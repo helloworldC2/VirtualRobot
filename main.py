@@ -4,7 +4,7 @@
   Ricky Singh
   Joel Bradley
   Adam Cook
-  Ben Domakos
+  Ben Domokos
 """
 
 #so it begins
