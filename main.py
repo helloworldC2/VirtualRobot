@@ -1,6 +1,6 @@
 """By Hello World  ©2014
   George Claridge
-  Aaron Daisly
+  Aaron Daisley
   Ricky Singh
   Joel Bradley
   Adam Cook
