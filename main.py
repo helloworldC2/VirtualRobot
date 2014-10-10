@@ -13,16 +13,19 @@ print "Hello, world!"
 
 class Game():
 
-    def __init__(self, width, height):
-        self.window = pygame.display.set_mode((width,height))
-        fpsClock = pygame.time.Clock()
-        font = pygame.font.Font('freesansbold.ttf', 36)
-        run()
-        
-    def run():
+
+    def run(self):
       while True:
           pygame.display.update()
-          fpsClock.tick(60)
+          self.fpsClock.tick(60)
+          
+    def __init__(self, width, height):
+        self.window = pygame.display.set_mode((width,height))
+        self.fpsClock = pygame.time.Clock()
+        #font = pygame.font.Font('freesansbold.ttf', 36)
+        self.run()
+        
+    
           
 
 if __name__ == "__main__":
@@ -31,3 +34,4 @@ if __name__ == "__main__":
     game = Game(width, height)
 
 pygame.quit()
+
