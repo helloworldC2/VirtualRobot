@@ -94,7 +94,7 @@ def login(user,x,y):
         t.start()
 
 def disconnect():
-	disconnect = Packet.Packet01Disconnect('Dave')
+	disconnect = Packet.Packet01Disconnect(username)
 	sendDataToServer(disconnect.getData())
 	print "Disconnected from server!"
 
@@ -106,7 +106,7 @@ class Player(object):
         self.username = username
         self.x =x
         self.y=y
-        self.player = pygame.image.load("smashing.jpg")
+        self.player = pygame.image.load("robot.png")
 
 
 
