@@ -2,7 +2,6 @@ import time
 import client
 import threading
 import random
-import Tile
 import pygame
 
 
@@ -70,7 +69,7 @@ def render():
     pygame.display.update()
 
 #createLevel()
-playerImg = pygame.image.load("smashing.jpg")
+playerImg = pygame.image.load("robot.png")
 player = playerImg.get_rect()
 pygame.key.set_repeat(1,20)
 lastTime = time.time()
