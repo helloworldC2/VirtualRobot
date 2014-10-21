@@ -28,9 +28,8 @@ players = []
 
 def sendDataToServer(data):
 	global timeLast
-	print "Sending:",data
+	#print "Sending:",data
 	sock.sendto(data, (UDP_IP, UDP_PORT))
-	timeLast = int(round(time.time() * 1000))
 
 def getPacket(data):
 	iD = data[:2]
@@ -38,7 +37,6 @@ def getPacket(data):
 
 def parsePacket(data,addr):
 	global timeLast,username
-	#print "Ping:",int(round(time.time() * 1000))-timeLast
 	packetType = getPacket(data)
 
 	if packetType=='00':
@@ -98,7 +96,6 @@ def disconnect():
 	sendDataToServer(disconnect.getData())
 	print "Disconnected from server!"
 
-#atexit.register(disconnect)
 
 class Player(object):
 
