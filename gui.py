@@ -36,22 +36,9 @@ def render():
     level.render(screen,xoff,yoff)
     
     for p in client.players:
-<<<<<<< HEAD
         p.render(screen,xoff,yoff)
 
     player.render(screen,xoff,yoff)
-=======
-        screen.blit(p.player, (p.x-xoff,p.y-yoff))
-        text = basicFont.render(p.username, True, (0,0,0))
-        textpos = text.get_rect(center=(p.x-xoff+30,p.y-yoff-20))
-        screen.blit(text, textpos)
-
-    screen.blit(playerImg, (x-xoff,y-yoff))
-    basicFont.render('Hello world!', True, (0,0,0), (0,1,0))
-    text = basicFont.render(client.username, True, (0,0,0))
-    textpos = text.get_rect(center=(x-xoff+30,y-yoff-20))
-    screen.blit(text, textpos)
->>>>>>> origin/master
     pygame.display.flip()
     pygame.display.update()
 
