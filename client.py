@@ -38,7 +38,9 @@ def getPacket(data):
 def parsePacket(data,addr):
 	global timeLast,username
 	packetType = getPacket(data)
-
+        for pl in players:
+                print pl.username
+                
 	if packetType=='00':
 		loginP = Packet.Packet00Login()
 		loginP.receivePacket(data)
@@ -61,6 +63,9 @@ def parsePacket(data,addr):
                                 pl.y = int(move.y)
                                 return
                 if move.username!=username:
+                        for pl in players:
+                                if move.username==pl.username:
+                                        return
                         addPlayer(move.username,int(move.x),int(move.y))
 		
 def addPlayer(usename,x,y):
