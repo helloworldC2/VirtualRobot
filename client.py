@@ -6,6 +6,7 @@ import time
 import sys
 import threading
 import pygame
+import Player
 
 
 
@@ -64,7 +65,7 @@ def parsePacket(data,addr):
                         addPlayer(move.username,int(move.x),int(move.y))
 		
 def addPlayer(usename,x,y):
-    pl = Player(usename,x,y)
+    pl = PlayerMP(usename,x,y)
     players.append(pl)
    
 
@@ -73,7 +74,7 @@ def addPlayer(usename,x,y):
 
 def waitForPacket():
 	while True:
-    		data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
+    		data, addr = sock.recvfrom(128) 
     		print "received message:", data, addr
     		parsePacket(data, addr)
 
@@ -84,7 +85,7 @@ def move(x,y):
         sendDataToServer(move.getData())
 
 def login(user,x,y):
-	global username,canvas,window
+	global username
         username  = user
         login = Packet.Packet00Login(user,x,y)
         sendDataToServer(login.getData())
@@ -97,13 +98,11 @@ def disconnect():
 	print "Disconnected from server!"
 
 
-class Player(object):
+class PlayerMP(Player.Player):
 
     def __init__(self,username,x,y):
-        self.username = username
-        self.x =x
-        self.y=y
-        self.player = pygame.image.load("robot.png")
+        super(PlayerMP,self).__init__(None,username,x,y)
+    
 
 
 

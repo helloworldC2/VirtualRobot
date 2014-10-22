@@ -1,9 +1,11 @@
 import time
-import client
 import threading
 import random
 import pygame
 import Level
+import Keyboard
+import client
+import Player
 
 def quitGame():
     client.disconnect()
@@ -11,43 +13,17 @@ def quitGame():
 
 def tick():
     global x,y,running,player
+    Keyboard.update()
     level.tick()
-    xx=0
-    yy=0
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            #quitGame()
-            running = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:
-                yy=-1
-            if event.key == pygame.K_s:
-                yy=1
-            if event.key == pygame.K_a:
-                xx=-1
-            if event.key == pygame.K_d:
-                xx=1
-    if pygame.mouse.get_pressed()[0]:
-        if pygame.mouse.get_pos()[0]>x:
-            xx=1
-        else:
-            xx=-1
-        if pygame.mouse.get_pos()[1]>y:
-            yy=1
-        else:
-            yy=-1
+    player.tick()
+    
 
-    if xx!=0 or yy!=0:
-        y+=yy
-        x+=xx
-        move = [x,y]
-        client.move(x,y)
-        player.move(move)
+    
 
 def render():
     screen.fill((0,0,0))
-    xoff = x - (width/2)
-    yoff = y - (height/2)
+    xoff = player.x - (width/2)
+    yoff = player.y - (height/2)
     if xoff < 0:
         xoff = 0
     if xoff > ((level.width << 5) - screen.get_width()):
@@ -60,41 +36,38 @@ def render():
     level.render(screen,xoff,yoff)
     
     for p in client.players:
-        screen.blit(p.player, (p.x-xoff,p.y-yoff))
+        p.render(screen,xoff,yoff)
 
-    screen.blit(playerImg, (x-xoff,y-yoff))
+    player.render(screen,xoff,yoff)
     pygame.display.flip()
     pygame.display.update()
 
 
 
 pygame.init()
-
+pygame.font.init()
+basicFont = pygame.font.SysFont(None, 32)
 x = random.randint(0,800)
 y = random.randint(0,400)
-client.login(raw_input("Enter Username: "),x,y)
-#client.login("Dave",x,y)
+#client.login(raw_input("Enter Username: "),x,y)
+client.login("Dave",x,y)
 
 size = width, height = 800, 400
 screen = pygame.display.set_mode(size)
 
 level = Level.Level(32,32)
+player = Player.Player(level,client.username,x,y)
 
-playerImg = pygame.image.load("robot.png")
-player = playerImg.get_rect()
-
-pygame.key.set_repeat(1,10)
 
 lastTime = time.time()
 lastTimer = time.time()
 delta = 0.0
 FPS = 60.0
 timepertick = 1./FPS
-running = True
 frames = 0
 ticks = 0
 
-while running:
+while Keyboard.running:
 
     now = time.time()
     delta += (now - lastTime) / timepertick
@@ -116,12 +89,3 @@ while running:
 
     
 pygame.quit()
-
-
-
-
-
-
-        
-
-    
