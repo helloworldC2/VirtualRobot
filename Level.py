@@ -1,6 +1,7 @@
 
 import random
 import Tile
+import string
 
 
 
@@ -19,7 +20,12 @@ class Level():
 		data = levelF.read()
 		x=0
 		y=0
-		for i in data:
+		
+		data = string.split(data,"@")
+		header  = string.split(data[0],",")
+		self.width = int(header[0])
+		self.height = int(header[1])
+		for i in data[1]:
 			if i ==';':
 				x=-1
 				y+=1
