@@ -11,14 +11,14 @@ class Level():
 		self.width  = w
 		self.height = h
 		self.tiles = [0]*(w*h)
-		self.loadLevelFromFile("levels/lvl1.txt")
+		self.loadLevelFromFile("levels/lvl2.txt")
 		#self.generateLevel()
 
 
 	def loadLevelFromFile(self,path):
 		levelF = open(path,'r')
 		data = levelF.read()
-		x=0
+		x=-1
 		y=0
 		
 		data = string.split(data,"@")
