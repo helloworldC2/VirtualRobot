@@ -7,19 +7,21 @@ import Keyboard
 import client
 import Player
 
+"""Called when the game closes to remove player from server"""
 def quitGame():
     client.disconnect()
     
-
+"""Called 60 times a second. Updates the games logic"""
 def tick():
     global x,y,running,player
-    Keyboard.update()
+    Keyboard.update(level)
     level.tick()
     player.tick()
     
 
     
-
+"""Called as many times as possible in the main loop.
+Draws all the games graphics"""
 def render():
     screen.fill((0,0,0))
     xoff = player.x - (width/2)
