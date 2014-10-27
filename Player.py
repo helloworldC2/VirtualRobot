@@ -45,12 +45,13 @@ class Player(Entity.Entity):
 	
 
 	def tick(self):
+                super(Player,self).tick()
 		xa = 0
 		ya = 0
-		centreX= self.x+32
-		centreY= self.y+32
-		xx = centreX >>5
-		yy = centreY >>5
+		self.centreX= self.x+32
+		self.centreY= self.y+62
+		xx = self.centreX >>5
+		yy = self.centreY >>5
 		
 		if Keyboard.keys['w']:
 			ya=-1
@@ -63,9 +64,6 @@ class Player(Entity.Entity):
 
 		if xa != 0 or ya != 0:
 			self.isMoving = not self.move(xa, ya)
-
-
-
 		else:
 			self.isMoving = False
 		
@@ -80,7 +78,12 @@ class Player(Entity.Entity):
 	
 
 	def render(self,screen,xoff,yoff):
-		screen.blit(self.img, (self.x-xoff,self.y-yoff))
+		
+                if self.isSwimming:
+                        source_area = pygame.Rect((0,0), (self.img.get_width(), self.img.get_height()/2))
+                        screen.blit(self.img,(self.x-xoff,self.y-yoff+32),source_area)
+                else:
+                        screen.blit(self.img, (self.x-xoff,self.y-yoff))
    	 	text = self.basicFont.render(self.username, True, (0,0,0))
    		textpos = text.get_rect(center=(self.x-xoff+30,self.y-yoff-20))
                 screen.blit(text, textpos)
