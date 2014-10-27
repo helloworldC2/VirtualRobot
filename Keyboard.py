@@ -13,10 +13,14 @@ keys = {
         'h':False,
         'e':False,
         'l':False,
-        'o':False
+        'o':False,
+        'r':False
+    
+        
 }
 cheatOn = False
-def update():
+"""Called for main.tick(). Updates the keys dict to hold key values"""
+def update(level):
 	global running
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
@@ -41,6 +45,8 @@ def update():
 				keys['l'] = True
 			if event.key == pygame.K_e:
 				keys['e'] = True
+			if event.key == pygame.K_r:
+				keys['r'] = True
 
 		if event.type == pygame.KEYUP:
 			if event.key == pygame.K_w:
@@ -59,14 +65,20 @@ def update():
 				keys['l'] = False
 			if event.key == pygame.K_e:
 				keys['e'] = False
+			if event.key == pygame.K_r:
+				keys['r'] = False
 
-                isCheatOn()
-                
-def isCheatOn():
+                isCheatOn(level)
+
+"""Nothing to see here"""
+def isCheatOn(level):
         global cheatOn,keys
         if keys['h'] and keys['e'] and keys['l'] and keys['o']:
                 cheatOn = not cheatOn
                 Tile.tiles[3].setSolid(not cheatOn)
+                print 'CHEAT TOGGLED'
+        if keys['w'] and keys['o'] and keys['r'] and keys['l']:
+                level.generateLevel()
                 print 'CHEAT TOGGLED'
         
 			
