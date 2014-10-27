@@ -11,6 +11,7 @@ class Tile(object):
 		self.img = pygame.image.load(imagePath)
 		self.img = pygame.transform.scale(self.img, (32, 32))
 		self.isSolid = False
+		self.speed = 1.0
 
 	def render(self,screen,x,y):
 		screen.blit(self.img, (x,y))
@@ -18,6 +19,12 @@ class Tile(object):
 	def tick(self):
 		pass
 		#print self,self.isSolid
+	def setSpeed(self,speed):
+                self.speed = speed
+
+        def getSpeed(self):
+                return self.speed
+                
 
 	def setSolid(self,solid):
 		self.isSolid=solid
@@ -33,4 +40,8 @@ class Tile(object):
 void = Tile(0,"tiles/void.png")
 grass = Tile(1,"tiles/grass.png")
 water = Tile(2,"tiles/water.png")
+water.setSpeed(3)
 wall = Tile(3,"tiles/wall.png").setSolid(True)
+sand = Tile(4,"tiles/sand.png").setSpeed(2)
+
+
