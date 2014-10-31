@@ -10,7 +10,7 @@ class Level():
 	def __init__(self,w,h):
 		self.width  = w
 		self.height = h
-		self.loadLevelFromFile("levels/lvl2.txt")
+		self.loadLevelFromFile("levels/Arena.txt")
 		#self.generateLevel()
 
         """Populates the tiles list to hold the level data."""
@@ -46,7 +46,14 @@ class Level():
 	def tick(self):
 		for tile in Tile.tiles:
 			tile.tick()
+		for x in range(self.width):
+                        for y in range(self.height):
+                                if self.getTile(x,y).id== 5:
+                                        self.setTile(x,y,Tile.greenlight)
+                                if self.getTile(x,y).id== 6:
+                                        self.setTile(x,y,Tile.redlight)
 
+                                
         """Renders tiles and entities
         @Params:
         
@@ -62,10 +69,11 @@ class Level():
 	def setTile(self,x, y, tile):
                 if x < 0 or y < 0 or x >= self.width or y >= self.height:
 			return
-		self.tiles[x + y * self.width] = tile.getId();
+		self.tiles[x + y * self.width] = tile.getId()
 
 	def getTile(self,x,y):
 
 		if 0 > x or x >= self.width or 0 > y or y >= self.height:
 			return Tile.void
 		return Tile.tiles[self.tiles[x + y * self.width]]
+
