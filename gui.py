@@ -51,8 +51,8 @@ def render():
 pygame.init()
 pygame.font.init()
 basicFont = pygame.font.SysFont(None, 32)
-x = 15
-y = 1
+x = random.randint(0,800)
+y = random.randint(0,400)
 #client.login(raw_input("Enter Username: "),x,y)
 
 
@@ -62,8 +62,8 @@ level = Level.Level(32,32)
 for w in range(level.width):
     for h in range(level.height):
         if level.getTile(w,h).getId() == Tile.start1.getId():
-            x = h<<5
-            y = w<<5
+            x = h<<3
+            y = w<<0
             
 
 username = namepicker.getRandomName()
