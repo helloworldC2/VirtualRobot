@@ -5,19 +5,19 @@ import pygame
 import Level
 import Keyboard
 import client
-import Player
 import namepicker
+import Player
 
-"""Called when the game closes to remove player from server"""
+"""Called when the game closes to remove level.player from server"""
 def quitGame():
     client.disconnect()
     
 """Called 60 times a second. Updates the games logic"""
 def tick():
-    global x,y,running,player
+    global x,y,running
     Keyboard.update(level)
     level.tick()
-    player.tick()
+    level.player.tick()
     
 
     
@@ -25,8 +25,8 @@ def tick():
 Draws all the games graphics"""
 def render():
     screen.fill((0,0,0))
-    xoff = player.x - (width/2)
-    yoff = player.y - (height/2)
+    xoff = level.player.x - (width/2)
+    yoff = level.player.y - (height/2)
     if xoff < 0:
         xoff = 0
     if xoff > ((level.width << 5) - screen.get_width()):
@@ -41,7 +41,7 @@ def render():
     for p in client.players:
         p.render(screen,xoff,yoff)
 
-    player.render(screen,xoff,yoff)
+    level.player.render(screen,xoff,yoff)
     pygame.display.flip()
     
 
@@ -59,7 +59,7 @@ size = width, height = 800, 400
 screen = pygame.display.set_mode(size)
 
 level = Level.Level(32,32)
-player = Player.Player(level,client.username,x,y)
+level.player = Player.Player(level,client.username,x,y)
 
 
 lastTime = time.time()
