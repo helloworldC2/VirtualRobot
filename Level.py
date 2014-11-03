@@ -2,6 +2,8 @@
 import random
 import Tile
 import string
+import math
+import RobotAI
 
 
 
@@ -13,6 +15,9 @@ class Level():
 		self.loadLevelFromFile("levels/Arena.txt")
 		#self.generateLevel()
 		self.ticks=0
+		self.player = None
+		self.entities = []
+		self.entities.append(RobotAI.RobotAI(self,500,500))
 
         """Populates the tiles list to hold the level data."""
 	def loadLevelFromFile(self,path):
@@ -46,6 +51,8 @@ class Level():
 	"""Updates the tiles and entities"""
 	def tick(self):
                 self.ticks+=1
+                for e in self.entities:
+			e.tick()
 		for tile in Tile.tiles:
 			tile.tick()
 		for x in range(self.width):
@@ -66,6 +73,8 @@ class Level():
 		for x in range(self.width):
                         for y in range(self.height):
                                 self.getTile(x,y).render(screen,(x<<5)-xoff,(y<<5)-yoff)
+                for e in self.entities:
+                        e.render(screen,xoff,yoff)
 
         """"""
 	def setTile(self,x, y, tile):
@@ -78,4 +87,75 @@ class Level():
 		if 0 > x or x >= self.width or 0 > y or y >= self.height:
 			return Tile.void
 		return Tile.tiles[self.tiles[x + y * self.width]]
+
+	def getDistance(self,a,b):
+		dx = a[0] - b[0]
+		dy = a[1] - b[0]
+		return math.sqrt(dx*dx+dy*dy)
+
+	def inList(self,l,i):
+		for node in l:
+			if node.pos == i:
+				return True
+
+		return False
+
+
+
+	def findPath(self,start,goal):
+		openList = []
+		closedList = []
+		currentNode = Node(start,None,0,self.getDistance(start,goal))
+		openList.append(currentNode)
+		while len(openList) >0:
+			sorted(openList,key=lambda i: i.totalCost)
+			currentNode = openList[0] #only use node with lowest cost
+			if currentNode.pos==goal:
+				path = []
+				while currentNode.parent != None:#goes until reaches the start
+					path.append(currentNode)
+					currentNode = currentNode.parent
+				openList = []
+				closedList = []
+				return path
+			openList.remove(currentNode)
+			closedList.append(currentNode)
+			for i in range(9):
+				if i==0:
+					continue#ignore current tile
+				x = currentNode.pos[0]
+				y  = currentNode.pos[1]
+				dx = (i % 3) -1
+				dy = (i / 3) -1
+				tile = self.getTile(x+dx,y+dy)
+				if tile == None or tile == Tile.void:
+					continue
+				if tile.isSolid:
+					#print 'solid'
+					continue
+				tilePos = (x+dx,y+dy)
+				costSoFar = currentNode.costSoFar + self.getDistance(currentNode.pos,tilePos)
+				costSoFar*=tile.getSpeed()
+				distanceToEnd = self.getDistance(tilePos,goal)
+				node = Node(tilePos,currentNode,costSoFar,distanceToEnd)
+				if self.inList(closedList,tilePos) and costSoFar >= node.costSoFar: #checks if node has already been used,or if you are going backwards
+					continue
+				if not self.inList(openList,tilePos) or costSoFar < node.costSoFar:#only add if it's not alredy there
+					openList.append(node)
+
+
+
+
+		print "No path :("
+		return None
+
+
+class Node(object):
+
+	def __init__(self,pos,parent,costSoFar,distanceToEnd):
+		self.pos = pos
+		self.parent = parent
+		self.costSoFar = costSoFar
+		self.distanceToEnd = distanceToEnd
+		self.totalCost = distanceToEnd +costSoFar
 
