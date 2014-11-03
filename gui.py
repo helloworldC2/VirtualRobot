@@ -7,6 +7,7 @@ import Keyboard
 import client
 import namepicker
 import Player
+import Tile
 
 """Called when the game closes to remove level.player from server"""
 def quitGame():
@@ -50,16 +51,24 @@ def render():
 pygame.init()
 pygame.font.init()
 basicFont = pygame.font.SysFont(None, 32)
-x = random.randint(0,800)
-y = random.randint(0,400)
+x = 15
+y = 1
 #client.login(raw_input("Enter Username: "),x,y)
-client.login(namepicker.getRandomName(),x,y)
+
 
 size = width, height = 800, 400
 screen = pygame.display.set_mode(size)
-
 level = Level.Level(32,32)
-level.player = Player.Player(level,client.username,x,y)
+for w in range(level.width):
+    for h in range(level.height):
+        if level.getTile(w,h).getId() == Tile.start1.getId():
+            x = h<<5
+            y = w<<5
+            
+
+username = namepicker.getRandomName()
+client.login(username,x,y)
+level.player = Player.Player(level,username,x,y)
 
 
 lastTime = time.time()
@@ -92,3 +101,4 @@ while Keyboard.running:
 
     
 pygame.quit()
+
