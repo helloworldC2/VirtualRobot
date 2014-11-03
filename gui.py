@@ -6,6 +6,7 @@ import Level
 import Keyboard
 import client
 import Player
+import namepicker
 
 """Called when the game closes to remove player from server"""
 def quitGame():
@@ -42,7 +43,7 @@ def render():
 
     player.render(screen,xoff,yoff)
     pygame.display.flip()
-    pygame.display.update()
+    
 
 
 
@@ -52,7 +53,7 @@ basicFont = pygame.font.SysFont(None, 32)
 x = random.randint(0,800)
 y = random.randint(0,400)
 #client.login(raw_input("Enter Username: "),x,y)
-client.login("Dave",x,y)
+client.login(namepicker.getRandomName(),x,y)
 
 size = width, height = 800, 400
 screen = pygame.display.set_mode(size)
