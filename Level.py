@@ -12,6 +12,7 @@ class Level():
 		self.height = h
 		self.loadLevelFromFile("levels/Arena.txt")
 		#self.generateLevel()
+		self.ticks=0
 
         """Populates the tiles list to hold the level data."""
 	def loadLevelFromFile(self,path):
@@ -44,13 +45,14 @@ class Level():
 
 	"""Updates the tiles and entities"""
 	def tick(self):
+                self.ticks+=1
 		for tile in Tile.tiles:
 			tile.tick()
 		for x in range(self.width):
                         for y in range(self.height):
-                                if self.getTile(x,y).id== 5:
+                                if self.getTile(x,y).id== 5 and self.ticks%random.randint(1,1000)==0:
                                         self.setTile(x,y,Tile.greenlight)
-                                if self.getTile(x,y).id== 6:
+                                if self.getTile(x,y).id== 6 and self.ticks%random.randint(1,1000)==0:
                                         self.setTile(x,y,Tile.redlight)
 
                                 
@@ -69,7 +71,7 @@ class Level():
 	def setTile(self,x, y, tile):
                 if x < 0 or y < 0 or x >= self.width or y >= self.height:
 			return
-		self.tiles[x + y * self.width] = tile.getId()
+		self.tiles[x+(y*self.width)] = tile.id
 
 	def getTile(self,x,y):
 
