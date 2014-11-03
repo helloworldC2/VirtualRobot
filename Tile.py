@@ -2,15 +2,6 @@ import pygame
 
 tiles = []
 
-void = Tile(0,"tiles/void.png")
-grass = Tile(1,"tiles/grass.png")
-water = Tile(2,"tiles/water.png")
-water.setSpeed(3)
-wall = Tile(3,"tiles/wall.png").setSolid(True)
-sand = Tile(4,"tiles/sand.png").setSpeed(2)
-redlight = Tile(5,"tiles/redlight.png").setSolid(True)
-greenlight = Tile(6,"tiles/greenlight.png")
-
 class Tile(object):
 
 	
@@ -43,3 +34,12 @@ class Tile(object):
 
 	def getId(self):
 		return self.id
+
+void = Tile(0,"tiles/void.png")
+grass = Tile(1,"tiles/grass.png")
+water = Tile(2,"tiles/water.png")
+water.setSpeed(3)
+wall = Tile(3,"tiles/wall.png").setSolid(True)
+sand = Tile(4,"tiles/sand.png").setSpeed(2)
+redlight = Tile(5,"tiles/redlight.png").setSolid(True)
+greenlight = Tile(6,"tiles/greenlight.png")
