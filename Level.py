@@ -4,7 +4,8 @@ import Tile
 import string
 import math
 import RobotAI
-
+import socket
+import threading
 
 
 class Level():
@@ -18,6 +19,18 @@ class Level():
 		self.player = None
 		self.entities = []
 		self.entities.append(RobotAI.RobotAI(self,500,500))
+		self.hasAStarWorker = False
+		self.workers = 1	#number of worker
+		self.addr_list = []	#list of client addresses and connections
+		self.HOST = ''
+		self.PORT = 1337
+		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+		self.s.bind((self.HOST, self.PORT))
+		self.sendTilesToAStarWorker()
+		t = threading.Thread(target=self.listenForResult)
+		t.start()
+
 
         """Populates the tiles list to hold the level data."""
 	def loadLevelFromFile(self,path):
@@ -25,7 +38,7 @@ class Level():
 		data = levelF.read()
 		x=-1
 		y=0
-		
+
 		data = string.split(data,"@")
 		header  = string.split(data[0],",")
 		self.width = int(header[0])
@@ -62,13 +75,13 @@ class Level():
                                 if self.getTile(x,y).id== 6 and self.ticks%random.randint(1,1000)==0:
                                         self.setTile(x,y,Tile.redlight)
 
-                                
+
         """Renders tiles and entities
         @Params:
-        
+
         """
 	def render(self,screen,xoff,yoff):
-		
+
 
 		for x in range(self.width):
                         for y in range(self.height):
@@ -149,6 +162,38 @@ class Level():
 		print "No path :("
 		return None
 
+	def sendTilesToAStarWorker(self):
+		self.s.listen(self.workers)	#Listens for (n) number of client connections
+		print 'Waiting for client...'
+		for i in range(self.workers):	#Connects to all clients
+			conn, addr = self.s.accept()	#Accepts connection from client
+			print 'Connected by', addr
+			self.addr_list.append((conn,addr))	#Adds address to address list
+		for i in range(self.workers):	#Converts array section into string to be sent
+			data = self.tiles
+			data.append(self.width)
+			data.append(self.height)
+			arraystring = repr(data)
+			conn.sendto(arraystring , self.addr_list[i][1])	#Sends array string
+			print 'Tiles sent to worker'
+		self.hasAStarWorker = True
+
+	def requestAStar(self,workerID,start,goal):
+		arraystring = repr([start,goal])
+		self.addr_list[workerID][0].sendto( arraystring , self.addr_list[workerID][1] )	#Sends array string
+		print 'requesting A*!'
+
+	def listenForResult(self):
+		while True:
+			for i in range(self.workers):	#Receives sorted sections from each client
+				arraystring = ''
+				print 'Receiving data from clients...'
+				while 1:
+					data = self.addr_list[i][0].recv(4096)	#Receives data in chunks
+					print "Recieved:",data
+					data = eval(data)
+					self.entities[i].path = [Node((int(data[0]),int(data[1])),None,0,0)]
+
 
 class Node(object):
 
@@ -158,4 +203,3 @@ class Node(object):
 		self.costSoFar = costSoFar
 		self.distanceToEnd = distanceToEnd
 		self.totalCost = distanceToEnd +costSoFar
-
