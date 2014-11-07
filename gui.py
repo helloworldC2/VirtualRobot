@@ -47,58 +47,60 @@ def render():
     
 
 
-
-pygame.init()
-pygame.font.init()
-basicFont = pygame.font.SysFont(None, 32)
-x = random.randint(0,800)
-y = random.randint(0,400)
-#client.login(raw_input("Enter Username: "),x,y)
-
-
-size = width, height = 800, 400
-screen = pygame.display.set_mode(size)
-level = Level.Level(32,32)
-for w in range(level.width):
-    for h in range(level.height):
-        if level.getTile(w,h).getId() == Tile.start1.getId():
-            x = h<<3
-            y = w<<0
-            
-
-username = namepicker.getRandomName()
-client.login(username,x,y)
-level.player = Player.Player(level,username,x,y)
+def start(canvas) :
+    global screen, height, width, size, level
+    screen = canvas
+    pygame.init()
+    pygame.font.init()
+    basicFont = pygame.font.SysFont(None, 32)
+    x = random.randint(0,800)
+    y = random.randint(0,600)
+    #client.login(raw_input("Enter Username: "),x,y)
 
 
-lastTime = time.time()
-lastTimer = time.time()
-delta = 0.0
-FPS = 60.0
-timepertick = 1./FPS
-frames = 0
-ticks = 0
+    size = width, height = 800, 600
+    #screen = pygame.display.set_mode(size)
+    level = Level.Level(32,32)
+    for w in range(level.width):
+        for h in range(level.height):
+            if level.getTile(w,h).getId() == Tile.start1.getId():
+                x = h<<3
+                y = w<<0
+                
 
-while Keyboard.running:
+    username = namepicker.getRandomName()
+    client.login(username,x,y)
+    level.player = Player.Player(level,username,x,y)
 
-    now = time.time()
-    delta += (now - lastTime) / timepertick
-    lastTime = now
 
-    while delta >= 1:
-        ticks+=1
-        tick();
-        delta -= 1;
+    lastTime = time.time()
+    lastTimer = time.time()
+    delta = 0.0
+    FPS = 60.0
+    timepertick = 1./FPS
+    frames = 0
+    ticks = 0
 
-    frames+=1
-    render()
+    while Keyboard.running:
 
-    if time.time() - lastTimer >= 0:
-        lastTimer+=1
-        pygame.display.set_caption("Frames:"+ str(frames) +" ticks:"+str(ticks))
-        frames=0
-        ticks=0
+        now = time.time()
+        delta += (now - lastTime) / timepertick
+        lastTime = now
 
-    
-pygame.quit()
+        while delta >= 1:
+            ticks+=1
+            tick();
+            delta -= 1;
+
+        frames+=1
+        render()
+
+        if time.time() - lastTimer >= 0:
+            lastTimer+=1
+            pygame.display.set_caption("Frames:"+ str(frames) +" ticks:"+str(ticks))
+            frames=0
+            ticks=0
+
+        
+    pygame.quit()
 

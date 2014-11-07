@@ -2,6 +2,7 @@
 
 import pygame
 import Tile
+import sys
 
 
 running = True
@@ -25,6 +26,8 @@ def update(level):
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
                         #quitGame()
+                        pygame.quit()
+                        sys.exit()
                         running = False
                         print "closing down!"
                         

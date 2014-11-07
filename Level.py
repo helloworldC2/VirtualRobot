@@ -22,14 +22,14 @@ class Level():
 		self.hasAStarWorker = False
 		#self.workers = 1	#number of worker
 		#self.addr_list = []	#list of client addresses and connections
-		# self.HOST = ''
-		# self.PORT = 1337
-		# self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		# self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-		# self.s.bind((self.HOST, self.PORT))
-		# self.sendTilesToAStarWorker()
-		# t = threading.Thread(target=self.listenForResult)
-		# t.start()
+		#self.HOST = ''
+		#self.PORT = 1337
+		#self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		#self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+		#self.s.bind((self.HOST, self.PORT))
+		#self.sendTilesToAStarWorker()
+		#t = threading.Thread(target=self.listenForResult)
+		#t.start()
 
 
         """Populates the tiles list to hold the level data."""
