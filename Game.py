@@ -81,8 +81,8 @@ def menu1(canvas):
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :                        
                             if collide(startX,startY,startButton,pos) == 1 :
                                 pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)    
-                                #gui.start(canvas)
-                                Play.playMenu(canvas)
+                                gui.start(canvas)
+                                #Play.playMenu(canvas)
                                 
                             elif collide(eX,eY,closeButton,pos) :
                                 pygame.quit()
