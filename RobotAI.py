@@ -9,10 +9,11 @@ import random
 class RobotAI(Entity.Entity):
 
 
-	def __init__(self,level, x, y):
+	def __init__(self,level, x, y,destination):
 		super(RobotAI,self).__init__(level,x,y)
 		self.x = x
 		self.y = y
+		self.destination = destination
 		self.isSwimming = False
 		self.isMoving = False
 		self.img = pygame.image.load("robot.png")
@@ -59,9 +60,9 @@ class RobotAI(Entity.Entity):
 
 		if self.ticks%30==0:
 			if self.level.hasAStarWorker:
-				self.level.requestAStar(self.level.entities.index(self),(xx,yy),(self.level.player.centreX>>5,self.level.player.centreY>>5))
+				self.level.requestAStar(0,(xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 			else:
-				self.path = self.level.findPath((xx,yy),(self.level.player.centreX>>5,self.level.player.centreY>>5))
+				self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 
 		if self.path != None:
 			if len(self.path) > 0 :
@@ -97,6 +98,6 @@ class RobotAI(Entity.Entity):
 
                 if self.isSwimming:
                         source_area = pygame.Rect((0,0), (self.img.get_width(), self.img.get_height()/2))
-                        screen.blit(self.img,(self.x-xoff+16,self.y-yoff+32),source_area)
+                        screen.blit(self.img,(self.x-xoff+8,self.y-yoff+32),source_area)
                 else:
-                        screen.blit(self.img, (self.x-xoff+16,self.y-yoff))
+                        screen.blit(self.img, (self.x-xoff+8,self.y-yoff))
