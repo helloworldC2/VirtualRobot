@@ -8,6 +8,7 @@ import client
 import namepicker
 import Player
 import Tile
+import RobotAI
 
 """Called when the game closes to remove level.player from server"""
 def quitGame():
@@ -63,10 +64,15 @@ def start(canvas) :
     level = Level.Level(32,32)
     for w in range(level.width):
         for h in range(level.height):
-            if level.getTile(w,h).getId() == Tile.start1.getId():
-                x = h<<3
-                y = w<<0
+            if level.getTile(w,h).getId() == Tile.start1.getId(): 
+                startX = h<<5
+                startY = w<<5
+            if level.getTile(w,h).getId() == Tile.start2.getId(): 
+                endX = h<<5
+                endY = w<<5
                 
+    level.entities.append(RobotAI.RobotAI(level,startX,startY,(endX,endY)))
+    level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
 
     username = namepicker.getRandomName()
     client.login(username,x,y)
