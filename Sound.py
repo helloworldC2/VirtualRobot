@@ -3,8 +3,9 @@ import pygame
 
 sounds = []
 
-class Sound(self):
+class Sound(object):
     def __init__(self,id,path):
+        pygame.mixer.init(44100, -16,2,2048)
         sound = pygame.mixer.music.load(path)
         sounds.append(self)
     def play(self):
