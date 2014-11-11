@@ -20,7 +20,7 @@ def menu1(canvas):
         leftArrow = pygame.image.load("buttons/larrow.png").convert_alpha()
         rightArrow = pygame.image.load("buttons/rarrow.png").convert_alpha()
         creditButton = pygame.image.load("buttons/credits.png").convert_alpha()
-        closeButton = pygame.image.load("buttons/exit.png").convert_alpha()
+        closeButton = pygame.image.load("buttons/Exit.png").convert_alpha()
         
         helloWorld = pygame.image.load("VR.png").convert_alpha()
         robot = pygame.image.load("robot.png").convert_alpha()
