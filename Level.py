@@ -19,16 +19,16 @@ class Level():
 		self.player = None
 		self.entities = []
 		self.hasAStarWorker = False
-		self.workers = 1	#number of worker
-		self.addr_list = []	#list of client addresses and connections
-		self.HOST = ''
-		self.PORT = 1337
-		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-		self.s.bind((self.HOST, self.PORT))
-		self.sendTilesToAStarWorker()
-		t = threading.Thread(target=self.listenForResult)
-		t.start()
+##		self.workers = 1	#number of worker
+##		self.addr_list = []	#list of client addresses and connections
+##		self.HOST = ''
+##		self.PORT = 1337
+##		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+##		self.s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+##		self.s.bind((self.HOST, self.PORT))
+##		self.sendTilesToAStarWorker()
+##		t = threading.Thread(target=self.listenForResult)
+##		t.start()
 
 
         """Populates the tiles list to hold the level data."""
@@ -71,10 +71,26 @@ class Level():
                         for y in range(self.height):
                                 if self.getTile(x,y).id== 5 and self.ticks%random.randint(1,1000)==0:
                                         self.setTile(x,y,Tile.greenlight)
+                                        self.souroundingTiles(x,y,Tile.redlight,Tile.greenlight)           
+                                                        
+                                        #self.sendChangeToWorker(x,y,Tile.greenlight)
                                 if self.getTile(x,y).id== 6 and self.ticks%random.randint(1,1000)==0:
                                         self.setTile(x,y,Tile.redlight)
+                                        self.souroundingTiles(x,y,Tile.greenlight,Tile.redlight)
+                                        #self.sendChangeToWorker(x,y,Tile.redlight)
 
 
+        def souroundingTiles(self,x,y, get,set):
+                for i in range(9):
+                        if i==0:
+                                continue#ignore current tile
+                        dx = (i % 3) -1
+                        dy = (i / 3) -1
+                        if self.getTile(x+dx,y+dy).id== get.id:
+                                self.setTile(x, y, set)
+                                self.souroundingTiles(x+dx,y+dy,get,set)
+                return False
+                
         """Renders tiles and entities
         @Params:
 
@@ -177,7 +193,16 @@ class Level():
 			conn.sendto(arraystring , self.addr_list[i][1])	#Sends array string
 			print 'Tiles sent to worker'
 		self.hasAStarWorker = True
-
+		
+        def sendChangeToWorker(self,x,y,tile):
+                for i in range(self.workers):	#Converts array section into string to be sent
+			data = ["c"]
+			data.append(x)
+			data.append(y)
+			data.append(tile.id)
+			arraystring = repr(data)
+			self.addr_list[i][0].sendto(arraystring , self.addr_list[i][1])
+			
 	def requestAStar(self,workerID,start,goal):
 		arraystring = repr([start,goal])
 		worker_add = self.addr_list[workerID][0]
