@@ -147,7 +147,7 @@ class Level():
 			openList.remove(currentNode)
 			closedList.append(currentNode)
 			for i in range(9):
-				if i==4:
+				if i==0:
 					continue#ignore current tile
 				x = currentNode.pos[0]
 				y  = currentNode.pos[1]
