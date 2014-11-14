@@ -3,6 +3,7 @@ import pygame
 import Tile
 import client
 import Keyboard
+import Robot_Skin_selector
 
 
 class Player(Entity.Entity):
@@ -15,7 +16,8 @@ class Player(Entity.Entity):
 		self.username =username
 		self.isSwimming = False
 		self.isMoving = False
-		self.img = pygame.image.load("robot.png")
+		SkinTP = Robot_Skin_selector.selskin()
+		self.img = pygame.image.load(SkinTP)
 		self.basicFont = pygame.font.SysFont(None, 32)
 
 

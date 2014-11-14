@@ -6,6 +6,9 @@ import sys
 import gui
 import Play
 import credit
+import Sound
+import Robot_Skin_selector
+import random
 
 def createCanvas() :
         pygame.init()
@@ -16,6 +19,7 @@ def createCanvas() :
 
 def menu1(canvas):
 
+        Robo = ["robot.png","LF_0.png","GFront.png","robotj.png"]
         startButton = pygame.image.load("buttons/start.png").convert_alpha()
         leftArrow = pygame.image.load("buttons/larrow.png").convert_alpha()
         rightArrow = pygame.image.load("buttons/rarrow.png").convert_alpha()
@@ -67,6 +71,8 @@ def menu1(canvas):
         #print (r.width,r.height,r.x)
 
         sound = 0
+        skin = 0
+        ran = ""
 
         while True:
                 for event in pygame.event.get():
@@ -100,9 +106,15 @@ def menu1(canvas):
                                 canvas.blit(helloWorld,(0,0))
                                 canvas.blit(startButton,(startX,startY))
                                 canvas.blit(closeButton,(eX,eY))
+                                ran = Sound.random_sound()
+                                print ran
+                                Sound.pygame.mixer.music.load(ran)
+                                pygame.mixer.music.play()
                                 break
 
                             elif sound == 1 and collide(sX,sY,soundEnabled,pos) == 1 :
+                                pygame.mixer.music.stop()
+                                pygame.mixer.init(44100, -16,2,2048)
                                 sound = 0
                                 canvas.blit(bg, (0,0))
                                 canvas.blit(leftArrow, (leftX,leftY))
@@ -115,12 +127,93 @@ def menu1(canvas):
                                 canvas.blit(closeButton,(eX,eY))
                                 break
                         
+                            elif collide(leftX,leftY,leftArrow,pos):
+                                    pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
+                                    skin = skin + 1
+
+                                    canvas.blit(bg, (0,0))
+                                    canvas.blit(leftArrow, (leftX,leftY))
+                                    canvas.blit(rightArrow, (rightY,rightY))
+                                    canvas.blit(soundDisabled,(sX,sY))
+                                    canvas.blit(soundEnabled,(sX,sY))
+                                    canvas.blit(robot,(rX,rY))
+                                    canvas.blit(creditButton,(cX,cY))
+                                    canvas.blit(helloWorld,(0,0))
+                                    canvas.blit(startButton,(startX,startY))
+                                    canvas.blit(closeButton,(eX,eY))
+
+                                    if skin == 0:
+                                            cRBskin= Robo[0]
+                                    elif skin == 1:
+                                            cRBskin= Robo[1]
+                                    if skin == 2:
+                                            cRBskin= Robo[2]
+                                    elif skin == 3:
+                                            cRBskin= Robo[3]
+         
+
+                                    robot = pygame.image.load(cRBskin).convert_alpha()
+                                    robot = pygame.transform.scale(robot,(300,300))
+                                    robot = pygame.transform.scale(robot,(200,200))
+                                    canvas.blit(robot,(rX,rY))
+
+                                    canvas.blit(bg, (0,0))
+                                    canvas.blit(leftArrow, (leftX,leftY))
+                                    canvas.blit(rightArrow, (rightY,rightY))
+                                    canvas.blit(soundDisabled,(sX,sY))
+                                    canvas.blit(soundEnabled,(sX,sY))
+                                    canvas.blit(robot,(rX,rY))
+                                    canvas.blit(creditButton,(cX,cY))
+                                    canvas.blit(helloWorld,(0,0))
+                                    canvas.blit(startButton,(startX,startY))
+                                    canvas.blit(closeButton,(eX,eY))
+
+                                    
+                            elif collide(rightY,rightY,rightArrow,pos):
+                                    pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
+                                    skin = skin - 1
+                                    canvas.blit(bg, (0,0))
+                                    canvas.blit(leftArrow, (leftX,leftY))
+                                    canvas.blit(rightArrow, (rightY,rightY))
+                                    canvas.blit(soundDisabled,(sX,sY))
+                                    canvas.blit(soundEnabled,(sX,sY))
+                                    canvas.blit(robot,(rX,rY))
+                                    canvas.blit(creditButton,(cX,cY))
+                                    canvas.blit(helloWorld,(0,0))
+                                    canvas.blit(startButton,(startX,startY))
+                                    canvas.blit(closeButton,(eX,eY))
+
+
+                                    if skin == 3:
+                                            cRBskin= Robo[0]
+                                    elif skin == 2:
+                                            cRBskin= Robo[1]
+                                    if skin == 1:
+                                            cRBskin= Robo[2]
+                                    elif skin == 0:
+                                            cRBskin= Robo[3]
+
+                                    robot = pygame.image.load(cRBskin).convert_alpha()
+                                    robot = pygame.transform.scale(robot,(300,300))
+                                    robot = pygame.transform.scale(robot,(200,200))
+                                    canvas.blit(robot,(rX,rY))
+
+                                    canvas.blit(bg, (0,0))
+                                    canvas.blit(leftArrow, (leftX,leftY))
+                                    canvas.blit(rightArrow, (rightY,rightY))
+                                    canvas.blit(soundDisabled,(sX,sY))
+                                    canvas.blit(soundEnabled,(sX,sY))
+                                    canvas.blit(robot,(rX,rY))
+                                    canvas.blit(creditButton,(cX,cY))
+                                    canvas.blit(helloWorld,(0,0))
+                                    canvas.blit(startButton,(startX,startY))
+                                    canvas.blit(closeButton,(eX,eY))
                             elif collide(cX,cY,creditButton,pos) :
                                     pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
                                     credit.creditMenu(canvas)
                                 
                                 
-                        if collide(startX,startY,startButton,pos) == 1 or collide(cX,cY,creditButton,pos) == 1 or collide(sX,sY,soundDisabled,pos) or collide(eX,eY,closeButton,pos) :
+                        if collide(startX,startY,startButton,pos) == 1 or collide(cX,cY,creditButton,pos) == 1 or collide(sX,sY,soundDisabled,pos) or collide(eX,eY,closeButton,pos)or collide(leftX,leftY,leftArrow,pos) or collide(rightY,rightY,rightArrow,pos) :
                                 pygame.mouse.set_cursor(*cursor.HAND_CURSOR)
                         else :
                                 pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)

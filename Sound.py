@@ -1,22 +1,9 @@
 #Sounds
 import pygame
-
-sounds = []
-
-class Sound(object):
-    def __init__(self,id,path):
-        pygame.mixer.init(44100, -16,2,2048)
-        sound = pygame.mixer.music.load(path)
-        sounds.append(self)
-    def play(self):
-        sound.play()
+import Game
+import random
 
 
-example = Sound(0,"exapmle.wav")
-example2 = Sound(1,"exapmle1.wav")
-
-
-
-#to play
-
-#Sound.sounds[id].play()
+sound_list = ['asda.wav','asda2.wav','Track1ad.wav']
+def random_sound():
+    return sound_list[random.randint(0,len(sound_list)-1)]
