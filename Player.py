@@ -1,7 +1,6 @@
 import Entity
 import pygame
 import Tile
-import client
 import Keyboard
 import Robot_Skin_selector
 
@@ -68,9 +67,6 @@ class Player(Entity.Entity):
 			self.isMoving = not self.move(xa, ya)
 		else:
 			self.isMoving = False
-		
-		if self.isMoving:
-			client.move(self.x,self.y)
 
 		if self.getTileUnder().getId() == Tile.water.getId():
 			self.isSwimming = True

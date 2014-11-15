@@ -1,7 +1,6 @@
 import Entity
 import pygame
 import Tile
-import client
 import Keyboard
 import random
 
@@ -84,8 +83,6 @@ class RobotAI(Entity.Entity):
 		else:
 			self.isMoving = False
 
-		if self.isMoving:
-			client.move(self.x,self.y)
 
 		if self.getTileUnder().getId() == Tile.water.getId():
 			self.isSwimming = True
