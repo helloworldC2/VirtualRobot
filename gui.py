@@ -4,7 +4,6 @@ import random
 import pygame
 import Level
 import Keyboard
-import client
 import namepicker
 import Player
 import Tile
@@ -40,8 +39,6 @@ def render():
 
     level.render(screen,xoff,yoff)
     
-    for p in client.players:
-        p.render(screen,xoff,yoff)
 
     level.player.render(screen,xoff,yoff)
     pygame.display.flip()
@@ -56,7 +53,7 @@ def start(canvas) :
     basicFont = pygame.font.SysFont(None, 32)
     x = random.randint(0,800)
     y = random.randint(0,600)
-    #client.login(raw_input("Enter Username: "),x,y)
+    
 
 
     size = width, height = 800, 600
@@ -75,7 +72,6 @@ def start(canvas) :
     level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
 
     username = namepicker.getRandomName()
-    client.login(username,x,y)
     level.player = Player.Player(level,username,x,y)
 
 
