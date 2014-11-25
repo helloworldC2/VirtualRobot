@@ -69,12 +69,12 @@ class Level():
 			tile.tick()
 		for x in range(self.width):
                         for y in range(self.height):
-                                if self.getTile(x,y).id== 5 and self.ticks%random.randint(1,1000)==0:
+                                if self.getTile(x,y).id== 5 and self.ticks%random.randint(1,10000)==0:
                                         self.setTile(x,y,Tile.greenlight)
                                         self.souroundingTiles(x,y,Tile.redlight,Tile.greenlight)           
                                                         
                                         #self.sendChangeToWorker(x,y,Tile.greenlight)
-                                if self.getTile(x,y).id== 6 and self.ticks%random.randint(1,1000)==0:
+                                if self.getTile(x,y).id== 6 and self.ticks%random.randint(1,10000)==0:
                                         self.setTile(x,y,Tile.redlight)
                                         self.souroundingTiles(x,y,Tile.greenlight,Tile.redlight)
                                         #self.sendChangeToWorker(x,y,Tile.redlight)
@@ -126,6 +126,13 @@ class Level():
 
 		return False
 
+	def lookForSlowest(self,l):
+                currentBiggest =0
+                for i in l:
+                        if i>currentBiggest:
+                                currentBiggest =i
+                        
+                return currentBiggest
 
 
 	def findPath(self,start,goal):
@@ -134,8 +141,9 @@ class Level():
 		currentNode = Node(start,None,0,self.getDistance(start,goal))
 		openList.append(currentNode)
 		while len(openList) >0:
-			sorted(openList,key=lambda i: i.totalCost)
-			currentNode = openList[0] #only use node with lowest cost
+
+			#sorted(openList,key=lambda i: i.totalCost)
+			currentNode = self.lookForSlowest(openList) #only use node with lowest cost
 			if currentNode.pos==goal:
 				path = []
 				while currentNode.parent != None:#goes until reaches the start
