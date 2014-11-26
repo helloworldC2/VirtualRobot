@@ -32,7 +32,7 @@ class Level():
 
 
         """Populates the tiles list to hold the level data."""
-	def loadLevelFromFile(self,path):
+        def loadLevelFromFile(self,path):
 		levelF = open(path,'r')
 		data = levelF.read()
 		x=-1
@@ -116,7 +116,7 @@ class Level():
 
 	def getDistance(self,a,b):
 		dx = a[0] - b[0]
-		dy = a[1] - b[0]
+		dy = a[1] - b[1]
 		return math.sqrt(dx*dx+dy*dy)
 
 	def inList(self,l,i):
@@ -126,13 +126,16 @@ class Level():
 
 		return False
 
-	def lookForSlowest(self,l):
-                currentBiggest =0
+	def lookForFastest(self,l):
+                currentSmallest =0
+                bestNode = None
+                if len(l)==1:
+                        return l[0]
                 for i in l:
-                        if i>currentBiggest:
-                                currentBiggest =i
-                        
-                return currentBiggest
+                        if i.costSoFar<currentSmallest or currentSmallest==0:
+                                currentSmallest =i.costSoFar
+                                bestNode = i
+                return bestNode
 
 
 	def findPath(self,start,goal):
@@ -143,7 +146,7 @@ class Level():
 		while len(openList) >0:
 
 			#sorted(openList,key=lambda i: i.totalCost)
-			currentNode = self.lookForSlowest(openList) #only use node with lowest cost
+			currentNode = self.lookForFastest(openList) #only use node with lowest cost
 			if currentNode.pos==goal:
 				path = []
 				while currentNode.parent != None:#goes until reaches the start
@@ -168,8 +171,7 @@ class Level():
 					#print 'solid'
 					continue
 				tilePos = (x+dx,y+dy)
-				costSoFar = currentNode.costSoFar + self.getDistance(currentNode.pos,tilePos)
-				costSoFar*=tile.getSpeed()
+				costSoFar = currentNode.costSoFar + (self.getDistance(currentNode.pos,tilePos)+tile.getSpeed())
 				distanceToEnd = self.getDistance(tilePos,goal)
 				node = Node(tilePos,currentNode,costSoFar,distanceToEnd)
 				if self.inList(closedList,tilePos) and costSoFar >= node.costSoFar: #checks if node has already been used,or if you are going backwards
