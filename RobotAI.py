@@ -56,7 +56,6 @@ class RobotAI(Entity.Entity):
 		xx = self.centreX >>5
 		yy = self.centreY >>5
 
-
 		if self.ticks%30==0:
 			if self.level.hasAStarWorker:
 				self.level.requestAStar(0,(xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
@@ -64,18 +63,17 @@ class RobotAI(Entity.Entity):
 				self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 
 		if self.path != None:
-			if len(self.path) > 0 :
-				pos = self.path[len(self.path)-1].pos
-				if xx < pos[0]:
-					xa=1
-				if yy < pos[1]:
-					ya=1
-				if xx > pos[0]:
-					xa=-1
-				if yy > pos[1]:
-					ya=-1
-			else:
-				print "You have arived!"
+		
+                        pos = self.path.pos
+                        if xx < pos[0]:
+                                xa=1
+                        if yy < pos[1]:
+                                ya=1
+                        if xx > pos[0]:
+                                xa=-1
+                        if yy > pos[1]:
+                                ya=-1
+			
 
 
 		if xa != 0 or ya != 0:
@@ -95,6 +93,6 @@ class RobotAI(Entity.Entity):
 
                 if self.isSwimming:
                         source_area = pygame.Rect((0,0), (self.img.get_width(), self.img.get_height()/2))
-                        screen.blit(self.img,(self.x-xoff+8,self.y-yoff+32),source_area)
+                        screen.blit(self.img,(self.x-xoff+16,self.y-yoff+48),source_area)
                 else:
-                        screen.blit(self.img, (self.x-xoff+8,self.y-yoff))
+                        screen.blit(self.img, (self.x-xoff+16,self.y-yoff+16))
