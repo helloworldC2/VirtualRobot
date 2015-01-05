@@ -142,23 +142,26 @@ class Level():
 		openList = []
 		closedList = []
 		currentNode = Node(start,None,0,self.getDistance(start,goal))
+		del start
 		openList.append(currentNode)
 		while len(openList) >0:
-
-			#sorted(openList,key=lambda i: i.totalCost)
 			currentNode = self.lookForFastest(openList) #only use node with lowest cost
-			if currentNode.pos==goal:
+			if currentNode.pos == goal:
+			#if len(closedList)>=20 or currentNode.pos == goal:
+                                print len(closedList)
+                                print "open",len(openList)
 				path = []
 				while currentNode.parent != None:#goes until reaches the start
 					path.append(currentNode)
 					currentNode = currentNode.parent
-				openList = []
-				closedList = []
-				return path
+				del openList
+				del closedList
+				print path[len(path)-1].pos
+				return path[len(path)-1]
 			openList.remove(currentNode)
 			closedList.append(currentNode)
 			for i in range(9):
-				if i==4:
+				if i==4 or i==0 or i==2 or i==6 or i==8:
 					continue#ignore current tile
 				x = currentNode.pos[0]
 				y  = currentNode.pos[1]
