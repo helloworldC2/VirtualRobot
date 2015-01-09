@@ -3,6 +3,7 @@ import pygame
 import Tile
 import Keyboard
 import Robot_Skin_selector
+import VRClient
 
 
 class Player(Entity.Entity):
@@ -65,6 +66,7 @@ class Player(Entity.Entity):
 
 		if xa != 0 or ya != 0:
 			self.isMoving = not self.move(xa, ya)
+			VRClient.move(self.x,self.y)
 		else:
 			self.isMoving = False
 
