@@ -70,10 +70,12 @@ class Level():
 		for x in range(self.width):
                         for y in range(self.height):
                                 if self.getTile(x,y).id== 5 and self.ticks%random.randint(1,10000)==0:
-                                        self.setTile(x,y,Tile.greenlight)
-                                        self.souroundingTiles(x,y,Tile.redlight,Tile.greenlight)           
-                                                        
+                                        self.setTile(x,y,Tile.amberlight)
+                                        self.souroundingTiles(x,y,Tile.redlight,Tile.amberlight)           
                                         #self.sendChangeToWorker(x,y,Tile.greenlight)
+                                if self.getTile(x,y).id== 9 and self.ticks%random.randint(1,10000)==0:
+                                        self.setTile(x,y,Tile.greenlight)
+                                        self.souroundingTiles(x,y,Tile.amberlight,Tile.greenlight)
                                 if self.getTile(x,y).id== 6 and self.ticks%random.randint(1,10000)==0:
                                         self.setTile(x,y,Tile.redlight)
                                         self.souroundingTiles(x,y,Tile.greenlight,Tile.redlight)
@@ -170,7 +172,7 @@ class Level():
 				tile = self.getTile(x+dx,y+dy)
 				if tile == None or tile == Tile.void:
 					continue
-				if tile.isSolid:
+				if tile.isSolid and not tile.id == 9:
 					#print 'solid'
 					continue
 				tilePos = (x+dx,y+dy)
