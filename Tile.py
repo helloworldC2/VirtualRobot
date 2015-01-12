@@ -4,7 +4,7 @@ tiles = []
 
 class Tile(object):
 
-	
+
 
 	def __init__(self,iD,char,imagePath):
 		self.id = iD
@@ -13,6 +13,7 @@ class Tile(object):
 		self.img = pygame.transform.scale(self.img, (32, 32))
 		self.isSolid = False
 		self.speed = 1.0
+		self.children = []
 		tiles.append(self)
 
 	def render(self,screen,x,y):
@@ -73,7 +74,5 @@ def getID(char):
                 else:
                          if t.char == char:
                                  return t.id
-                
-        return 0 
 
-
+        return 0
