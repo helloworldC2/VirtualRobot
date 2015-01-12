@@ -87,10 +87,3 @@ def getHighScores():
 
     bubbleSort(scores,names,len(scores)-1)
     return [names,scores]
-
-
-postScore("George",6000)
-postScore("Adam",6000)
-postScore("George",6000)
-postScore("George",6000)
-postScore("George",6000)
