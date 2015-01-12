@@ -1,9 +1,0 @@
-import cursor
-from cursor import *
-import pygame
-from pygame.locals import *
-import sys
-import game
-import gui
-
-print __name__
