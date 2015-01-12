@@ -35,6 +35,14 @@ class Tile(object):
 
 	def getId(self):
 		return self.id
+	def getChildren(self):
+                return self.children
+        def setChild(self,child):
+                self.children.append(child)
+        def hasChildren(self):
+                if len(self.children)==0:
+                        return False
+                return True
 
 void = Tile(0,"v","tiles/void.png")
 grass = Tile(1,"g","tiles/grass.png")
@@ -58,9 +66,14 @@ Treasure4 = Tile(12,"p","tiles/start.png")
 
 
 def getID(char):
-	for t in tiles:
-		if t.char == char:
-			return t.id
+        for t in tiles:
+                rand=random.randrange(0,100)
+                if rand == 0 and t.hasChildren():
+                         return t.getChildren()[0].id
+                else:
+                         if t.char == char:
+                                 return t.id
+                
         return 0 
 
 
