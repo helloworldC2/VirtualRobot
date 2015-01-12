@@ -13,6 +13,7 @@ class Tile(object):
 		self.img = pygame.transform.scale(self.img, (32, 32))
 		self.isSolid = False
 		self.speed = 1.0
+		self.children = []
 		tiles.append(self)
 
 	def render(self,screen,x,y):
