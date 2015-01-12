@@ -49,7 +49,7 @@ class Level():
 				y+=1
 				continue
 			try:
-				self.setTile(x,y,Tile.tiles[Tile.getId(i)])
+				self.setTile(x,y,Tile.tiles[Tile.getID(i)])
 			except:
 				pass
 			x+=1
