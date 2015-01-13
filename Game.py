@@ -75,7 +75,7 @@ def menu1(canvas):
         r = startButton.get_rect()
         #print (r.width,r.height,r.x)
 
-        sound = 0
+        sound = 1
         skin = 0
         ran = ""
 
