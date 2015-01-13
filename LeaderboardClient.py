@@ -69,7 +69,7 @@ def bubbleSort(l,s,n):
         return l
     return bubbleSort(l,s,n-1)
 
-"""Fetches list of scores from database
+"""Fetches and sorts list of scores from database
 @Params:
         None
 @Return:
