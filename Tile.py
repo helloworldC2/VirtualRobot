@@ -64,6 +64,7 @@ Treasure0 = Tile(10,"z","tiles/start.png")
 Treasure2 = Tile(11,"x","tiles/start.png")
 Treasure3 = Tile(11,"y","tiles/start.png")
 Treasure4 = Tile(12,"p","tiles/start.png")
+grass.setChild(sand)
 
 
 def getID(char):
