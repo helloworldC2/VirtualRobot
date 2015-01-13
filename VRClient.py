@@ -11,5 +11,4 @@ sock = socket.socket(socket.AF_INET, # Internet
 
 def move(x,y):
     data = str(x)+","+str(y)
-    print data
     sock.sendto(data, (UDP_IP, UDP_PORT))
