@@ -73,7 +73,7 @@ def bubbleSort(l,s,n):
 @Params:
         None
 @Return:
-        scoresAndNames(list[names(list),scores(list)])
+        scoresAndNames[names(list),scores(list)](list)
 """
 def getHighScores():
     res = client.list('Leaderboard')
