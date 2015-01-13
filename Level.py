@@ -163,7 +163,7 @@ class Level():
                 a(vec2): first point
                 b(vec2): second point
         @Return:
-                distance(double): distance between a -> b
+                distance(double): distance between a and b
         """
 	def getDistance(self,a,b):
 		dx = a[0] - b[0]
