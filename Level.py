@@ -31,7 +31,12 @@ class Level():
 ##		t.start()
 
 
-        """Populates the tiles list to hold the level data."""
+        """Populates the tiles list to hold the level data.
+        @Params:
+                path(string): path to level file
+        @Return:
+                None
+        """
         def loadLevelFromFile(self,path):
 		levelF = open(path,'r')
 		data = levelF.read()
@@ -53,14 +58,25 @@ class Level():
 			except:
 				pass
 			x+=1
+                print self.tiles
 
-	"""Generates a random level"""
+	"""Generates a random level
+        @Params:
+                None
+        @Return:
+                None
+        """
 	def generateLevel(self):
                 for x in range(self.width):
                         for y in range(self.height):
                                 self.tiles[x+(y*self.width)] = random.randint(1,4)
 
-	"""Updates the tiles and entities"""
+	"""Updates the tiles and entities
+        @Params:
+                None
+        @Return:
+                None
+        """
 	def tick(self):
                 self.ticks+=1
                 for e in self.entities:
@@ -81,7 +97,14 @@ class Level():
                                         self.souroundingTiles(x,y,Tile.greenlight,Tile.redlight)
                                         #self.sendChangeToWorker(x,y,Tile.redlight)
 
-
+        """recursively sets all identical surrounding tiles
+        to a new tile
+        @Params:
+                x(int): x co-ordinate of starting tile
+                y(int): y co-ordinate of starting tile
+                get(tile): tile to be changed
+                set(tile): tile to set
+        """
         def souroundingTiles(self,x,y, get,set):
                 for i in range(9):
                         dx = (i % 3) -1
@@ -89,11 +112,15 @@ class Level():
                         if self.getTile(x+dx,y+dy).id== get.id:
                                 self.setTile(x, y, set)
                                 self.souroundingTiles(x+dx,y+dy,get,set)
-                return False
+
                 
         """Renders tiles and entities
         @Params:
-
+                screen(pygame.surface): pygame surface to draw on to
+                xoff(int): x offset of the objects to render
+                yoff(int): y offset of the objects to render
+        @Return:
+                None
         """
 	def render(self,screen,xoff,yoff):
 
@@ -104,30 +131,63 @@ class Level():
                 for e in self.entities:
                         e.render(screen,xoff,yoff)
 
-        """"""
+        """changes to tile in level.tiles at index x+(y*level.width) to
+           tile.id
+        @Params:
+                x(int): x position of tile
+                y(int): y position of tile
+                tile(Tile): tile to set
+        @Return:
+                None
+        """
 	def setTile(self,x, y, tile):
                 if x < 0 or y < 0 or x >= self.width or y >= self.height:
 			return
 		self.tiles[x+(y*self.width)] = tile.id
 
+        """gets the tile  form level.tiles
+        @Params:
+                x(int): x position of tile
+                y(int): y position of tile
+        @Return:
+                tile(Tile)
+        """
 	def getTile(self,x,y):
 
 		if 0 > x or x >= self.width or 0 > y or y >= self.height:
 			return Tile.void
 		return Tile.tiles[self.tiles[x + y * self.width]]
 
+        """gets distance between two points
+        @Params:
+                a(vec2): first point
+                b(vec2): second point
+        @Return:
+                distance(double): distance between a -> b
+        """
 	def getDistance(self,a,b):
 		dx = a[0] - b[0]
 		dy = a[1] - b[1]
 		return math.sqrt(dx*dx+dy*dy)
-
+	"""returns true if i is in list l
+        @Params:
+                l(list): list to check
+                i(object): object to look for
+        @Return:
+                inList(boolean): true if i is in l
+        """
 	def inList(self,l,i):
 		for node in l:
 			if node.pos == i:
 				return True
 
 		return False
-
+        """gets the best option from list l
+        @Params:
+                l(list): list of nodes
+        @Return:
+                bestNode(Node): node with lowest cost fo far
+        """
 	def lookForFastest(self,l):
                 currentSmallest =0
                 bestNode = None
@@ -139,7 +199,13 @@ class Level():
                                 bestNode = i
                 return bestNode
 
-
+        """finds the fastest path between two points
+        @Params:
+                start(vec2): starting point
+                goal(vec2): end point
+        @Return:
+                path(Node): next node to move to
+        """
 	def findPath(self,start,goal):
 		openList = []
 		closedList = []
@@ -190,6 +256,12 @@ class Level():
 		print "No path :("
 		return None
 
+        """sends tiles to A* worker
+        @Params:
+                None
+        @Params:
+                None
+        """
 	def sendTilesToAStarWorker(self):
 		self.s.listen(self.workers)	#Listens for (n) number of client connections
 		print 'Waiting for client...'
@@ -206,7 +278,15 @@ class Level():
 			conn.sendto(arraystring , self.addr_list[i][1])	#Sends array string
 			print 'Tiles sent to worker'
 		self.hasAStarWorker = True
-		
+
+	"""sends updates to A* workers
+        @Params:
+                x(int): x pos of tile
+                y(int): y pos of tile
+                tile(Tile): tile that has changed
+        @Return:
+                None
+        """
         def sendChangeToWorker(self,x,y,tile):
                 for i in range(self.workers):	#Converts array section into string to be sent
 			data = ["c"]
@@ -215,13 +295,27 @@ class Level():
 			data.append(tile.id)
 			arraystring = repr(data)
 			self.addr_list[i][0].sendto(arraystring , self.addr_list[i][1])
-			
+
+	"""requests an update from the A* worker
+        @Params:
+                workerID(int): id of the worker
+                start(vec2): start of path
+                goal(vec2): end of path
+        @Return:
+                None
+        """
 	def requestAStar(self,workerID,start,goal):
 		arraystring = repr([start,goal])
 		worker_add = self.addr_list[workerID][0]
 		worker_add .sendto( arraystring , self.addr_list[workerID][1] )	#Sends array string
 		print 'requesting A*!'
 
+        """Listens to result from A* worker
+        @Params:
+                None
+        @Return:
+                None
+        """
 	def listenForResult(self):
 		while True:
 			for i in range(self.workers):	#Receives sorted sections from each client
