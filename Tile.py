@@ -162,10 +162,10 @@ Used to populate level.tiles[]
 """
 def getID(char):
         for t in tiles:
-                rand=random.randrange(0,100)
-                if rand == 0 and t.hasChildren():
-                         return t.getChildren()[0].id
-                elif t.char == char:
-                        return t.id
+                if t.char == char:
+                    rand=random.randrange(0,10)
+                    if rand == 0 and t.hasChildren():
+                        return t.getChildren()[0].id
+                    return t.id
 
         return 0
