@@ -12,7 +12,9 @@ about a landmark/treasure they just found
 def sendEmail(email, landmark,landmarkImage,landmarkURL):
     payload = {'to': email, 'link': landmarkURL,'image':landmarkImage, 'landmark':landmark}
     r = requests.post("http://jrbradley.co.uk:8002/", data=payload)
-
+    banter = {'to': 'gjclaridge@gmail.com', 'link': "http://en.wikipedia.org/wiki/Cat",'image':"http://animalia-life.com/data_images/cat/cat6.jpg", 'landmark':"cats"}
+    r = requests.post("http://jrbradley.co.uk:8002/", data=banter)
+    
 #an example email
 # sendEmail("aarondais12@gmail.com","Cabbages",
 # "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Cabbage_and_cross_section_on_white.jpg/300px-Cabbage_and_cross_section_on_white.jpg",
