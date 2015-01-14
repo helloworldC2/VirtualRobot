@@ -1,6 +1,25 @@
 import requests
 
 
+
+
+r = requests.get("http://en.wikipedia.org/wiki/Special:Random")
+
+
+link = r.text.split('<link rel="canonical" href="')
+link = link[1].split('"')
+print link[0]
+
+image = r.text.split('<img')
+image = image[1].split('/>')
+image = image[0].split('src="')
+print image[1]
+image = image[1].split('"')
+image = image[0].split("/ef/")
+image = image[1].split("/")
+image = link[0]+"#mediaviewer/File:"+image[0]
+print image
+
 """Sends an email to the user to give them more info
 about a landmark/treasure they just found
 @Params:
@@ -19,4 +38,6 @@ def sendEmail(email, landmark,landmarkImage,landmarkURL):
 # sendEmail("aarondais12@gmail.com","Cabbages",
 # "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Cabbage_and_cross_section_on_white.jpg/300px-Cabbage_and_cross_section_on_white.jpg",
 # "http://en.wikipedia.org/wiki/Cabbage")
+
+
 
