@@ -9,11 +9,9 @@ about a landmark/treasure they just found
         landmarkImage(string): url to image of landmark/item
         landmakerURL(string): link to page about landmark
 """
-def sendEmail(email, landmark,landmarkImage,landmarkURL):
-    payload = {'to': email, 'link': landmarkURL,'image':landmarkImage, 'landmark':landmark}
+def sendEmail(email, landmark,landmarkImage,landmarkURL,summary):
+    payload = {'to': email, 'link': landmarkURL,'image':landmarkImage, 'landmark':landmark,'summary':summary}
     r = requests.post("http://jrbradley.co.uk:8002/", data=payload)
-    banter = {'to': 'gjclaridge@gmail.com', 'link': landmarkURL,'image':landmarkImage, 'landmark':landmark}
-    r = requests.post("http://jrbradley.co.uk:8002/", data=banter)
 
 #an example email
 # sendEmail("poo@poo.com","Cabbages",
@@ -26,7 +24,7 @@ def sendEmail(email, landmark,landmarkImage,landmarkURL):
 """
 def sendRandomEmail(email):
     r = requests.get("http://en.wikipedia.org/wiki/Special:Random")
-
+    
 
     link = r.text.split('<link rel="canonical" href="')
     link = link[1].split('"')
@@ -43,9 +41,14 @@ def sendRandomEmail(email):
     image = image[1]
     #print image
 
-
+    
     title = r.text.split('"wgTitle":"')
     title = title[1].split('","')
     #print title[0]
 
-    sendEmail(email,title[0],image,link[0])
+    summary  = r.text.split("<p>")
+    summary = summary[1].split("</p>")
+    print summary[0]
+    sendEmail(email,title[0],image,link[0],summary[0])
+
+sendRandomEmail("joelbradley14@gmail.com")
