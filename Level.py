@@ -58,7 +58,7 @@ class Level():
 			except:
 				pass
 			x+=1
-                print self.tiles
+
 
 	"""Generates a random level
         @Params:
@@ -87,7 +87,7 @@ class Level():
                         for y in range(self.height):
                                 if self.getTile(x,y).id== 5 and self.ticks%random.randint(1,10000)==0:
                                         self.setTile(x,y,Tile.amberlight)
-                                        self.souroundingTiles(x,y,Tile.redlight,Tile.amberlight)           
+                                        self.souroundingTiles(x,y,Tile.redlight,Tile.amberlight)
                                         #self.sendChangeToWorker(x,y,Tile.greenlight)
                                 if self.getTile(x,y).id== 9 and self.ticks%random.randint(1,10000)==0:
                                         self.setTile(x,y,Tile.greenlight)
@@ -113,7 +113,7 @@ class Level():
                                 self.setTile(x, y, set)
                                 self.souroundingTiles(x+dx,y+dy,get,set)
 
-                
+
         """Renders tiles and entities
         @Params:
                 screen(pygame.surface): pygame surface to draw on to
@@ -127,7 +127,7 @@ class Level():
 
 		for x in range(self.width):
                         for y in range(self.height):
-                                self.getTile(x,y).render(screen,(x<<5)-xoff,(y<<5)-yoff)
+                                self.getTile(x,y).render(self,screen,(x<<5)-xoff,(y<<5)-yoff,x,y)
                 for e in self.entities:
                         e.render(screen,xoff,yoff)
 
@@ -216,15 +216,13 @@ class Level():
 			currentNode = self.lookForFastest(openList) #only use node with lowest cost
 			if currentNode.pos == goal:
 			#if len(closedList)>=20 or currentNode.pos == goal:
-                                print len(closedList)
-                                print "open",len(openList)
+
 				path = []
 				while currentNode.parent != None:#goes until reaches the start
 					path.append(currentNode)
 					currentNode = currentNode.parent
 				del openList
 				del closedList
-				print path[len(path)-1].pos
 				return path[len(path)-1]
 			openList.remove(currentNode)
 			closedList.append(currentNode)
