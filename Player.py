@@ -16,6 +16,7 @@ class Player(Entity.Entity):
 		self.username =username
 		self.isSwimming = False
 		self.isMoving = False
+		self.foundTreasure = False
 		SkinTP = Robot_Skin_selector.selskin()
 		self.img = pygame.image.load(SkinTP)
 		self.basicFont = pygame.font.SysFont(None, 32)
@@ -74,6 +75,13 @@ class Player(Entity.Entity):
 			self.isSwimming = True
 		else:
 			self.isSwimming = False
+	       #if self.getTileUnder().getId() == Tile.landmark1.getId()or Tile.landmark2.getId()or Tile.landmark3.getId():
+			#self.Treasure = True
+               #else:
+			#self.Treasure = False
+               #if self.Treasure == True:
+                      #  pass
+
 
 	
 

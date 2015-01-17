@@ -147,12 +147,14 @@ start1 = Tile(7,"S","tiles/start.png")
 start2 = Tile(8,"R","tiles/start.png")
 amberlight = Tile(9,"m","tiles/amberlight.png")
 amberlight.setSolid(True)
-Treasure0 = Tile(10,"z","tiles/start.png")
-Treasure2 = Tile(11,"x","tiles/start.png")
-Treasure3 = Tile(12,"y","tiles/start.png")
-Treasure4 = Tile(13,"p","tiles/start.png")
-grass.setChild(sand)
-
+Treasure1 = Tile(10,"z","tiles/TreasureChest.png")
+Treasure2 = Tile(11,"x","tiles/sandT.png")
+Treasure3 = Tile(12,"y","tiles/waterT.png")
+landmark1 = Tile(13,"X","tiles/waterLM.png")
+landmark2= Tile(14,"Y","tiles/sandLM.png")
+landmark3  = Tile(15,"P","tiles/grassLM.png")
+grass2  = Tile(16,"P","tiles/grass2.png")
+grass.setChild(grass2)
 """gets the tile id from the tiles char.
 Used to populate level.tiles[]
 @Params:

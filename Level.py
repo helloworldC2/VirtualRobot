@@ -58,8 +58,7 @@ class Level():
 			except:
 				pass
 			x+=1
-                print self.tiles
-
+               
 	"""Generates a random level
         @Params:
                 None
