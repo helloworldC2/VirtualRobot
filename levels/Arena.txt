@@ -1,6 +1,6 @@
 32,32@
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
-a7wwwwwssssssssssssssssssssswwwa;
+aSwwwwwssssssssssssssssssssswwwa;
 awwwwwwsssaaaasssssssssssssswwwa;
 awwwwwssssawgrggggggggggsswwwwsa;
 awwwwsssssawgrgggggggggggwwwwssa;
@@ -29,6 +29,6 @@ agggggwwwgggggaaaaaggggggwwwggga;
 agggwwwwggggggggggggggggggwwwgga;
 agwwwwwggggggggggggggggggggwwwwa;
 awwwwgggggggggggggggggggggggwwwa;
-awwggggggggggggggggggggggggggw8a;
+awwggggggggggggggggggggggggggwRa;
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
 $
