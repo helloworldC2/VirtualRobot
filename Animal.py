@@ -14,7 +14,7 @@ class Animal(Entity.Entity):
 		self.y = y
 		self.isSwimming = False
 		self.isMoving = False
-		self.img = pygame.image.load("robot.png")
+		self.img = pygame.image.load("animals/animalPlaceholder.png")
 		self.basicFont = pygame.font.SysFont(None, 32)
 
 	def hasCollided(self,xa, ya):

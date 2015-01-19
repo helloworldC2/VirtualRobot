@@ -17,7 +17,7 @@ def sendEmail(email, landmark,landmarkImage,landmarkURL,summary):
     print r.text
 
 #an example email
-# sendEmail("poo@poo.com","Cabbages",
+# sendEmail("name@email.com","Cabbages",
 # "http://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Cabbage_and_cross_section_on_white.jpg/300px-Cabbage_and_cross_section_on_white.jpg",
 # "http://en.wikipedia.org/wiki/Cabbage")
 

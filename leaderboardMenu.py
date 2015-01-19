@@ -9,7 +9,7 @@ import LeaderboardClient
 
 
 def leaderboardMenu(display):
-    bg = pygame.image.load("wallpaper.jpg").convert_alpha()
+    bg = pygame.image.load("menu/wallpaper.jpg").convert_alpha()
     back = pygame.image.load("buttons/back.png").convert_alpha()
     font = pygame.font.Font(None, 30)
     stringsToRender = []

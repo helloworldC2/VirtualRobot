@@ -8,8 +8,8 @@ import Game
 
 
 def creditMenu(display):
-    bg = pygame.image.load("wallpaper.jpg")
-    rollingCredit = pygame.image.load("rolling.png").convert_alpha()
+    bg = pygame.image.load("menu/wallpaper.jpg")
+    rollingCredit = pygame.image.load("menu/rolling.png").convert_alpha()
     back = pygame.image.load("buttons/back.png").convert_alpha()
     
     bX = 10

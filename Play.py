@@ -7,11 +7,11 @@ import Game
 import gui
 
 def playMenu(display) :
-    bg = pygame.image.load("wallpaper.jpg")
+    bg = pygame.image.load("menu/wallpaper.jpg")
     #bg = pygame.transform.scale(bg,(1107,700))
-    bgpart = pygame.image.load("bgpart.jpg")
+    bgpart = pygame.image.load("menu/bgpart.jpg")
     
-    robot = pygame.image.load("robot.png").convert_alpha()
+    robot = pygame.image.load("robots/robot.png").convert_alpha()
     robot = pygame.transform.scale(robot,(150,150))
     ai = pygame.image.load("buttons/AI.png").convert_alpha()
     single = pygame.image.load("buttons/Single.png").convert_alpha()

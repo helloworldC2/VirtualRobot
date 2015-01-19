@@ -15,7 +15,7 @@ class RobotAI(Entity.Entity):
 		self.destination = destination
 		self.isSwimming = False
 		self.isMoving = False
-		self.img = pygame.image.load("robot.png")
+		self.img = pygame.image.load("robots/robot.png")
 		self.basicFont = pygame.font.SysFont(None, 32)
 		self.path = None
 

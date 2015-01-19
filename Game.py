@@ -21,7 +21,7 @@ def createCanvas() :
 
 def menu1(canvas):
 
-        Robo = ["robot.png","LF_0.png","GFront.png","robotj.png"]
+        Robo = ["robots/robot.png","robots/LF_0.png","robots/GFront.png","robots/robotj.png"]
         startButton = pygame.image.load("buttons/start.png").convert_alpha()
         leftArrow = pygame.image.load("buttons/larrow.png").convert_alpha()
         rightArrow = pygame.image.load("buttons/rarrow.png").convert_alpha()
@@ -29,13 +29,13 @@ def menu1(canvas):
         leaderboardButton = pygame.image.load("buttons/credits.png").convert_alpha()
         closeButton = pygame.image.load("buttons/exit.png").convert_alpha()
 
-        helloWorld = pygame.image.load("VR.png").convert_alpha()
-        robot = pygame.image.load("robot.png").convert_alpha()
+        helloWorld = pygame.image.load("menu/VR.png").convert_alpha()
+        robot = pygame.image.load("robots/robot.png").convert_alpha()
         robot = pygame.transform.scale(robot,(300,300))
 
         robot = pygame.transform.scale(robot,(200,200))
 
-        bg = pygame.image.load("wallpaper.jpg")
+        bg = pygame.image.load("menu/wallpaper.jpg")
 
         soundDisabled = pygame.image.load("buttons/soundoff.png").convert_alpha()
         soundDisabled = pygame.transform.scale(soundDisabled,(35,50))

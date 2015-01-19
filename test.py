@@ -18,13 +18,13 @@ def menu1():
         creditButton = pygame.image.load("buttons/credits.png").convert_alpha()
         closeButton = pygame.image.load("buttons/Exit.png").convert_alpha()
         
-        helloWorld = pygame.image.load("VR.png").convert_alpha()
-        robot = pygame.image.load("robot.png").convert_alpha()
+        helloWorld = pygame.image.load("menu/VR.png").convert_alpha()
+        robot = pygame.image.load("robots/robot.png").convert_alpha()
         robot = pygame.transform.scale(robot,(300,300))
 
         robot = pygame.transform.scale(robot,(200,200))
 
-        bg = pygame.image.load("wallpaper.jpg")
+        bg = pygame.image.load("menu?wallpaper.jpg")
         bg = pygame.transform.scale(bg,(1107,700))
 
         soundDisabled = pygame.image.load("buttons/soundoff.png").convert_alpha()
