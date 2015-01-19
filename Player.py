@@ -1,3 +1,4 @@
+import math
 import Entity
 import pygame
 import Tile
@@ -8,7 +9,7 @@ import VRClient
 
 class Player(Entity.Entity):
 
-	
+
 	def __init__(self,level,username, x, y):
 		super(Player,self).__init__(level,x,y)
 		self.x = x
@@ -18,8 +19,9 @@ class Player(Entity.Entity):
 		self.isMoving = False
 		self.foundTreasure = False
 		SkinTP = Robot_Skin_selector.selskin()
-		self.img = pygame.image.load(SkinTP)
+		self.img = [pygame.image.load("robots/GFront.png"),pygame.image.load("robots/GBack.png"),pygame.image.load("robots/GSide.png"),pygame.transform.flip(pygame.image.load("robots/GSide.png"),True,False)]
 		self.basicFont = pygame.font.SysFont(None, 32)
+
 
 
 	def hasCollided(self,xa, ya):
@@ -27,12 +29,12 @@ class Player(Entity.Entity):
 		xMax = 43
 		yMin = 48
 		yMax = 62
-		
-		
+
+
 		for x in range(xMin,xMax):
 			if self.isSolidTile(xa, ya, x, yMin):
 				return True
-		
+
 		for x in range(xMin,xMax):
 			if self.isSolidTile(xa, ya, x, yMax):
 				return True
@@ -45,7 +47,7 @@ class Player(Entity.Entity):
 			if self.isSolidTile(xa, ya, xMax, y):
 				return True
 		return False
-	
+
 
 	def tick(self):
                 super(Player,self).tick()
@@ -55,7 +57,7 @@ class Player(Entity.Entity):
 		self.centreY= self.y+62
 		xx = self.centreX >>5
 		yy = self.centreY >>5
-		
+
 		if Keyboard.keys['w']:
 			ya=-1
 		if Keyboard.keys['s']:
@@ -83,17 +85,15 @@ class Player(Entity.Entity):
                       #  pass
 
 
-	
+
 
 	def render(self,screen,xoff,yoff):
-		
+		image = self.img[self.movingDir]
                 if self.isSwimming:
-                        source_area = pygame.Rect((0,0), (self.img.get_width(), self.img.get_height()/2))
-                        screen.blit(self.img,(self.x-xoff,self.y-yoff+32),source_area)
+                        source_area = pygame.Rect((0,0), (image.get_width(), image.get_height()/2))
+                        screen.blit(image,(self.x-xoff,self.y-yoff+32),source_area)
                 else:
-                        screen.blit(self.img, (self.x-xoff,self.y-yoff))
+                        screen.blit(image, (self.x-xoff,self.y-yoff))
    	 	text = self.basicFont.render(self.username, True, (0,0,0))
    		textpos = text.get_rect(center=(self.x-xoff+30,self.y-yoff-20))
                 screen.blit(text, textpos)
-
-

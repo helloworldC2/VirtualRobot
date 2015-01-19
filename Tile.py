@@ -128,7 +128,15 @@ class Tile(object):
                 if len(self.children)==0:
                         return False
                 return True
-
+        """returns true if the tile is the same as tile at x,y or
+        tile at x,y is solid
+        @Params:
+                level(level): the level object
+                x(int) x pos of tile
+                y(int): y pos of tile
+        @Return:
+                bool: solid or self
+        """
         def thisOrSolid(self,level,x,y):
             t = level.getTile(x,y)
             if t.isSolid:
