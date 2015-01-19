@@ -58,7 +58,7 @@ class Level():
 			except:
 				pass
 			x+=1
-               
+
 	"""Generates a random level
         @Params:
                 None
@@ -86,7 +86,7 @@ class Level():
                         for y in range(self.height):
                                 if self.getTile(x,y).id== 5 and self.ticks%random.randint(1,10000)==0:
                                         self.setTile(x,y,Tile.amberlight)
-                                        self.souroundingTiles(x,y,Tile.redlight,Tile.amberlight)           
+                                        self.souroundingTiles(x,y,Tile.redlight,Tile.amberlight)
                                         #self.sendChangeToWorker(x,y,Tile.greenlight)
                                 if self.getTile(x,y).id== 9 and self.ticks%random.randint(1,10000)==0:
                                         self.setTile(x,y,Tile.greenlight)
@@ -112,7 +112,7 @@ class Level():
                                 self.setTile(x, y, set)
                                 self.souroundingTiles(x+dx,y+dy,get,set)
 
-                
+
         """Renders tiles and entities
         @Params:
                 screen(pygame.surface): pygame surface to draw on to
@@ -122,13 +122,13 @@ class Level():
                 None
         """
 	def render(self,screen,xoff,yoff):
-
-
-		for x in range(self.width):
-                        for y in range(self.height):
-                                self.getTile(x,y).render(self,screen,(x<<5)-xoff,(y<<5)-yoff,x,y)
-                for e in self.entities:
-                        e.render(screen,xoff,yoff)
+		if self.player != None:
+			for x in range(xoff>>5,(xoff>>5)+26):
+	                        for y in range(yoff>>5,(yoff>>5)+20):
+					#print x,y
+                                        self.getTile(x,y).render(self,screen,(x<<5)-xoff,(y<<5)-yoff,x,y)
+	                for e in self.entities:
+	                        e.render(screen,xoff,yoff)
 
         """changes to tile in level.tiles at index x+(y*level.width) to
            tile.id
