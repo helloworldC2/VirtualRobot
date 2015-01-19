@@ -8,6 +8,7 @@ import namepicker
 import Player
 import Tile
 import RobotAI
+import Animal
 
 """Called when the game closes to remove level.player from server"""
 def quitGame():
@@ -70,6 +71,7 @@ def start(canvas) :
                 
     level.entities.append(RobotAI.RobotAI(level,startX,startY,(endX,endY)))
     level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
+    level.entities.append(Animal.Animal(level,random.randint(0,20),random.randint(0,20)))
 
     username = namepicker.getRandomName()
     level.player = Player.Player(level,username,x,y)
