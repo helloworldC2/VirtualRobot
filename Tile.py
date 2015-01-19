@@ -222,7 +222,14 @@ landmark1 = Tile(13,"X","tiles/waterLM.png")
 landmark2= Tile(14,"Y","tiles/sandLM.png")
 landmark3  = Tile(15,"P","tiles/grassLM.png")
 grass2  = Tile(16,"P","tiles/grass2.png")
+grass3 = Tile(17,"-","tiles/grass3.png")
+cactus = Tile(18,"-","tiles/cactus.png")
+sandbush = Tile(19,"-","tiles/sandbush.png")
+cactus.setSolid(True)
 grass.setChild(grass2)
+grass.setChild(grass3)
+sand.setChild(cactus)
+sand.setChild(sandbush)
 """gets the tile id from the tiles char.
 Used to populate level.tiles[]
 @Params:
@@ -233,9 +240,9 @@ Used to populate level.tiles[]
 def getID(char):
         for t in tiles:
                 if t.char == char:
-                    rand=random.randrange(0,10)
+                    rand=random.randrange(0,20)
                     if rand == 0 and t.hasChildren():
-                        return t.getChildren()[0].id
+                        return t.getChildren()[random.randint(0,len(t.getChildren())-1)].id
                     return t.id
 
         return 0
