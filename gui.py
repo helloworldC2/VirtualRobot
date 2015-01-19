@@ -13,16 +13,16 @@ import Animal
 """Called when the game closes to remove level.player from server"""
 def quitGame():
     client.disconnect()
-    
+
 """Called 60 times a second. Updates the games logic"""
 def tick():
     global x,y,running
     Keyboard.update(level)
     level.tick()
     level.player.tick()
-    
 
-    
+
+
 """Called as many times as possible in the main loop.
 Draws all the games graphics"""
 def render():
@@ -39,11 +39,11 @@ def render():
         yoff = ((level.height << 5) - screen.get_height())
 
     level.render(screen,xoff,yoff)
-    
+
 
     level.player.render(screen,xoff,yoff)
     pygame.display.flip()
-    
+
 
 
 def start(canvas) :
@@ -54,7 +54,7 @@ def start(canvas) :
     basicFont = pygame.font.SysFont(None, 32)
     x = random.randint(0,800)
     y = random.randint(0,600)
-    
+
 
 
     size = width, height = 800, 600
@@ -62,16 +62,16 @@ def start(canvas) :
     level = Level.Level(32,32)
     for w in range(level.width):
         for h in range(level.height):
-            if level.getTile(w,h).getId() == Tile.start1.getId(): 
+            if level.getTile(w,h).getId() == Tile.start1.getId():
                 startX = h<<5
                 startY = w<<5
-            if level.getTile(w,h).getId() == Tile.start2.getId(): 
+            if level.getTile(w,h).getId() == Tile.start2.getId():
                 endX = h<<5
                 endY = w<<5
-                
-    level.entities.append(RobotAI.RobotAI(level,startX,startY,(endX,endY)))
-    level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
-    level.entities.append(Animal.Animal(level,random.randint(0,20),random.randint(0,20)))
+
+    #level.entities.append(RobotAI.RobotAI(level,startX,startY,(endX,endY)))
+    ##level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
+    #level.entities.append(Animal.Animal(level,random.randint(0,20),random.randint(0,20)))
 
     username = namepicker.getRandomName()
     level.player = Player.Player(level,username,x,y)
@@ -105,6 +105,5 @@ def start(canvas) :
             frames=0
             ticks=0
 
-        
-    pygame.quit()
 
+    pygame.quit()

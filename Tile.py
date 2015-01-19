@@ -51,7 +51,7 @@ class Tile(object):
         """
 	def tick(self):
 		pass
-		#print self,self.isSolid
+
 
 	"""set the movement cost of the tile
         @Params:
@@ -144,6 +144,9 @@ class Tile(object):
             if t == self:
                 return True
             return False
+
+        def bump(self,level,x,y):
+            level.setTile(x,y,water)
 
 
 
