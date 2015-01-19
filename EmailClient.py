@@ -1,4 +1,5 @@
 import requests
+import random
 
 
 """Sends an email to the user to give them more info
@@ -27,8 +28,15 @@ def sendEmail(email, landmark,landmarkImage,landmarkURL,summary):
         landmark(string): name of the landmark
 """
 def sendRandomEmail(email):
-    r = requests.get("http://en.wikipedia.org/wiki/Special:RandomInCategory/Treasure_troves_in_England")
-    
+    i = random.randint(0,4)
+    if i ==0:  
+        r = requests.get("http://en.wikipedia.org/wiki/Special:RandomInCategory/Treasure_troves_in_England")
+    elif i ==1:
+        r = requests.get("http://en.wikipedia.org/wiki/Special:RandomInCategory/Treasure_troves_in_Scotland")
+    elif i ==2:
+        r = requests.get("http://en.wikipedia.org/wiki/Special:RandomInCategory/Treasure_troves_in_Wales")
+    else:
+        r = requests.get("http://en.wikipedia.org/wiki/Special:RandomInCategory/Treasure_troves_of_Medieval_Europe")
 
     link = r.text.split('<link rel="canonical" href="')
     link = link[1].split('"')
@@ -56,4 +64,6 @@ def sendRandomEmail(email):
     sendEmail(email,title[0],image,link[0],summary[0])
     return title[0]
 
+
+sendRandomEmail("joelbradley14@gmail.com")
 
