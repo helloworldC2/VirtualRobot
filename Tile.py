@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 """
 Global list of tile objects
 """
@@ -39,7 +40,7 @@ class Tile(object):
         @Return:
                 None
         """
-	def render(self,screen,x,y):
+	def render(self,level,screen,x,y,xx,yy):
 		screen.blit(self.img, (x,y))
 
         """update tile properties
@@ -129,12 +130,79 @@ class Tile(object):
                 return True
 
 
+
+
+class WaterTile(Tile):
+
+    def __init__(self,iD,char,imagePaths):
+
+        self.images = []
+        for i  in imagePaths:
+            img = pygame.image.load(i)
+            img = pygame.transform.scale(img, (32, 32))
+            self.images.append(img)
+
+        super(self.__class__, self).__init__(iD,char,imagePaths[0])
+
+    def render(self,level,screen,x,y,xx,yy):
+
+        if level.getTile(xx,yy-1)!=water and level.getTile(xx+1,yy)!=water and level.getTile(xx,yy+1)!=water and level.getTile(xx-1,yy)!=water:
+            screen.blit(self.images[1], (x,y))#surrounded an all sides
+            return
+        elif level.getTile(xx,yy-1)!=water and level.getTile(xx+1,yy)!=water and level.getTile(xx-1,yy)!=water:
+            screen.blit(self.images[5], (x,y))#surrounded top and sides
+            return
+        elif level.getTile(xx+1,yy)!=water and level.getTile(xx,yy+1)!=water and level.getTile(xx-1,yy)!=water:
+            screen.blit(pygame.transform.rotate(self.images[5], 180), (x,y))#surrounded bottom and sides
+            return
+        elif level.getTile(xx,yy-1)!=water and level.getTile(xx,yy+1)!=water and level.getTile(xx-1,yy)!=water:
+            screen.blit(pygame.transform.rotate(self.images[5], 90), (x,y))#surrounded an left top and bottom
+            return
+        elif level.getTile(xx,yy-1)!=water and level.getTile(xx+1,yy)!=water and level.getTile(xx,yy+1)!=water:
+            screen.blit(pygame.transform.rotate(self.images[5], -90), (x,y))#surrounded an right top and bottom
+            return
+        elif level.getTile(xx,yy-1)!=water and level.getTile(xx,yy+1)!=water:
+            screen.blit(pygame.transform.rotate(self.images[4], -90), (x,y))#surrounded top and bottom
+            return
+        elif level.getTile(xx-1,yy)!=water and level.getTile(xx+1,yy)!=water:
+            screen.blit(self.images[4], (x,y))#surrounded left and right
+            return
+        elif level.getTile(xx,yy-1)!=water and level.getTile(xx-1,yy)!=water:
+            screen.blit(self.images[2], (x,y))#top left
+            return
+        elif level.getTile(xx,yy-1)!=water and level.getTile(xx+1,yy)!=water:
+            screen.blit(pygame.transform.rotate(self.images[2], -90), (x,y))#top right
+            return
+        elif level.getTile(xx,yy+1)!=water and level.getTile(xx+1,yy)!=water:
+            screen.blit(pygame.transform.rotate(self.images[2], 180), (x,y))#bottom right
+            return
+        elif level.getTile(xx,yy+1)!=water and level.getTile(xx-1,yy)!=water:
+            screen.blit(pygame.transform.rotate(self.images[2], 90), (x,y))#bottom left
+            return
+        elif level.getTile(xx,yy+1)!=water:
+            screen.blit(pygame.transform.rotate(self.images[3], 90),(x,y))#bottom
+            return
+        elif level.getTile(xx,yy-1)!=water:
+            screen.blit(pygame.transform.rotate(self.images[3], -90), (x,y))#top
+            return
+        elif level.getTile(xx-1,yy)!=water:
+            screen.blit(self.images[3], (x,y))#left
+            return
+        elif level.getTile(xx+1,yy)!=water:
+            screen.blit(pygame.transform.rotate(self.images[3], 180), (x,y))#right
+            return
+        else:
+            screen.blit(self.images[0], (x,y))#no suroundings
+            return
+
+
+
 """
 Tile creation
 """
 void = Tile(0,"v","tiles/void.png")
 grass = Tile(1,"g","tiles/grass.png")
-water = Tile(2,"w","tiles/water.png")
+water = WaterTile(2,"w",["tiles/water.png","tiles/waterall.png","tiles/watertl.png","tiles/waterside.png","tiles/watert2side.png","tiles/watert3side.png"])
 water.setSpeed(3)
 wall = Tile(3,"a","tiles/wall.png")
 wall.setSolid(True)
