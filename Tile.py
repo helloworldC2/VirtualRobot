@@ -129,6 +129,13 @@ class Tile(object):
                         return False
                 return True
 
+        def thisOrSolid(self,level,x,y):
+            t = level.getTile(x,y)
+            if t.isSolid:
+                return True
+            if t == self:
+                return True
+            return False
 
 
 
@@ -146,49 +153,64 @@ class WaterTile(Tile):
 
     def render(self,level,screen,x,y,xx,yy):
 
-        if level.getTile(xx,yy-1)!=water and level.getTile(xx+1,yy)!=water and level.getTile(xx,yy+1)!=water and level.getTile(xx-1,yy)!=water:
+        if not self.thisOrSolid(level,xx,yy-1) and not self.thisOrSolid(level,xx+1,yy) and not self.thisOrSolid(level,xx,yy+1) and not self.thisOrSolid(level,xx-1,yy):
+            screen.blit(level.getTile(xx,yy-1).img, (x,y))
             screen.blit(self.images[1], (x,y))#surrounded an all sides
             return
-        elif level.getTile(xx,yy-1)!=water and level.getTile(xx+1,yy)!=water and level.getTile(xx-1,yy)!=water:
+        elif not self.thisOrSolid(level,xx,yy-1) and not self.thisOrSolid(level,xx+1,yy) and not self.thisOrSolid(level,xx-1,yy):
+            screen.blit(level.getTile(xx,yy-1).img, (x,y))
             screen.blit(self.images[5], (x,y))#surrounded top and sides
             return
-        elif level.getTile(xx+1,yy)!=water and level.getTile(xx,yy+1)!=water and level.getTile(xx-1,yy)!=water:
+        elif not self.thisOrSolid(level,xx+1,yy) and not self.thisOrSolid(level,xx,yy+1) and not self.thisOrSolid(level,xx-1,yy):
+            screen.blit(level.getTile(xx-1,yy).img, (x,y))
             screen.blit(pygame.transform.rotate(self.images[5], 180), (x,y))#surrounded bottom and sides
             return
-        elif level.getTile(xx,yy-1)!=water and level.getTile(xx,yy+1)!=water and level.getTile(xx-1,yy)!=water:
+        elif not self.thisOrSolid(level,xx,yy-1) and not self.thisOrSolid(level,xx,yy+1) and not self.thisOrSolid(level,xx-1,yy):
+            screen.blit(level.getTile(xx-1,yy).img, (x,y))
             screen.blit(pygame.transform.rotate(self.images[5], 90), (x,y))#surrounded an left top and bottom
             return
-        elif level.getTile(xx,yy-1)!=water and level.getTile(xx+1,yy)!=water and level.getTile(xx,yy+1)!=water:
+        elif not self.thisOrSolid(level,xx,yy-1) and not self.thisOrSolid(level,xx+1,yy) and not self.thisOrSolid(level,xx,yy+1):
+            screen.blit(level.getTile(xx,yy-1).img, (x,y))
             screen.blit(pygame.transform.rotate(self.images[5], -90), (x,y))#surrounded an right top and bottom
             return
-        elif level.getTile(xx,yy-1)!=water and level.getTile(xx,yy+1)!=water:
+        elif not self.thisOrSolid(level,xx,yy-1) and not self.thisOrSolid(level,xx,yy+1):
+            screen.blit(level.getTile(xx,yy-1).img, (x,y))
             screen.blit(pygame.transform.rotate(self.images[4], -90), (x,y))#surrounded top and bottom
             return
-        elif level.getTile(xx-1,yy)!=water and level.getTile(xx+1,yy)!=water:
+        elif not self.thisOrSolid(level,xx-1,yy) and not self.thisOrSolid(level,xx+1,yy):
+            screen.blit(level.getTile(xx-1,yy).img, (x,y))
             screen.blit(self.images[4], (x,y))#surrounded left and right
             return
-        elif level.getTile(xx,yy-1)!=water and level.getTile(xx-1,yy)!=water:
-            screen.blit(self.images[2], (x,y))#top left
+        elif not self.thisOrSolid(level,xx,yy-1) and not self.thisOrSolid(level,xx-1,yy):
+            screen.blit(level.getTile(xx,yy-1).img, (x,y))
+            screen.blit(self.images[2], (x,y))
             return
-        elif level.getTile(xx,yy-1)!=water and level.getTile(xx+1,yy)!=water:
+        elif not self.thisOrSolid(level,xx,yy-1) and not self.thisOrSolid(level,xx+1,yy):
+            screen.blit(level.getTile(xx,yy-1).img, (x,y))
             screen.blit(pygame.transform.rotate(self.images[2], -90), (x,y))#top right
             return
-        elif level.getTile(xx,yy+1)!=water and level.getTile(xx+1,yy)!=water:
+        elif not self.thisOrSolid(level,xx,yy+1) and not self.thisOrSolid(level,xx+1,yy):
+            screen.blit(level.getTile(xx+1,yy).img, (x,y))
             screen.blit(pygame.transform.rotate(self.images[2], 180), (x,y))#bottom right
             return
-        elif level.getTile(xx,yy+1)!=water and level.getTile(xx-1,yy)!=water:
+        elif not self.thisOrSolid(level,xx,yy+1) and not self.thisOrSolid(level,xx-1,yy):
+            screen.blit(level.getTile(xx-1,yy).img, (x,y))
             screen.blit(pygame.transform.rotate(self.images[2], 90), (x,y))#bottom left
             return
-        elif level.getTile(xx,yy+1)!=water:
+        elif not self.thisOrSolid(level,xx,yy+1):
+            screen.blit(level.getTile(xx,yy+1).img, (x,y))
             screen.blit(pygame.transform.rotate(self.images[3], 90),(x,y))#bottom
             return
-        elif level.getTile(xx,yy-1)!=water:
+        elif not self.thisOrSolid(level,xx,yy-1):
+            screen.blit(level.getTile(xx,yy-1).img, (x,y))
             screen.blit(pygame.transform.rotate(self.images[3], -90), (x,y))#top
             return
-        elif level.getTile(xx-1,yy)!=water:
+        elif not self.thisOrSolid(level,xx-1,yy):
+            screen.blit(level.getTile(xx-1,yy).img, (x,y))
             screen.blit(self.images[3], (x,y))#left
             return
-        elif level.getTile(xx+1,yy)!=water:
+        elif not self.thisOrSolid(level,xx+1,yy):
+            screen.blit(level.getTile(xx+1,yy).img, (x,y))
             screen.blit(pygame.transform.rotate(self.images[3], 180), (x,y))#right
             return
         else:
