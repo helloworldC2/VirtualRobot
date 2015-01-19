@@ -19,6 +19,7 @@ class Level():
 		self.player = None
 		self.entities = []
 		self.hasAStarWorker = False
+		self.entitiesOnTiles = []
 ##		self.workers = 1	#number of worker
 ##		self.addr_list = []	#list of client addresses and connections
 ##		self.HOST = ''
@@ -77,11 +78,14 @@ class Level():
                 None
         """
 	def tick(self):
+		self.entitiesOnTiles  = []
                 self.ticks+=1
                 for e in self.entities:
-			e.tick()
+                        e.tick()
+			self.entitiesOnTiles.append((e.centreX>>5,e.centreY>>5))
 		for tile in Tile.tiles:
 			tile.tick()
+
 		for x in range(self.width):
                         for y in range(self.height):
                                 if self.getTile(x,y).id== 5 and self.ticks%random.randint(1,10000)==0:
@@ -156,6 +160,16 @@ class Level():
 		if 0 > x or x >= self.width or 0 > y or y >= self.height:
 			return Tile.void
 		return Tile.tiles[self.tiles[x + y * self.width]]
+
+
+	def canPassTile(self,t,x,y,entity):
+		if t.isSolid:
+			return False
+		for i in self.entitiesOnTiles:
+			if i == (x,y):
+				return False
+		return True
+
 
         """gets distance between two points
         @Params:
@@ -234,7 +248,7 @@ class Level():
 				tile = self.getTile(x+dx,y+dy)
 				if tile == None or tile == Tile.void:
 					continue
-				if tile.isSolid and not tile.id == 9:
+				if not self.canPassTile(tile,x+dx,y+dx,None) and not tile.id == 9:
 					#print 'solid'
 					continue
 				tilePos = (x+dx,y+dy)
