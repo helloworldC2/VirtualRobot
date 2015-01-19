@@ -126,7 +126,7 @@ class Level():
 
 		for x in range(self.width):
                         for y in range(self.height):
-                                self.getTile(x,y).render(screen,(x<<5)-xoff,(y<<5)-yoff)
+                                self.getTile(x,y).render(self,screen,(x<<5)-xoff,(y<<5)-yoff,x,y)
                 for e in self.entities:
                         e.render(screen,xoff,yoff)
 
@@ -215,15 +215,12 @@ class Level():
 			currentNode = self.lookForFastest(openList) #only use node with lowest cost
 			if currentNode.pos == goal:
 			#if len(closedList)>=20 or currentNode.pos == goal:
-                                print len(closedList)
-                                print "open",len(openList)
 				path = []
 				while currentNode.parent != None:#goes until reaches the start
 					path.append(currentNode)
 					currentNode = currentNode.parent
 				del openList
 				del closedList
-				print path[len(path)-1].pos
 				return path[len(path)-1]
 			openList.remove(currentNode)
 			closedList.append(currentNode)
