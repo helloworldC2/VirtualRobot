@@ -146,7 +146,8 @@ class Tile(object):
             return False
 
         def bump(self,level,x,y):
-            level.setTile(x,y,water)
+            pass
+            #level.setTile(x,y,water)
 
 
 

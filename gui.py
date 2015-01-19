@@ -84,26 +84,31 @@ def start(canvas) :
     timepertick = 1./FPS
     frames = 0
     ticks = 0
-
+    clock  = pygame.time.Clock()
     while Keyboard.running:
+        #doesn't work on pi, but better on pc
+        # now = time.time()
+        # delta += (now - lastTime) / timepertick
+        # lastTime = now
+        #
+        # while delta >= 1:
+        #     ticks+=1
+        #     tick();
+        #     delta -= 1;
+        #
+        # frames+=1
+        # render()
+        #
+        # if time.time() - lastTimer >= 0:
+        #     lastTimer+=1
+        #     pygame.display.set_caption("Frames:"+ str(frames) +" ticks:"+str(ticks))
+        #     frames=0
+        #     ticks=0
 
-        now = time.time()
-        delta += (now - lastTime) / timepertick
-        lastTime = now
-
-        while delta >= 1:
-            ticks+=1
-            tick();
-            delta -= 1;
-
-        frames+=1
+        tick()
         render()
-
-        if time.time() - lastTimer >= 0:
-            lastTimer+=1
-            pygame.display.set_caption("Frames:"+ str(frames) +" ticks:"+str(ticks))
-            frames=0
-            ticks=0
+        pygame.display.set_caption("FPS:"+str(clock.get_fps()))
+        clock.tick(60)
 
 
     pygame.quit()

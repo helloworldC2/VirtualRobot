@@ -1,4 +1,4 @@
-
+import pygame
 import random
 import Tile
 import string
@@ -20,6 +20,8 @@ class Level():
 		self.entities = []
 		self.hasAStarWorker = False
 		self.entitiesOnTiles = []
+		self.hasChanged = True
+		self.tileImage = 0
 ##		self.workers = 1	#number of worker
 ##		self.addr_list = []	#list of client addresses and connections
 ##		self.HOST = ''
@@ -126,13 +128,16 @@ class Level():
                 None
         """
 	def render(self,screen,xoff,yoff):
-		if self.player != None:
-			for x in range(xoff>>5,(xoff>>5)+26):
-	                        for y in range(yoff>>5,(yoff>>5)+20):
-					#print x,y
-                                        self.getTile(x,y).render(self,screen,(x<<5)-xoff,(y<<5)-yoff,x,y)
-	                for e in self.entities:
-	                        e.render(screen,xoff,yoff)
+		if self.tileImage==0 or self.hasChanged:
+                        self.hasChanged = False
+			self.tileImage = pygame.Surface((self.width<<5,self.height<<5))
+			if self.player != None:
+				for x in range(self.width):
+		                        for y in range(self.height):
+	                                        self.getTile(x,y).render(self,self.tileImage,(x<<5),(y<<5),x,y)
+		screen.blit(self.tileImage,(-xoff,-yoff))
+	        for e in self.entities:
+	                e.render(screen,xoff,yoff)
 
         """changes to tile in level.tiles at index x+(y*level.width) to
            tile.id
@@ -147,6 +152,7 @@ class Level():
                 if x < 0 or y < 0 or x >= self.width or y >= self.height:
 			return
 		self.tiles[x+(y*self.width)] = tile.id
+		self.hasChanged = True
 
         """gets the tile  form level.tiles
         @Params:
