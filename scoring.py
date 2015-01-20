@@ -2,10 +2,10 @@ import LeaderboardClient
 
 score = 0
 
-def implementScore()
+def implementScore():
     score += 1
 
-def happyDucks
+def happyDucks():
     LeaderboardClient.postScore(name, player)
 
 
