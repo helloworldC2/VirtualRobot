@@ -5,6 +5,7 @@ score = 0
 def implementScore()
     score += 1
 
-postScore(name, player)
+def happyDucks
+    LeaderboardClient.postScore(name, player)
 
 
