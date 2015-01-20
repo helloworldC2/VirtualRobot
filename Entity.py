@@ -11,6 +11,7 @@ class Entity(object):
 		self.ticks = 0
 		self.steps = 0
 		self.movingDir = 0
+		self.limitedToOneTile = False
 
 	def tick(self):
                 self.ticks+=1
@@ -55,6 +56,8 @@ class Entity(object):
 		lastTile = self.level.getTile((self.x + x) >>5, (self.y + y) >>5)
 		nextTile = self.level.getTile((self.x + x + xa) >>5,(self.y + y + ya) >> 5)
 		nextTile.bump(self.level,(self.x + x + xa) >>5,(self.y + y + ya) >> 5)
+		if self.limitedToOneTile and lastTile != nextTile:#like a duck on water
+			return True
 		if lastTile != nextTile and nextTile.isSolid:
 			return True
 		for i in self.level.entitiesOnTiles:
