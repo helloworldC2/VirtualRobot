@@ -145,19 +145,19 @@ class Tile(object):
                 return True
             return False
 
-        def bump(self,level,x,y):
-            if self == cactus:
-                print "Ouch!"
-                if level.player.xa>0:
-                    level.player.x-=4
-                if level.player.xa<0:
-                    level.player.x+=4
-                if level.player.ya>0:
-                    level.player.y-=4
-                if level.player.ya<0:
-                    level.player.y+=4
-            pass
-            #level.setTile(x,y,water)
+        def bump(self,level,entity,x,y):
+            if entity == level.player:    
+                    if self == cactus:
+                        print "Ouch!"
+                        if level.player.xa>0:
+                            level.player.x-=4
+                        if level.player.xa<0:
+                            level.player.x+=4
+                        if level.player.ya>0:
+                            level.player.y-=4
+                        if level.player.ya<0:
+                            level.player.y+=4
+            
 
 
 
