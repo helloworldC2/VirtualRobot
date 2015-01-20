@@ -55,11 +55,9 @@ class Animal(Entity.Entity):
 
                 if self.ticks%random.randint(1,100)==0:
                         xa = random.randint(-4,4)
-                        ya = random.randint(-4,4)
+
                 else:
                         xa = 0
-                        ya = 0
-
 
 		if xa != 0 or ya != 0:
 			self.isMoving = not self.move(xa, ya)
