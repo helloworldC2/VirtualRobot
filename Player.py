@@ -21,6 +21,8 @@ class Player(Entity.Entity):
 		SkinTP = Robot_Skin_selector.selskin()
 		self.img = [pygame.image.load("robots/GFront.png"),pygame.image.load("robots/GBack.png"),pygame.image.load("robots/GSide.png"),pygame.transform.flip(pygame.image.load("robots/GSide.png"),True,False)]
 		self.basicFont = pygame.font.SysFont(None, 32)
+		self.xa =0
+		self.ya =0
 
 
 
@@ -51,24 +53,24 @@ class Player(Entity.Entity):
 
 	def tick(self):
                 super(Player,self).tick()
-		xa = 0
-		ya = 0
+		self.xa = 0
+		self.ya = 0
 		self.centreX= self.x+32
 		self.centreY= self.y+62
 		xx = self.centreX >>5
 		yy = self.centreY >>5
 
 		if Keyboard.keys['w']:
-			ya=-1
+			self.ya=-1
 		if Keyboard.keys['s']:
-			ya=1
+			self.ya=1
 		if Keyboard.keys['a']:
-			xa=-1
+			self.xa=-1
 		if Keyboard.keys['d']:
-			xa=1
+			self.xa=1
 
-		if xa != 0 or ya != 0:
-			self.isMoving = not self.move(xa, ya)
+		if self.xa != 0 or self.ya != 0:
+			self.isMoving = not self.move(self.xa, self.ya)
 			VRClient.move(self.x,self.y)
 		else:
 			self.isMoving = False

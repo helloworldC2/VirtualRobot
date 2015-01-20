@@ -53,7 +53,7 @@ class Duck(Animal.Animal):
         xx = self.centreX >>5
         yy = self.centreY >>5
 
-        if self.ticks%100==0:
+        if self.ticks%random.randint(1,500)==0:
             self.xa = random.randint(-1,1)
             self.ya = random.randint(-1,1)
 
