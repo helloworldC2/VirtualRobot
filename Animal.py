@@ -8,13 +8,13 @@ import random
 class Animal(Entity.Entity):
 
 
-	def __init__(self,level, x, y):
+	def __init__(self,level, x, y, imagePath):
 		super(Animal,self).__init__(level,x,y)
 		self.x = x
 		self.y = y
 		self.isSwimming = False
 		self.isMoving = False
-		self.img = pygame.image.load("animals/animalPlaceholder.png")
+		self.img = pygame.image.load(imagePath)
 		self.basicFont = pygame.font.SysFont(None, 32)
 
 	def hasCollided(self,xa, ya):
@@ -53,9 +53,12 @@ class Animal(Entity.Entity):
 		xx = self.centreX >>5
 		yy = self.centreY >>5
 
-
-		xa = random.randint(-1,1)
-		ya = random.randint(-1,1)
+                if self.ticks%random.randint(1,100)==0:
+                        xa = random.randint(-4,4)
+                        ya = random.randint(-4,4)
+                else:
+                        xa = 0
+                        ya = 0 
 
 
 		if xa != 0 or ya != 0:

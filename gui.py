@@ -71,7 +71,7 @@ def start(canvas) :
 
     #level.entities.append(RobotAI.RobotAI(level,startX,startY,(endX,endY)))
     #level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
-    #level.entities.append(Animal.Animal(level,random.randint(0,20),random.randint(0,20)))
+    level.entities.append(Animal.Animal(level,random.randint(0,200),random.randint(0,200),"animals/crab.png"))
 
     username = namepicker.getRandomName()
     level.player = Player.Player(level,username,x,y)
