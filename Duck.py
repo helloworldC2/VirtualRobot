@@ -13,7 +13,7 @@ class Duck(Animal.Animal):
         self.y = y
         self.isSwimming = False
         self.isMoving = False
-        self.img = [pygame.image.load("animals/duckfront.png"),pygame.transform.flip(pygame.image.load("animals/duckfront.png"),False,True),pygame.transform.flip(pygame.image.load("animals/duckside.png"),True,False),pygame.image.load("animals/duckside.png")]
+        self.img = [pygame.image.load("animals/duckfront.png"),pygame.transform.flip(pygame.image.load("animals/duckfront.png"),False,True),pygame.transform.rotate(pygame.image.load("animals/duckfront.png"),-90),pygame.transform.rotate(pygame.image.load("animals/duckfront.png"),90)]
         self.basicFont = pygame.font.SysFont(None, 32)
         self.xa =0
         self.ya =0
