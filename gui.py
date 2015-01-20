@@ -10,6 +10,7 @@ import Tile
 import RobotAI
 import Animal
 import Duck
+import GuiHUD
 
 """Called when the game closes to remove level.player from server"""
 def quitGame():
@@ -21,6 +22,7 @@ def tick():
     Keyboard.update(level)
     level.tick()
     level.player.tick()
+    hud.tick()
 
 
 
@@ -43,18 +45,20 @@ def render():
 
 
     level.player.render(screen,xoff,yoff)
+    hud.render(screen,basicFont)
     pygame.display.flip()
 
 
 
 def start(canvas) :
-    global screen, height, width, size, level
+    global screen, height, width, size, level,hud,basicFont
     screen = canvas
     pygame.init()
     pygame.font.init()
     basicFont = pygame.font.SysFont(None, 32)
     x = random.randint(0,800)
     y = random.randint(0,600)
+    hud = GuiHUD.GuiHUD()
 
 
 
@@ -70,7 +74,7 @@ def start(canvas) :
                 endX = h<<5
                 endY = w<<5
 
-    #level.entities.append(RobotAI.RobotAI(level,startX,startY,(endX,endY)))
+    level.entities.append(RobotAI.RobotAI(level,startX,startY,(endX,endY)))
     #level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
     level.entities.append(Animal.Animal(level,random.randint(0,20),random.randint(0,20)))
     for i in range(10):
@@ -96,28 +100,29 @@ def start(canvas) :
     clock  = pygame.time.Clock()
     while Keyboard.running:
         #doesn't work on pi, but better on pc
-        # now = time.time()
-        # delta += (now - lastTime) / timepertick
-        # lastTime = now
-        #
-        # while delta >= 1:
-        #     ticks+=1
-        #     tick();
-        #     delta -= 1;
-        #
-        # frames+=1
-        # render()
-        #
-        # if time.time() - lastTimer >= 0:
-        #     lastTimer+=1
-        #     pygame.display.set_caption("Frames:"+ str(frames) +" ticks:"+str(ticks))
-        #     frames=0
-        #     ticks=0
+         now = time.time()
+         delta += (now - lastTime) / timepertick
+         lastTime = now
+        
+         while delta >= 1:
+             ticks+=1
+             tick();
+             delta -= 1;
+        
+         frames+=1
+         render()
+        
+         if time.time() - lastTimer >= 0:
+             lastTimer+=1
+             print frames
+             pygame.display.set_caption("Frames:"+ str(frames) +" ticks:"+str(ticks))
+             frames=0
+             ticks=0
 
-        tick()
-        render()
-        pygame.display.set_caption("FPS:"+str(clock.get_fps()))
-        clock.tick(60)
+##        tick()
+##        render()
+##        pygame.display.set_caption("FPS:"+str(clock.get_fps()))
+##        clock.tick(60)
 
 
     pygame.quit()
