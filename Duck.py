@@ -1,7 +1,6 @@
 import Animal
 import pygame
 import Tile
-import Keyboard
 import random
 
 
@@ -9,7 +8,7 @@ class Duck(Animal.Animal):
 
 
     def __init__(self,level, x, y):
-        super(Duck,self).__init__(level,x,y)
+        super(Animal.Animal,self).__init__(level,x,y)
         self.x = x
         self.y = y
         self.isSwimming = False
