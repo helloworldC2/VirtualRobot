@@ -58,7 +58,6 @@ class Duck(Animal.Animal):
             self.ya = random.randint(-1,1)
 
 
-        print self.movingDir
         if self.xa != 0 or self.ya != 0:
             self.isMoving = not self.move(self.xa,self.ya)
         else:

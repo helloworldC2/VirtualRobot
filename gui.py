@@ -73,24 +73,14 @@ def start(canvas) :
     #level.entities.append(RobotAI.RobotAI(level,startX,startY,(endX,endY)))
     #level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
     #level.entities.append(Animal.Animal(level,random.randint(0,20),random.randint(0,20)))
-    dx = 0
-    dy = 0
-    while level.getTile(dx>>5,dy>>5)!=Tile.water:
-        dx = random.randint(0,level.width<<5)
-        dy = random.randint(0,level.height<<5)
-    level.entities.append(Duck.Duck(level,dx,dy))
-    dx = 0
-    dy = 0
-    while level.getTile(dx>>5,dy>>5)!=Tile.water:
-        dx = random.randint(0,level.width<<5)
-        dy = random.randint(0,level.height<<5)
-    level.entities.append(Duck.Duck(level,dx,dy))
-    dx = 0
-    dy = 0
-    while level.getTile(dx>>5,dy>>5)!=Tile.water:
-        dx = random.randint(0,level.width<<5)
-        dy = random.randint(0,level.height<<5)
-    level.entities.append(Duck.Duck(level,dx,dy))
+    for i in range(10):
+        dx = 0
+        dy = 0
+        while level.getTile(dx,dy)!=Tile.water:
+            dx = random.randint(0,level.width)
+            dy = random.randint(0,level.height)
+        level.entities.append(Duck.Duck(level,dx<<5,dy<<5))
+
 
     username = namepicker.getRandomName()
     level.player = Player.Player(level,username,x,y)
