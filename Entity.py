@@ -55,8 +55,8 @@ class Entity(object):
 	def isSolidTile(self,xa, ya, x, y):
 		lastTile = self.level.getTile((self.x + x) >>5, (self.y + y) >>5)
 		nextTile = self.level.getTile((self.x + x + xa) >>5,(self.y + y + ya) >> 5)
-		if self == self.level.player:
-			nextTile.bump(self.level,(self.x + x + xa) >>5,(self.y + y + ya) >> 5)
+		
+		nextTile.bump(self.level,self,(self.x + x + xa) >>5,(self.y + y + ya) >> 5)
 		if self.limitedToOneTile and lastTile != nextTile:#like a duck on water
 			return True
 		if lastTile != nextTile and nextTile.isSolid:
