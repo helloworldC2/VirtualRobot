@@ -14,7 +14,7 @@ import random
 
 def createCanvas() :
         pygame.init()
-        canvas = pygame.display.set_mode((800,600))
+        canvas = pygame.display.set_mode((800,600),pygame.FULLSCREEN|pygame.HWSURFACE,32)
         menu1(canvas)
         return
 
