@@ -1,9 +1,12 @@
 import LeaderboardClient
 
-score = 0
 
-def implementScore():
-    score += 1
+class Score(object):
+    def __init__(self):
+        self.score =  0
 
-def happyDucks(name):
-    LeaderboardClient.postScore(name, score)
+    def incrementScore(self):
+        self.score = self.score + 25
+
+    def happyDucks(self,name):
+        LeaderboardClient.postScore(name, self.score)
