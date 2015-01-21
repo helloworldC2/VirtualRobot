@@ -10,11 +10,13 @@ import leaderboardMenu
 import Sound
 import Robot_Skin_selector
 import random
-
+import Config
 
 def createCanvas() :
         pygame.init()
-        canvas = pygame.display.set_mode((800,600),pygame.FULLSCREEN|pygame.HWSURFACE,32)
+        Config.loadConfig()
+        #,pygame.FULLSCREEN|pygame.HWSURFACE,32
+        canvas = pygame.display.set_mode((800,600))
         menu1(canvas)
         return
 
