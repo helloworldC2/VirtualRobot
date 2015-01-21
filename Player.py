@@ -5,6 +5,7 @@ import Tile
 import Keyboard
 import Robot_Skin_selector
 import VRClient
+import scoring
 
 
 class Player(Entity.Entity):
@@ -23,6 +24,7 @@ class Player(Entity.Entity):
 		self.basicFont = pygame.font.SysFont(None, 32)
 		self.xa =0
 		self.ya =0
+		self.score = scoring.Score()
 
 
 
