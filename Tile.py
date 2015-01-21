@@ -1,5 +1,8 @@
 import pygame
 import random
+import scoring
+import Config
+import EmailClient
 
 
 """
@@ -146,17 +149,29 @@ class Tile(object):
             return False
 
         def bump(self,level,entity,x,y):
-            if entity == level.player:    
-                    if self == cactus:
-                        print "Ouch!"
-                        if level.player.xa>0:
-                            level.player.x-=4
-                        if level.player.xa<0:
-                            level.player.x+=4
-                        if level.player.ya>0:
-                            level.player.y-=4
-                        if level.player.ya<0:
-                            level.player.y+=4
+                if entity == level.player:
+                        if self == landmark1:
+                                level.setTile(x,y,Treasure3)
+                                entity.score.incrementScore()
+                                EmailClient.sendRandomEmail(Config.config['email'])
+                        if self == landmark2:
+                                level.setTile(x,y,Treasure2)
+                                entity.score.incrementScore()
+                                EmailClient.sendRandomEmail(Config.config['email'])                         
+                        if self == landmark3:
+                                level.setTile(x,y,Treasure1)
+                                entity.score.incrementScore()
+                                EmailClient.sendRandomEmail(Config.config['email'])
+                        if self == cactus:
+                                print "Ouch!"
+                                if level.player.xa>0:
+                                        level.player.x-=4
+                                if level.player.xa<0:
+                                        level.player.x+=4
+                                if level.player.ya>0:
+                                        level.player.y-=4
+                                if level.player.ya<0:
+                                        level.player.y+=4
             
 
 
@@ -271,7 +286,6 @@ cactus = Tile(18,"-","tiles/cactus.png")
 sandbush = Tile(19,"-","tiles/sandbush.png")
 cactus.setSolid(True)
 grass.setChild(grass2)
-grass.setChild(grass3)
 sand.setChild(cactus)
 sand.setChild(sandbush)
 """gets the tile id from the tiles char.
