@@ -45,7 +45,7 @@ def render():
 
 
     level.player.render(screen,xoff,yoff)
-    hud.render(screen,basicFont)
+    hud.render(screen,level,basicFont)
     pygame.display.flip()
 
 
@@ -74,9 +74,10 @@ def start(canvas) :
                 endX = h<<5
                 endY = w<<5
 
-    level.entities.append(RobotAI.RobotAI(level,startX,startY,(endX,endY)))
+   
     #level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
     level.entities.append(Animal.Animal(level,random.randint(0,20),random.randint(0,20)))
+    destinations = []
     for i in range(10):
         dx = 0
         dy = 0
@@ -84,8 +85,29 @@ def start(canvas) :
             dx = random.randint(0,level.width)
             dy = random.randint(0,level.height)
         level.entities.append(Duck.Duck(level,dx<<5,dy<<5))
+    dx = 0
+    dy = 0
+    while level.getTile(dx,dy)!=Tile.water:
+        dx = random.randint(0,level.width)
+        dy = random.randint(0,level.height)
+    destinations.append((dx<<5,dy<<5))
+    level.setTile(dx,dy,Tile.landmark1)
+    dx = 0
+    dy = 0
+    while level.getTile(dx,dy)!=Tile.sand:
+        dx = random.randint(0,level.width)
+        dy = random.randint(0,level.height)
+    destinations.append((dx<<5,dy<<5))
+    level.setTile(dx,dy,Tile.landmark2)  
+    dx = 0
+    dy = 0
+    while level.getTile(dx,dy)!=Tile.grass:
+        dx = random.randint(0,level.width)
+        dy = random.randint(0,level.height)
+    destinations.append((dx<<5,dy<<5))
+    level.setTile(dx,dy,Tile.landmark3)
 
-
+    level.entities.append(RobotAI.RobotAI(level,startX,startY,destinations))
     username = namepicker.getRandomName()
     level.player = Player.Player(level,username,x,y)
 
