@@ -8,17 +8,21 @@ import random
 class RobotAI(Entity.Entity):
 
 
+
 	def __init__(self,level, x, y,destination):
 		super(RobotAI,self).__init__(level,x,y)
 		self.x = x
 		self.y = y
-		self.destination = destination
+		self.destinations = destination
 		self.isSwimming = False
 		self.isMoving = False
 		self.img = pygame.image.load("robots/robot.png")
 		self.basicFont = pygame.font.SysFont(None, 32)
 		self.path = None
+		self.destination = self.getClosestDestination(self.destinations)
 
+        def getClosestDestination(self,d):
+                return d[0]
 	def hasCollided(self,xa, ya):
 		return False
 		xMin = 32
