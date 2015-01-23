@@ -27,7 +27,12 @@ class Player(Entity.Entity):
 		self.score = scoring.Score()
 
 
-
+        """Determins if the entity has collided
+        @Params:
+                None
+        @Return:
+                hasCollided(boolean): if the entity has collided
+        """
 	def hasCollided(self,xa, ya):
 		xMin = 14
 		xMax = 43
@@ -52,7 +57,12 @@ class Player(Entity.Entity):
 				return True
 		return False
 
-
+        """Updates logic associated with entity
+        @Params:
+                None
+        @Retrun:
+                None
+        """
 	def tick(self):
                 super(Player,self).tick()
 		self.xa = 0
@@ -90,7 +100,15 @@ class Player(Entity.Entity):
 
 
 
-
+        """Renders the entity to the screen
+        @Params:
+                screen(pygame.Surface): suface to draw to
+                xoff(int): x offset of screen
+                yoff(int): y offset of screen
+        @Return:
+                None
+                
+        """
 	def render(self,screen,xoff,yoff):
 		image = self.img[self.movingDir]
                 if self.isSwimming:
