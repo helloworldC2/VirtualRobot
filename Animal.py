@@ -17,6 +17,12 @@ class Animal(Entity.Entity):
 		self.img = pygame.image.load("animals/crab.png")
 		self.basicFont = pygame.font.SysFont(None, 32)
 
+        """Determins if the entity has collided
+        @Params:
+                None
+        @Return:
+                hasCollided(boolean): if the entity has collided
+        """
 	def hasCollided(self,xa, ya):
 		xMin = 32
 		xMax = 38
@@ -42,7 +48,12 @@ class Animal(Entity.Entity):
 		return False
 
 
-
+         """Updates logic associated with entity
+        @Params:
+                None
+        @Retrun:
+                None
+        """
 	def tick(self):
 		global x,y
                 super(Animal,self).tick()
@@ -71,7 +82,15 @@ class Animal(Entity.Entity):
 			self.isSwimming = False
 
 
-
+        """Renders the entity to the screen
+        @Params:
+                screen(pygame.Surface): suface to draw to
+                xoff(int): x offset of screen
+                yoff(int): y offset of screen
+        @Return:
+                None
+                
+        """
 	def render(self,screen,xoff,yoff):
 
                 if self.isSwimming:
