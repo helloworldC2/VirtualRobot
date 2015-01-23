@@ -21,8 +21,22 @@ class RobotAI(Entity.Entity):
 		self.path = None
 		self.destination = self.getClosestDestination(self.destinations)
 
+
+        """Gets the closest treasure to robot
+        @Params:
+                d(list): list of destinations
+        @Return:
+                destination(tulple): closest treasure
+        """
         def getClosestDestination(self,d):
                 return d[0]
+
+        """Determins if the entity has collided
+        @Params:
+                None
+        @Return:
+                hasCollided(boolean): if the entity has collided
+        """
 	def hasCollided(self,xa, ya):
 		return False
 		xMin = 32
@@ -49,7 +63,12 @@ class RobotAI(Entity.Entity):
 		return False
 
 
-
+        """Updates logic associated with entity
+        @Params:
+                None
+        @Retrun:
+                None
+        """
 	def tick(self):
 		global x,y
                 super(RobotAI,self).tick()
@@ -91,8 +110,16 @@ class RobotAI(Entity.Entity):
 		else:
 			self.isSwimming = False
 
-
-
+        
+        """Renders the entity to the screen
+        @Params:
+                screen(pygame.Surface): suface to draw to
+                xoff(int): x offset of screen
+                yoff(int): y offset of screen
+        @Return:
+                None
+                
+        """
 	def render(self,screen,xoff,yoff):
 
                 if self.isSwimming:
