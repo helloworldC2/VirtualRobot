@@ -48,7 +48,7 @@ class Animal(Entity.Entity):
 		return False
 
 
-         """Updates logic associated with entity
+        """Updates logic associated with entity
         @Params:
                 None
         @Retrun:
