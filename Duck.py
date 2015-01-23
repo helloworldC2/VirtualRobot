@@ -50,7 +50,7 @@ class Duck(Animal.Animal):
         return False
 
 
-     """Updates logic associated with entity
+    """Updates logic associated with entity
         @Params:
                 None
         @Retrun:
