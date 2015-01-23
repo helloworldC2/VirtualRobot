@@ -19,6 +19,12 @@ class Duck(Animal.Animal):
         self.ya =0
         self.limitedToOneTile = True
 
+    """Determins if the entity has collided
+        @Params:
+                None
+        @Return:
+                hasCollided(boolean): if the entity has collided
+        """
     def hasCollided(self,xa, ya):
         xMin = 0
         xMax = 32
@@ -44,7 +50,12 @@ class Duck(Animal.Animal):
         return False
 
 
-
+     """Updates logic associated with entity
+        @Params:
+                None
+        @Retrun:
+                None
+        """
     def tick(self):
         global x,y
         super(Animal.Animal,self).tick()
@@ -70,7 +81,15 @@ class Duck(Animal.Animal):
             self.isSwimming = False
 
 
-
+    """Renders the entity to the screen
+        @Params:
+                screen(pygame.Surface): suface to draw to
+                xoff(int): x offset of screen
+                yoff(int): y offset of screen
+        @Return:
+                None
+                
+        """
     def render(self,screen,xoff,yoff):
         image = self.img[self.movingDir]
 
