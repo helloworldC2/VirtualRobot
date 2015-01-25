@@ -19,7 +19,8 @@ class Animal(Entity.Entity):
 		self.isMoving = False
 		self.img = pygame.image.load("animals/crab.png")
 		self.basicFont = pygame.font.SysFont(None, 32)
-		Client.sendEntity("Crab",x,y)
+		if Client.isHost == True:
+			Client.sendEntity("Crab",x,y)
 
         """Determins if the entity has collided
         @Params:

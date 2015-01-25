@@ -22,6 +22,7 @@ print "UDP target port:", UDP_PORT
 
 isHost = False
 isWaiting = True
+isServerReady = False
 
 sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
@@ -43,7 +44,7 @@ def getPacket(data):
 	return iD
 
 def parsePacket(data,addr):
-	global timeLast,username,isWaiting,isHost
+	global timeLast,username,isWaiting,isHost,isServerReady
 	packetType = getPacket(data)
 
 	if packetType=='00':
@@ -51,6 +52,10 @@ def parsePacket(data,addr):
 		loginP = Packet.Packet00Login()
 		loginP.receivePacket(data)
 		if loginP.username != username:
+
+                        for p in players:
+                            if p.username == loginP.username:
+                                return
                         addPlayer(loginP.username,int(loginP.x),int(loginP.y))
 
                 else:
@@ -153,12 +158,13 @@ def move(x,y,direction,isSwimming):
         sendDataToServer(move.getData())
 
 def login(user,x,y):
-	global username
+	global username,isServerReady
         username  = user
         login = Packet.Packet00Login(user,x,y)
         sendDataToServer(login.getData())
         t = threading.Thread(target=waitForPacket)
         t.start()
+
 
 def disconnect():
 	disconnect = Packet.Packet01Disconnect(username)

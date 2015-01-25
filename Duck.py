@@ -21,7 +21,8 @@ class Duck(Animal.Animal):
         self.xa =0
         self.ya =0
         self.limitedToOneTile = True
-        Client.sendEntity("Duck",x,y)
+        if Client.isHost == True:
+            Client.sendEntity("Duck",x,y)
 
     """Determins if the entity has collided
         @Params:
