@@ -104,9 +104,11 @@ def populateLevel():
 
     #level.entities.append(RobotAI.RobotAI(level,startX,startY,destinations))
 
-def startServer(players):
-    subprocess.call(['java', '-jar', 'server.jar', players])
-    #subprocess.call(['javaw', '-jar', 'server.jar', players])#for no console
+def startServer(players,console):
+    if console==True:
+        subprocess.call(['java', '-jar', 'server.jar', players])#with console
+    else:
+        subprocess.call(['javaw', '-jar', 'server.jar', players])#for no console
 
 def start(canvas) :
     global screen, height, width, size, level,hud,basicFont,isMultiplayer
@@ -114,7 +116,7 @@ def start(canvas) :
     pygame.init()
     pygame.font.init()
     if False:
-        t = threading.Thread(target=startServer,args=('3',))
+        t = threading.Thread(target=startServer,args=('3',False))
         t.start()
         time.sleep(1)#bad, but oh well
         print "Server starting"
@@ -125,7 +127,7 @@ def start(canvas) :
     level = Level.Level(32,32)
     username = namepicker.getRandomName()
     level.player = Player.Player(level,username,x,y)
-    isMultiplayer = True #set to true if you want to enanble multiplayer
+    isMultiplayer = False #set to true if you want to enanble multiplayer
     if isMultiplayer == True:
         Client.login(username,x,y)
 
