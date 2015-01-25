@@ -6,6 +6,8 @@ import math
 import RobotAI
 import socket
 import threading
+import Client
+import gui
 
 
 class Level():
@@ -13,7 +15,7 @@ class Level():
 	def __init__(self,w,h):
 		self.width  = w
 		self.height = h
-		self.loadLevelFromFile("levels/Arena.txt")
+		self.tiles = []
 		#self.generateLevel()
 		self.ticks=0
 		self.player = None
@@ -41,26 +43,46 @@ class Level():
                 None
         """
         def loadLevelFromFile(self,path):
-		levelF = open(path,'r')
-		data = levelF.read()
-		x=-1
-		y=0
 
-		data = string.split(data,"@")
-		header  = string.split(data[0],",")
-		self.width = int(header[0])
-		self.height = int(header[1])
-		self.tiles = [0]*(self.width*self.height)
-		for i in data[1]:
-			if i ==';':
-				x=-1
-				y+=1
+			if Client.isHost == True and gui.isMultiplayer==True:
+				self.addTiles(path)
+				Client.sendTiles(self.tiles)
+			elif gui.isMultiplayer==True:
+				while len(self.tiles)<2:#wait for tiles from host
+					print "Waiting for tiles.."
+			else:
+				self.addTiles(path)
+
+        """Called by loadLevelFromFile depending on who is host and such
+        """
+        def addTiles(self,path):
+                levelF = open(path,'r')
+                data = levelF.read()
+                x=0
+                y=0
+
+                data = string.split(data,"@")
+                header  = string.split(data[0],",")
+                self.width = int(header[0])
+                self.height = int(header[1])
+                self.tiles = [0]*(self.width*self.height)
+                for i in data[1]:
+                        
+			if i =='\n':
 				continue
-			try:
-				self.setTile(x,y,Tile.tiles[Tile.getID(i)])
-			except:
-				pass
-			x+=1
+							
+                        if i ==';':
+                                x=0
+                                y+=1
+                                continue
+                        try:
+                                #self.setTile(x,y,Tile.tiles[Tile.getID(i)])
+				print "Tile at", x,y, "set to:",i, Tile.getID(i)
+                                self.tiles[x+(y*self.width)]=Tile.tiles[Tile.getID(i)].id
+                        except:
+                                print "Fail at",x,y
+                        x+=1
+
 
 	"""Generates a random level
         @Params:
@@ -128,7 +150,8 @@ class Level():
                 None
         """
 	def render(self,screen,xoff,yoff):
-		if self.tileImage==0 or self.hasChanged:
+
+		if self.tileImage==0 or self.hasChanged==True:
                         self.hasChanged = False
 			self.tileImage = pygame.Surface((self.width<<5,self.height<<5))
 			if self.player != None:
@@ -136,8 +159,9 @@ class Level():
 		                        for y in range(self.height):
 	                                        self.getTile(x,y).render(self,self.tileImage,(x<<5),(y<<5),x,y)
 		screen.blit(self.tileImage,(-xoff,-yoff))
-	        for e in self.entities:
-	                e.render(screen,xoff,yoff)
+
+		for e in self.entities:
+			e.render(screen,xoff,yoff)
 
         """changes to tile in level.tiles at index x+(y*level.width) to
            tile.id
@@ -149,9 +173,10 @@ class Level():
                 None
         """
 	def setTile(self,x, y, tile):
-                if x < 0 or y < 0 or x >= self.width or y >= self.height:
+                if x < 0 or y < 0 or x > self.width or y > self.height:
 			return
 		self.tiles[x+(y*self.width)] = tile.id
+		Client.setTile(tile.id,x,y)
 		self.hasChanged = True
 
         """gets the tile  form level.tiles
@@ -163,9 +188,12 @@ class Level():
         """
 	def getTile(self,x,y):
 
-		if 0 > x or x >= self.width or 0 > y or y >= self.height:
+		if x < 0 or y < 0 or x > self.width or y > self.height:
 			return Tile.void
-		return Tile.tiles[self.tiles[x + y * self.width]]
+		try:
+			return Tile.tiles[self.tiles[x + y * self.width]]
+		except IndexError:
+			return Tile.void
 
 
 	def canPassTile(self,t,x,y,entity):
@@ -241,7 +269,9 @@ class Level():
 					currentNode = currentNode.parent
 				del openList
 				del closedList
-				return path[len(path)-1]
+				if len(path) >0:
+                                        return path[len(path)-1]
+                                return True
 			openList.remove(currentNode)
 			closedList.append(currentNode)
 			for i in range(9):
@@ -270,7 +300,7 @@ class Level():
 
 
 		print "No path :("
-		return None
+		return False
 
         """sends tiles to A* worker
         @Params:
