@@ -3,6 +3,8 @@ import pygame
 import Tile
 import Keyboard
 import random
+import Client
+import gui
 
 
 class Animal(Entity.Entity):
@@ -12,10 +14,12 @@ class Animal(Entity.Entity):
 		super(Animal,self).__init__(level,x,y)
 		self.x = x
 		self.y = y
+		self.id = len(level.entities)
 		self.isSwimming = False
 		self.isMoving = False
 		self.img = pygame.image.load("animals/crab.png")
 		self.basicFont = pygame.font.SysFont(None, 32)
+		Client.sendEntity("Crab",x,y)
 
         """Determins if the entity has collided
         @Params:
@@ -72,6 +76,8 @@ class Animal(Entity.Entity):
 
 		if xa != 0 or ya != 0:
 			self.isMoving = not self.move(xa, ya)
+			if Client.isHost == True and gui.isMultiplayer==True:
+				Client.moveEntity(self.id,self.x,self.y,self.movingDir,self.isSwimming)
 		else:
 			self.isMoving = False
 
@@ -89,7 +95,7 @@ class Animal(Entity.Entity):
                 yoff(int): y offset of screen
         @Return:
                 None
-                
+
         """
 	def render(self,screen,xoff,yoff):
 

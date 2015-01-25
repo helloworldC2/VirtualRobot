@@ -29,7 +29,7 @@ class Entity(object):
                 ya(int): y movement
         @Return:
                 hasCollided(boolean): true if the entity has collided
-                
+
         """
 	def move(self,xa,ya):
 		if xa != 0 and ya != 0:
@@ -90,7 +90,7 @@ class Entity(object):
 	def isSolidTile(self,xa, ya, x, y):
 		lastTile = self.level.getTile((self.x + x) >>5, (self.y + y) >>5)
 		nextTile = self.level.getTile((self.x + x + xa) >>5,(self.y + y + ya) >> 5)
-		
+
 		nextTile.bump(self.level,self,(self.x + x + xa) >>5,(self.y + y + ya) >> 5)
 		if self.limitedToOneTile and lastTile != nextTile:#like a duck on water (not a simile)
 			return True

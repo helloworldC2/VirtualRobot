@@ -16,8 +16,8 @@ keys = {
         'l':False,
         'o':False,
         'r':False
-    
-        
+
+
 }
 cheatOn = False
 """Called for main.tick(). Updates the keys dict to hold key values"""
@@ -25,12 +25,8 @@ def update(level):
 	global running
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
-                        #quitGame()
-                        pygame.quit()
-                        sys.exit()
                         running = False
-                        print "closing down!"
-                        
+
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_w:
 				keys['w'] = True
@@ -83,6 +79,3 @@ def isCheatOn(level):
         if keys['w'] and keys['o'] and keys['r'] and keys['l']:
                 level.generateLevel()
                 print 'CHEAT TOGGLED'
-        
-			
-			

@@ -4,14 +4,23 @@ class Packet(object):
 
 	packetID =-1
 
+	def __init__(self,iD):
+		self.packetID==iD
+
 	def getID(self, data):
 		return data[:2]
 
 	def readData(self, data):
 		return data[2:len(data)]
 
-	def __init__(self,iD):
-		self.packetID==iD
+
+	def writeData(self,server):
+		server.sendDataToAllClients(self.getData())
+
+	def writeDataToServer(self,client):
+		client.sendDataToServer(self.getData())
+
+
 
 class Packet00Login(Packet):
 
@@ -33,12 +42,6 @@ class Packet00Login(Packet):
    	def getUsername(self):
    		return self.username
 
-	def writeData(self,server):
-		server.sendDataToAllClients(self.getData())
-
-	def writeDataToServer(self,client):
-		client.sendDataToServer(self.getData())
-
 
 class Packet01Disconnect(Packet):
 
@@ -57,21 +60,14 @@ class Packet01Disconnect(Packet):
    	def getUsername(self):
    		return self.username
 
-	def writeData(self,server):
-		server.sendDataToAllClients(self.getData())
-
-	def writeDataToServer(self,client):
-		client.sendDataToServer(self.getData())
-
 class Packet02Move(Packet):
 
-	def __init__(self,username="",x=0,y=0,numSteps=0,isMoving=False,movingDir=0):
+	def __init__(self,username="",x=0,y=0,movingDir=0,isSwimming=False,):
 		super(Packet02Move,self).__init__(02)
 		self.username = username
 		self.x=x
 		self.y=y
-		self.numSteps=numSteps
-		self.isMoving = isMoving
+		self.isSwimming = isSwimming
 		self.movingDir = movingDir
 
 	def receivePacket(self,data):
@@ -79,19 +75,95 @@ class Packet02Move(Packet):
 		self.username = stuff[0][2:]
 		self.x=stuff[1]
 		self.y=stuff[2]
-		self.numSteps=stuff[3]
-		self.isMoving = stuff[4]
-		self.movingDir = stuff[5]
+		self.movingDir = stuff[3]
+		self.isSwimming = stuff[4]
 
 
    	def getData(self):
-   		return "02" + self.username +','+str(int(self.x))+','+str(int(self.y))+','+str(self.numSteps)+','+str(self.isMoving)+','+str(self.movingDir)
+   		return "02" + self.username +','+str(int(self.x))+','+str(int(self.y))+','+str(self.movingDir)+','+str(self.isSwimming)
 
    	def getUsername(self):
    		return self.username
 
-	def writeData(self,server):
-		server.sendDataToAllClients(self.getData())
+class Packet03AddEntity(Packet):
 
-	def writeDataToServer(self,client):
-		client.sendDataToServer(self.getData())
+	def __init__(self,idd=0,t="",x=0,y=0):
+		super(Packet03AddEntity,self).__init__(03)
+		self.id = idd
+		self.type = t
+		self.x=x
+		self.y=y
+
+	def receivePacket(self,data):
+		stuff = string.split(data,",")
+		self.id = stuff[0][2:]
+		self.type=stuff[1]
+		self.x=stuff[2]
+		self.y=stuff[3]
+
+
+	def getData(self):
+		return "03" + str(self.id) +','+self.type+','+str(int(self.x))+','+str(int(self.y))
+
+class Packet04MoveEntity(Packet):
+
+	def __init__(self,id=0,x=0,y=0,movingDir=0,isSwimming = False):
+		super(Packet04MoveEntity,self).__init__(04)
+		self.id = id
+		self.x=x
+		self.y=y
+		self.movingDir = movingDir
+		self.isSwimming = isSwimming
+
+	def receivePacket(self,data):
+		stuff = string.split(data,",")
+		self.id = stuff[0][2:]
+		self.x=stuff[1]
+		self.y=stuff[2]
+		self.movingDir=stuff[3]
+		self.isSwimming = stuff[4]
+
+	def getData(self):
+		return "04" + str(self.id) +','+str(int(self.x))+','+str(int(self.y))+','+str(self.movingDir)+','+str(self.isSwimming)
+
+
+class Packet05SendTiles(Packet):
+
+	def __init__(self,tiles=0):
+		super(Packet05SendTiles,self).__init__(05)
+		self.tiles = tiles
+
+	def receivePacket(self,data):
+		self.tiles = data[2:]
+
+
+	def getData(self):
+		return "05" + self.getTilesString()
+
+
+	def getTilesString(self):
+		t = ""
+		for s in self.tiles:
+			t+=str(s)
+			t+=','
+
+		return t
+
+
+class Packet06UpdateTile(Packet):
+
+	def __init__(self,tile=0,x=0,y=0):
+		super(Packet06UpdateTile,self).__init__(06)
+		self.tile = tile
+		self.x = x
+		self.y = y
+
+	def receivePacket(self,data):
+		stuff = string.split(data,",")
+		self.tile = stuff[0][2:]
+		self.x=stuff[1]
+		self.y=stuff[2]
+
+
+	def getData(self):
+		return "06" +str(self.tile) + ',' + str(self.x) + ',' + str(self.y)

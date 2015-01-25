@@ -29,7 +29,20 @@ class RobotAI(Entity.Entity):
                 destination(tulple): closest treasure
         """
         def getClosestDestination(self,d):
-                return d[0]
+		print "findind dest"
+                dest = 0
+                distance = 1000000
+                for i in d:
+                        dis = self.level.getDistance((self.x,self.y),i)
+			print "distance to",i,"=",dis
+                        if dis < distance:
+                                distance = dis
+                                dest = i
+		print d
+		d.remove(dest)
+		print d
+		print "Found",dest
+                return dest
 
         """Determins if the entity has collided
         @Params:
@@ -85,18 +98,23 @@ class RobotAI(Entity.Entity):
 			else:
 				self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 
-		if self.path != None:
-		
-                        pos = self.path.pos
-                        if xx < pos[0]:
-                                xa=1
-                        if yy < pos[1]:
-                                ya=1
-                        if xx > pos[0]:
-                                xa=-1
-                        if yy > pos[1]:
-                                ya=-1
-			
+		if self.path==True:
+			self.getClosestDestination(self.destinations)
+			self.path = None
+			self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
+		if self.path != None and self.path!=True:
+
+
+                    pos = self.path.pos
+                    if xx < pos[0]:
+                            xa=1
+                    if yy < pos[1]:
+                            ya=1
+                    if xx > pos[0]:
+                            xa=-1
+                    if yy > pos[1]:
+                            ya=-1
+
 
 
 		if xa != 0 or ya != 0:
@@ -110,7 +128,7 @@ class RobotAI(Entity.Entity):
 		else:
 			self.isSwimming = False
 
-        
+
         """Renders the entity to the screen
         @Params:
                 screen(pygame.Surface): suface to draw to
@@ -118,7 +136,7 @@ class RobotAI(Entity.Entity):
                 yoff(int): y offset of screen
         @Return:
                 None
-                
+
         """
 	def render(self,screen,xoff,yoff):
 

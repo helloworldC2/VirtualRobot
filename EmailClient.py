@@ -29,7 +29,7 @@ def sendEmail(email, landmark,landmarkImage,landmarkURL,summary):
 """
 def sendRandomEmail(email):
     i = random.randint(0,4)
-    if i ==0:  
+    if i ==0:
         r = requests.get("http://en.wikipedia.org/wiki/Special:RandomInCategory/Treasure_troves_in_England")
     elif i ==1:
         r = requests.get("http://en.wikipedia.org/wiki/Special:RandomInCategory/Treasure_troves_in_Scotland")
@@ -53,7 +53,7 @@ def sendRandomEmail(email):
     image = image[1]
     #print image
 
-    
+
     title = r.text.split('"wgTitle":"')
     title = title[1].split('","')
     #print title[0]
@@ -66,4 +66,3 @@ def sendRandomEmail(email):
 
 
 #sendRandomEmail("")
-

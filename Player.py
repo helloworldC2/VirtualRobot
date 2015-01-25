@@ -6,6 +6,7 @@ import Keyboard
 import Robot_Skin_selector
 import VRClient
 import scoring
+import Client
 
 
 class Player(Entity.Entity):
@@ -84,6 +85,7 @@ class Player(Entity.Entity):
 		if self.xa != 0 or self.ya != 0:
 			self.isMoving = not self.move(self.xa, self.ya)
 			VRClient.move(self.x,self.y)
+			Client.move(self.x,self.y,self.movingDir,self.isSwimming)
 		else:
 			self.isMoving = False
 
@@ -91,12 +93,7 @@ class Player(Entity.Entity):
 			self.isSwimming = True
 		else:
 			self.isSwimming = False
-	       #if self.getTileUnder().getId() == Tile.landmark1.getId()or Tile.landmark2.getId()or Tile.landmark3.getId():
-			#self.Treasure = True
-               #else:
-			#self.Treasure = False
-               #if self.Treasure == True:
-                      #  pass
+
 
 
 
@@ -107,7 +104,7 @@ class Player(Entity.Entity):
                 yoff(int): y offset of screen
         @Return:
                 None
-                
+
         """
 	def render(self,screen,xoff,yoff):
 		image = self.img[self.movingDir]

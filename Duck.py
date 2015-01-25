@@ -2,6 +2,8 @@ import Animal
 import pygame
 import Tile
 import random
+import Client
+import gui
 
 
 class Duck(Animal.Animal):
@@ -11,6 +13,7 @@ class Duck(Animal.Animal):
         super(Animal.Animal,self).__init__(level,x,y)
         self.x = x
         self.y = y
+        self.id = len(level.entities)
         self.isSwimming = False
         self.isMoving = False
         self.img = [pygame.image.load("animals/duckfront.png"),pygame.transform.flip(pygame.image.load("animals/duckfront.png"),False,True),pygame.transform.rotate(pygame.image.load("animals/duckfront.png"),-90),pygame.transform.rotate(pygame.image.load("animals/duckfront.png"),90)]
@@ -18,6 +21,7 @@ class Duck(Animal.Animal):
         self.xa =0
         self.ya =0
         self.limitedToOneTile = True
+        Client.sendEntity("Duck",x,y)
 
     """Determins if the entity has collided
         @Params:
@@ -71,6 +75,8 @@ class Duck(Animal.Animal):
 
         if self.xa != 0 or self.ya != 0:
             self.isMoving = not self.move(self.xa,self.ya)
+            if Client.isHost == True and gui.isMultiplayer == True:
+                Client.moveEntity(self.id,self.x,self.y,self.movingDir,self.isSwimming)
         else:
             self.isMoving = False
 
@@ -88,7 +94,7 @@ class Duck(Animal.Animal):
                 yoff(int): y offset of screen
         @Return:
                 None
-                
+
         """
     def render(self,screen,xoff,yoff):
         image = self.img[self.movingDir]
