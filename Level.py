@@ -67,17 +67,16 @@ class Level():
                 self.height = int(header[1])
                 self.tiles = [0]*(self.width*self.height)
                 for i in data[1]:
-                        
+
 			if i =='\n':
 				continue
-							
+
                         if i ==';':
                                 x=0
                                 y+=1
                                 continue
                         try:
                                 #self.setTile(x,y,Tile.tiles[Tile.getID(i)])
-				print "Tile at", x,y, "set to:",i, Tile.getID(i)
                                 self.tiles[x+(y*self.width)]=Tile.tiles[Tile.getID(i)].id
                         except:
                                 print "Fail at",x,y
