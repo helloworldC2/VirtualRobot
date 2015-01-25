@@ -49,7 +49,8 @@ class Level():
 				Client.sendTiles(self.tiles)
 			elif gui.isMultiplayer==True:
 				while len(self.tiles)<2:#wait for tiles from host
-					print "Waiting for tiles.."
+					#print "Waiting for tiles.."
+					pass
 			else:
 				self.addTiles(path)
 

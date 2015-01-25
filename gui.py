@@ -115,7 +115,7 @@ def start(canvas) :
     screen = canvas
     pygame.init()
     pygame.font.init()
-    if False:
+    if False:#true if you want to run a server localy
         t = threading.Thread(target=startServer,args=('3',False))
         t.start()
         time.sleep(1)#bad, but oh well

@@ -13,8 +13,8 @@ import string
 
 
 
-#UDP_IP = "54.76.38.104"
-UDP_IP = "127.0.0.1"
+UDP_IP = "178.62.91.20"
+#UDP_IP = "127.0.0.1"
 UDP_PORT = 1331
 
 print "UDP target IP:", UDP_IP
@@ -45,6 +45,10 @@ def getPacket(data):
 
 def parsePacket(data,addr):
 	global timeLast,username,isWaiting,isHost,isServerReady
+
+        if data=="You Are Host":
+                isHost=True
+                return
 	packetType = getPacket(data)
 
 	if packetType=='00':
@@ -98,6 +102,7 @@ def parsePacket(data,addr):
                 tiles = Packet.Packet05SendTiles()
                 tiles.receivePacket(data)
                 setTiles(tiles.tiles)
+                print "Got tiles"
         elif packetType == '06' and isHost==False:
                 tile = Packet.Packet06UpdateTile()
                 tile.receivePacket(data)
