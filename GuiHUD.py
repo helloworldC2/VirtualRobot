@@ -54,6 +54,7 @@ class GuiHUD(object):
         if gui.gameOver==True:
             if pygame.mouse.get_pressed()[0]==True:
                 gui.gameOver=False
+                gui.scorePosted = False
                 Game.menu1(gui.screen)
         
                                      
