@@ -39,6 +39,7 @@ client.ping().raise_for_status()
         None
 """
 def postScore(name, score):
+    print "Posting score",name,score
     response = client.post('Leaderboard',{
       "name": name,
       "score": score

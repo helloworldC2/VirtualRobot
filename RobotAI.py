@@ -10,7 +10,7 @@ class RobotAI(Entity.Entity):
 
 
 
-	def __init__(self,level, x, y,destination):
+	def __init__(self,level, x, y,destination,speed):
 		super(RobotAI,self).__init__(level,x,y)
 		self.x = x
 		self.y = y
@@ -23,7 +23,7 @@ class RobotAI(Entity.Entity):
 		self.destination = self.getClosestDestination(self.destinations,True)
                 self.canPickUpTreasure = True
 		self.score = scoring.Score()
-		self.speed =4
+		self.speed = speed
 
         """Gets the closest treasure to robot
         @Params:

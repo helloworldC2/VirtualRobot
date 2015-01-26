@@ -18,7 +18,7 @@ import GuiHUD
 
 
 gameOver = False
-
+scorePosted = False
 """Called when the game closes to remove level.player from server"""
 def quitGame():
     print "Exiting!"
@@ -27,12 +27,15 @@ def quitGame():
 
 """Called 60 times a second. Updates the games logic"""
 def tick():
-    global x,y,running,gameOver
+    global x,y,running,gameOver,scorePosted
     Keyboard.update(level)
     if isMultiplayer==False and gameOver==False:
         if timer/60>100:
-            level.player.score.happyDucks(level.player.username)
             gameOver = True
+
+    if gameOver == True and scorePosted==False:
+        level.player.score.happyDucks(level.player.username)
+        scorePosted = True
         
     if Client.isHost == True and isMultiplayer == True:
         level.tick()
@@ -70,16 +73,6 @@ def render():
 
 
 def populateLevel():
-    for w in range(level.width):
-        for h in range(level.height):
-            if level.getTile(w,h).getId() == Tile.start1.getId():
-                startX = h<<5
-                startY = w<<5
-            if level.getTile(w,h).getId() == Tile.start2.getId():
-                endX = h<<5
-                endY = w<<5
-    #level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
-    #level.entities.append(Animal.Animal(level,random.randint(0,20),random.randint(0,20)))
     destinations = []
     for i in range(3):
         dx = 0
@@ -111,7 +104,9 @@ def populateLevel():
         destinations.append((dx<<5,dy<<5))
         level.setTile(dx,dy,Tile.landmark3)
 
-    level.entities.append(RobotAI.RobotAI(level,startX,startY,destinations))
+    if hasAI==True:
+        for i in range(numAI):
+            level.entities.append(RobotAI.RobotAI(level,random.randint(0,level.width<<5),random.randint(0,level.width<<5),destinations,difficulty))
 
 def startServer(players,console):
     if console==True:
@@ -119,12 +114,12 @@ def startServer(players,console):
     else:
         subprocess.call(['javaw', '-jar', 'server.jar', players])#for no console
 
-def start(canvas) :
-    global screen, height, width, size, level,hud,basicFont,isMultiplayer,timer
+def start(canvas,multiplayer=False,runServer=False,AI=True,nAI=1,diff=4) :
+    global screen, height, width, size, level,hud,basicFont,isMultiplayer,hasAI,numAI,difficulty,timer
     screen = canvas
     pygame.init()
     pygame.font.init()
-    if False:#true if you want to run a server localy
+    if runServer:#true if you want to run a server localy
         t = threading.Thread(target=startServer,args=('3',False))
         t.start()
         time.sleep(1)#bad, but oh well
@@ -136,7 +131,10 @@ def start(canvas) :
     level = Level.Level(32,32)
     username = namepicker.getRandomName()
     level.player = Player.Player(level,username,x,y)
-    isMultiplayer = False #set to true if you want to enanble multiplayer
+    isMultiplayer = multiplayer
+    hasAI = AI
+    numAI = nAI
+    difficulty = diff
     if isMultiplayer == True:
         Client.login(username,x,y)
 
