@@ -20,7 +20,7 @@ class RobotAI(Entity.Entity):
 		self.img = pygame.image.load("robots/robot.png")
 		self.basicFont = pygame.font.SysFont(None, 32)
 		self.path = None
-		self.destination = self.getClosestDestination(self.destinations)
+		self.destination = self.getClosestDestination(self.destinations,True)
                 self.canPickUpTreasure = True
 		self.score = scoring.Score()
 		self.speed =5
@@ -31,7 +31,7 @@ class RobotAI(Entity.Entity):
         @Return:
                 destination(tulple): closest treasure
         """
-        def getClosestDestination(self,d):
+        def getClosestDestination(self,d,remove):
 		print "findind dest"
                 dest = 0
                 distance = 1000000
@@ -42,7 +42,8 @@ class RobotAI(Entity.Entity):
                                 distance = dis
                                 dest = i
 		print d
-		d.remove(dest)
+		if remove==True:
+                        d.remove(dest)
 		print d
 		print "Found",dest
                 return dest
@@ -102,7 +103,7 @@ class RobotAI(Entity.Entity):
 				self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 
 		if self.path==True:
-			self.destination = self.getClosestDestination(self.destinations)
+			self.destination = self.getClosestDestination(self.destinations,True)
 			self.path = None
 			self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 		if self.path != None and self.path!=True:
