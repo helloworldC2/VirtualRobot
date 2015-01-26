@@ -1,9 +1,11 @@
+#import RobotAI
 import pygame
 import random
 import scoring
 import Config
 import EmailClient
 import threading
+
 
 
 """
@@ -150,32 +152,35 @@ class Tile(object):
             return False
 
         def bump(self,level,entity,x,y):
-                if entity == level.player:
+                if entity.canPickUpTreasure==True:
                         if self == landmark1:
                                 level.setTile(x,y,Treasure3)
                                 entity.score.incrementScore()
-                                t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
-                                t.start()
+                                if entity == level.player:
+                                        t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
+                                        t.start()
                         if self == landmark2:
                                 level.setTile(x,y,Treasure2)
                                 entity.score.incrementScore()
-                                t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
-                                t.start()
+                                if entity == level.player:
+                                        t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
+                                        t.start()
                         if self == landmark3:
                                 level.setTile(x,y,Treasure1)
                                 entity.score.incrementScore()
-                                t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
-                                t.start()
-                        if self == cactus:
+                                if entity == level.player:
+                                        t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
+                                        t.start()
+                        if self == cactus and entity == level.player:
                                 print "Ouch!"
-                                if level.player.xa>0:
-                                        level.player.x-=4
-                                if level.player.xa<0:
-                                        level.player.x+=4
-                                if level.player.ya>0:
-                                        level.player.y-=4
-                                if level.player.ya<0:
-                                        level.player.y+=4
+                                if entity.xa>0:
+                                        entity.x-=4
+                                if entity.xa<0:
+                                        entity.x+=4
+                                if entity.ya>0:
+                                        entity.y-=4
+                                if entity.ya<0:
+                                        entity.y+=4
 
 
 

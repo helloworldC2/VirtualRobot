@@ -12,6 +12,8 @@ class Entity(object):
 		self.steps = 0
 		self.movingDir = 0
 		self.limitedToOneTile = False
+		self.canPickUpTreasure = False
+		self.speed = 1
 
         """Updates logic associated with entity
         @Params:
@@ -38,6 +40,8 @@ class Entity(object):
 
 			return True
 
+                xa=xa*self.speed
+                ya=ya*self.speed
 		if not self.hasCollided(xa, ya):
 			if ya < 0:
 				self.movingDir = 1

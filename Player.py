@@ -25,6 +25,7 @@ class Player(Entity.Entity):
 		self.basicFont = pygame.font.SysFont(None, 32)
 		self.xa =0
 		self.ya =0
+		self.canPickUpTreasure = True
 		self.score = scoring.Score()
 
 

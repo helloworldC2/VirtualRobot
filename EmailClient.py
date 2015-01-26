@@ -60,7 +60,6 @@ def sendRandomEmail(email):
 
     summary  = r.text.split("<p>")
     summary = summary[1].split("</p>")
-    print summary[0]
     sendEmail(email,title[0],image,link[0],summary[0])
     return title[0]
 

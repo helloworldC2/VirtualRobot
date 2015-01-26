@@ -1,8 +1,9 @@
-import Entity
 import pygame
+import Entity
 import Tile
 import Keyboard
 import random
+import scoring
 
 
 class RobotAI(Entity.Entity):
@@ -20,7 +21,9 @@ class RobotAI(Entity.Entity):
 		self.basicFont = pygame.font.SysFont(None, 32)
 		self.path = None
 		self.destination = self.getClosestDestination(self.destinations)
-
+                self.canPickUpTreasure = True
+		self.score = scoring.Score()
+		self.speed =5
 
         """Gets the closest treasure to robot
         @Params:
@@ -51,11 +54,11 @@ class RobotAI(Entity.Entity):
                 hasCollided(boolean): if the entity has collided
         """
 	def hasCollided(self,xa, ya):
-		return False
-		xMin = 32
-		xMax = 38
-		yMin = 48
-		yMax = 60
+		
+		xMin = 31
+		xMax = 33
+		yMin = 59
+		yMax = 61
 
 
 		for x in range(xMin,xMax):
@@ -88,7 +91,7 @@ class RobotAI(Entity.Entity):
 		xa = 0
 		ya = 0
 		self.centreX= self.x+31
-		self.centreY= self.y+63
+		self.centreY= self.y+59
 		xx = self.centreX >>5
 		yy = self.centreY >>5
 
@@ -99,23 +102,24 @@ class RobotAI(Entity.Entity):
 				self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 
 		if self.path==True:
-			self.getClosestDestination(self.destinations)
+			self.destination = self.getClosestDestination(self.destinations)
 			self.path = None
 			self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 		if self.path != None and self.path!=True:
 
-
-                    pos = self.path.pos
-                    if xx < pos[0]:
-                            xa=1
-                    if yy < pos[1]:
-                            ya=1
-                    if xx > pos[0]:
-                            xa=-1
-                    if yy > pos[1]:
-                            ya=-1
-
-
+                        try:
+                                pos = self.path.pos
+                                if xx < pos[0]:
+                                        xa=1
+                                if yy < pos[1]:
+                                        ya=1
+                                if xx > pos[0]:
+                                        xa=-1
+                                if yy > pos[1]:
+                                        ya=-1
+                        except:
+                                print "Lost :'("
+                                pass
 
 		if xa != 0 or ya != 0:
 			self.isMoving = not self.move(xa, ya)
@@ -128,6 +132,7 @@ class RobotAI(Entity.Entity):
 		else:
 			self.isSwimming = False
 
+                
 
         """Renders the entity to the screen
         @Params:
@@ -142,6 +147,6 @@ class RobotAI(Entity.Entity):
 
                 if self.isSwimming:
                         source_area = pygame.Rect((0,0), (self.img.get_width(), self.img.get_height()/2))
-                        screen.blit(self.img,(self.x-xoff+16,self.y-yoff+48),source_area)
+                        screen.blit(self.img,(self.x-xoff,self.y-yoff+32),source_area)
                 else:
-                        screen.blit(self.img, (self.x-xoff+16,self.y-yoff+16))
+                        screen.blit(self.img, (self.x-xoff,self.y-yoff))

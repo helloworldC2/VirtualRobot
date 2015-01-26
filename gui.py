@@ -17,6 +17,7 @@ import GuiHUD
 
 
 
+gameOver = False
 
 """Called when the game closes to remove level.player from server"""
 def quitGame():
@@ -26,14 +27,21 @@ def quitGame():
 
 """Called 60 times a second. Updates the games logic"""
 def tick():
-    global x,y,running
+    global x,y,running,gameOver
     Keyboard.update(level)
+    if isMultiplayer==False:
+        if timer/60>100:
+            level.player.score.happyDucks(level.player.username)
+            gameOver = True
+        
     if Client.isHost == True and isMultiplayer == True:
         level.tick()
-    if isMultiplayer == False:
+    if isMultiplayer == False and gameOver==False:
         level.tick()
-    level.player.tick()
-    hud.tick()
+    if gameOver==False:
+        level.player.tick()
+    
+    hud.tick(timer)
 
 
 
@@ -71,9 +79,9 @@ def populateLevel():
                 endX = h<<5
                 endY = w<<5
     #level.entities.append(RobotAI.RobotAI(level,endX,endY,(startX,startY)))
-    level.entities.append(Animal.Animal(level,random.randint(0,20),random.randint(0,20)))
+    #level.entities.append(Animal.Animal(level,random.randint(0,20),random.randint(0,20)))
     destinations = []
-    for i in range(10):
+    for i in range(3):
         dx = 0
         dy = 0
         while level.getTile(dx,dy)!=Tile.water:
@@ -82,27 +90,28 @@ def populateLevel():
         level.entities.append(Duck.Duck(level,dx<<5,dy<<5))
     dx = 0
     dy = 0
-    while level.getTile(dx,dy)!=Tile.water:
-        dx = random.randint(0,level.width)
-        dy = random.randint(0,level.height)
-    destinations.append((dx<<5,dy<<5))
-    level.setTile(dx,dy,Tile.landmark1)
-    dx = 0
-    dy = 0
-    while level.getTile(dx,dy)!=Tile.sand:
-        dx = random.randint(0,level.width)
-        dy = random.randint(0,level.height)
-    destinations.append((dx<<5,dy<<5))
-    level.setTile(dx,dy,Tile.landmark2)
-    dx = 0
-    dy = 0
-    while level.getTile(dx,dy)!=Tile.grass:
-        dx = random.randint(0,level.width)
-        dy = random.randint(0,level.height)
-    destinations.append((dx<<5,dy<<5))
-    level.setTile(dx,dy,Tile.landmark3)
+    for i in range(2):
+        while level.getTile(dx,dy)!=Tile.water:
+            dx = random.randint(0,level.width)
+            dy = random.randint(0,level.height)
+        destinations.append((dx<<5,dy<<5))
+        level.setTile(dx,dy,Tile.landmark1)
+        dx = 0
+        dy = 0
+        while level.getTile(dx,dy)!=Tile.sand:
+            dx = random.randint(0,level.width)
+            dy = random.randint(0,level.height)
+        destinations.append((dx<<5,dy<<5))
+        level.setTile(dx,dy,Tile.landmark2)
+        dx = 0
+        dy = 0
+        while level.getTile(dx,dy)!=Tile.grass:
+            dx = random.randint(0,level.width)
+            dy = random.randint(0,level.height)
+        destinations.append((dx<<5,dy<<5))
+        level.setTile(dx,dy,Tile.landmark3)
 
-    #level.entities.append(RobotAI.RobotAI(level,startX,startY,destinations))
+    level.entities.append(RobotAI.RobotAI(level,startX,startY,destinations))
 
 def startServer(players,console):
     if console==True:
@@ -111,7 +120,7 @@ def startServer(players,console):
         subprocess.call(['javaw', '-jar', 'server.jar', players])#for no console
 
 def start(canvas) :
-    global screen, height, width, size, level,hud,basicFont,isMultiplayer
+    global screen, height, width, size, level,hud,basicFont,isMultiplayer,timer
     screen = canvas
     pygame.init()
     pygame.font.init()
@@ -143,7 +152,7 @@ def start(canvas) :
 
 
 
-    level.loadLevelFromFile("levels/Arena.txt")
+    level.loadLevelFromFile("levels/Newtestlevel.txt")
 
     if isMultiplayer == False:
         populateLevel()
@@ -159,6 +168,7 @@ def start(canvas) :
     timepertick = 1./FPS
     frames = 0
     ticks = 0
+    timer = 0
     clock  = pygame.time.Clock()
     while Keyboard.running:
         #doesn't work on pi, but better on pc
@@ -168,6 +178,7 @@ def start(canvas) :
 
          while delta >= 1:
              ticks+=1
+             timer+=1
              tick();
              delta -= 1;
 
