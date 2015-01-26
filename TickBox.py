@@ -54,13 +54,3 @@ class tickBox(Button.button):
             self.canv.blit(self.boxTicked,(self.x,self.y))
         pygame.display.update()
         return
-
-pygame.init()
-canvas = pygame.display.set_mode((600,600))
-t = tickBox(canvas,10,10,"email")
-t.blit()
-pygame.display.update()
-while True:
-    t.clicked() 
-
-    pygame.display.update()

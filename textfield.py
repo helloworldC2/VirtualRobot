@@ -171,15 +171,3 @@ class textField :
         return
 
 
-screen = pygame.display.set_mode((500,500))
-screen.fill((255,0,0))
-t = textField(screen,100,50,200,20,"Name",15)
-t1 = textField(screen,100,100,200,20,"email",15)
-s = t.ask()
-print s
-
-
-s = t1.ask()
-print s
-
-
