@@ -159,21 +159,21 @@ class Tile(object):
                                 if entity == level.player:
                                         t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
                                         t.start()
-                                        self.updateAI(level,x,y)
+                                self.updateAI(level,x,y)
                         if self == landmark2:
                                 level.setTile(x,y,Treasure2)
                                 entity.score.incrementScore()
                                 if entity == level.player:
                                         t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
                                         t.start()
-                                        self.updateAI(level,x,y)
+                                self.updateAI(level,x,y)
                         if self == landmark3:
                                 level.setTile(x,y,Treasure1)
                                 entity.score.incrementScore()
                                 if entity == level.player:
                                         t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
                                         t.start()
-                                        self.updateAI(level,x,y)
+                                self.updateAI(level,x,y)
                         if self == cactus and entity == level.player:
                                 print "Ouch!"
                                 if entity.xa>0:
@@ -190,10 +190,12 @@ class Tile(object):
                 for e in level.entities:
                         if e.canPickUpTreasure:     
                                 for d in e.destinations:
+                                        print d[0],x<<5, d[1],y<<5
                                         if d[0]==x<<5 and d[1]==y<<5:
                                                 e.destinations.remove(d)
                                                 print "Removed",d
-                                e.getClosestDestination(e.destinations,False)
+                                e.destination = e.getClosestDestination(e.destinations,False)
+                                print "Changed destination!"
 
 class WaterTile(Tile):
 

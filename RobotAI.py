@@ -23,7 +23,7 @@ class RobotAI(Entity.Entity):
 		self.destination = self.getClosestDestination(self.destinations,True)
                 self.canPickUpTreasure = True
 		self.score = scoring.Score()
-		self.speed =5
+		self.speed =4
 
         """Gets the closest treasure to robot
         @Params:
@@ -32,20 +32,17 @@ class RobotAI(Entity.Entity):
                 destination(tulple): closest treasure
         """
         def getClosestDestination(self,d,remove):
-		print "findind dest"
                 dest = 0
                 distance = 1000000
                 for i in d:
                         dis = self.level.getDistance((self.x,self.y),i)
-			print "distance to",i,"=",dis
                         if dis < distance:
                                 distance = dis
                                 dest = i
-		print d
-		if remove==True:
-                        d.remove(dest)
-		print d
-		print "Found",dest
+
+##		if remove==True:
+##                        d.remove(dest)
+		
                 return dest
 
         """Determins if the entity has collided
