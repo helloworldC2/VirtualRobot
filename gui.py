@@ -29,7 +29,7 @@ def quitGame():
 def tick():
     global x,y,running,gameOver
     Keyboard.update(level)
-    if isMultiplayer==False:
+    if isMultiplayer==False and gameOver==False:
         if timer/60>100:
             level.player.score.happyDucks(level.player.username)
             gameOver = True
