@@ -11,15 +11,26 @@ class GuiHUD(object):
         if gui.gameOver==True:
             font = pygame.font.SysFont(None, 128)
             text = font.render("GAME OVER!", True, (0,0,0))
-            textpos = text.get_rect(center=(60,160))
+            textpos = text.get_rect(center=(400,300))
             screen.blit(text, textpos)
         else:
             text = font.render("Score: "+str(level.player.score.score), True, (0,0,0))
             textpos = text.get_rect(center=(60,60))
             screen.blit(text, textpos)
+            y = 60
+            for e in level.entities:
+                try:
+                    if e.score !=None:
+                        y=y+30
+                        text = font.render("AI: "+str(e.score.score), True, (0,0,0))
+                        textpos = text.get_rect(center=(500,y))
+                        screen.blit(text, textpos)
+                except:
+                    pass
+                
             if gui.isMultiplayer==False:
                 text = font.render("Time: "+str(100-self.time), True, (0,0,0))
-                textpos = text.get_rect(center=(400,300))
+                textpos = text.get_rect(center=(60,100))
                 screen.blit(text, textpos)
 
     def tick(self,ticks):

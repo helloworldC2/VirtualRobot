@@ -152,7 +152,7 @@ def start(canvas) :
 
 
 
-    level.loadLevelFromFile("levels/Newtestlevel.txt")
+    level.loadLevelFromFile("levels/Arena.txt")
 
     if isMultiplayer == False:
         populateLevel()
