@@ -5,6 +5,7 @@ import scoring
 import Config
 import EmailClient
 import threading
+import gui
 
 
 
@@ -194,8 +195,11 @@ class Tile(object):
                                         if d[0]==x<<5 and d[1]==y<<5:
                                                 e.destinations.remove(d)
                                                 print "Removed",d
-                                e.destination = e.getClosestDestination(e.destinations,False)
-                                print "Changed destination!"
+                                if len(e.destinations) >0:
+                                        e.destination = e.getClosestDestination(e.destinations,False)
+                                        print "Changed destination!"
+                                else:
+                                        gui.gameOver=True
 
 class WaterTile(Tile):
 

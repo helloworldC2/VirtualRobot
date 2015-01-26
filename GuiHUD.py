@@ -1,6 +1,7 @@
 import scoring
 import pygame
 import gui
+import Game
 class GuiHUD(object):
 
 
@@ -13,6 +14,21 @@ class GuiHUD(object):
             text = font.render("GAME OVER!", True, (0,0,0))
             textpos = text.get_rect(center=(400,300))
             screen.blit(text, textpos)
+            for e in level.entities:
+                try:
+                    if e.score.score >= level.player.score.score:
+                            font = pygame.font.SysFont(None, 64)
+                            text = font.render("AI WINS", True, (0,0,0))
+                            textpos = text.get_rect(center=(400,420))
+                            screen.blit(text, textpos)
+                            return
+                except:
+                    pass
+            font = pygame.font.SysFont(None, 64)
+            text = font.render("YOU WIN!", True, (0,0,0))
+            textpos = text.get_rect(center=(400,420))
+            screen.blit(text, textpos)
+                        
         else:
             text = font.render("Score: "+str(level.player.score.score), True, (0,0,0))
             textpos = text.get_rect(center=(60,60))
@@ -35,6 +51,10 @@ class GuiHUD(object):
 
     def tick(self,ticks):
         self.time = ticks/60
+        if gui.gameOver==True:
+            if pygame.mouse.get_pressed()[0]==True:
+                gui.gameOver=False
+                Game.menu1(gui.screen)
         
                                      
         

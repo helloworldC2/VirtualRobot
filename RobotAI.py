@@ -54,9 +54,9 @@ class RobotAI(Entity.Entity):
 	def hasCollided(self,xa, ya):
 		
 		xMin = 31
-		xMax = 33
+		xMax = 31
 		yMin = 59
-		yMax = 61
+		yMax = 60
 
 
 		for x in range(xMin,xMax):
