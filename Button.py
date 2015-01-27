@@ -11,10 +11,9 @@ class button(Image.image):
 
     def clicked(self):
         pos = pygame.mouse.get_pos()
-        for event in pygame.event.get():
-            if self.collide(pos) == 1 and event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                return 1
-            else:
-                return 0
+        if self.collide(pos) == 1:
+            return 1
+        else:
+            return 0
 
 
