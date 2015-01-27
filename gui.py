@@ -114,7 +114,7 @@ def startServer(players,console):
     else:
         subprocess.call(['javaw', '-jar', 'server.jar', players])#for no console
 
-def start(canvas,multiplayer=False,runServer=False,AI=True,nAI=1,diff=4) :
+def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     global screen, height, width, size, level,hud,basicFont,isMultiplayer,hasAI,numAI,difficulty,timer
     screen = canvas
     pygame.init()
@@ -150,7 +150,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=True,nAI=1,diff=4) :
 
 
 
-    level.loadLevelFromFile("levels/Arena.txt")
+    level.loadLevelFromFile("levels/oldArena.txt")
 
     if isMultiplayer == False:
         populateLevel()

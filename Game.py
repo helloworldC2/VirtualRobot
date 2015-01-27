@@ -127,9 +127,9 @@ def menu1(canvas):
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
                             if st == 1:
                                     if single.clicked():
-                                            gui.start(canvas,0,1,0)
+                                            gui.start(canvas,False,False,False,0,0)
                                     elif ai.clicked():
-                                            gui.start(canvas,0,1,1)
+                                            gui.start(canvas,False,False,True,1,4)
                             if sett == 1:
                                 box1.clicked()
                                 

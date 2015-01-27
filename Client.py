@@ -164,6 +164,7 @@ def move(x,y,direction,isSwimming):
 
 def login(user,x,y):
 	global username,isServerReady
+	print "Tring to login",user
         username  = user
         login = Packet.Packet00Login(user,x,y)
         sendDataToServer(login.getData())
