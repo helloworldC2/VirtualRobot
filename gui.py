@@ -27,7 +27,7 @@ def quitGame():
 
 """Called 60 times a second. Updates the games logic"""
 def tick():
-    global x,y,running,gameOver,scorePosted
+    global x,y,running,gameOver,scorePosted,isMultiplayer
     Keyboard.update(level)
     if isMultiplayer==False and gameOver==False:
         if timer/60>100:
