@@ -16,6 +16,7 @@ from Image import *
 import Button
 from Button import *
 import TickBox
+import textfield
 
 def createCanvas() :
         pygame.init()
@@ -98,6 +99,9 @@ def menu1(canvas):
         soundOffB.blit()
         soundOnB.blit()
         settingsB.blit()
+
+        box1 = TickBox.tickBox(canvas,230,270,"email")
+        txfld = textfield.textField(canvas,20,210,280,30,"",20)
         
         sound = 1
         skin = 0
@@ -106,7 +110,7 @@ def menu1(canvas):
         sett=0
 
         while True:
-                
+                #print sett, st
                 for event in pygame.event.get():
                         if event.type == QUIT:
                                 pygame.quit()
@@ -115,6 +119,9 @@ def menu1(canvas):
                             if event.key == K_ESCAPE :
                                 pygame.quit()
                                 sys.exit()
+
+                            if sett == 1:
+                                    txfld.handle(event)
                         pos = pygame.mouse.get_pos()
                         
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
@@ -123,6 +130,9 @@ def menu1(canvas):
                                             gui.start(canvas,0,1,0)
                                     elif ai.clicked():
                                             gui.start(canvas,0,1,1)
+                            if sett == 1:
+                                box1.clicked()
+                                
                             if startB.collide(pos) == 1 :
                                 pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
                                 st = 1
@@ -139,10 +149,8 @@ def menu1(canvas):
                                 settingsB.blit()
                                 single.blit()
                                 multi.blit()
-                                ai.blit()
-
-                                
-                            elif settingsB.collide(pos):
+                                ai.blit()   
+                            if settingsB.collide(pos):
                                 pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
                                 st = 0
                                 sett = 1
@@ -160,8 +168,11 @@ def menu1(canvas):
                                 font = pygame.font.SysFont("calibri",25)
                                 font.set_bold(1)
                                 text = font.render("Recieve emails",1,(250,250,250))
-                                canvas.blit(text,(30,250))
-                                box1 = TickBox.tickBox(canvas,230,240,"email")
+                                text1 = font.render("Enter Email:",1,(250,250,250))
+                                canvas.blit(text,(30,280))
+                                canvas.blit(text1,(30,170))
+                                txfld.blit()
+                                
                                 box1.blit()
                             elif closeB.collide(pos) :
                                 pygame.quit()
@@ -289,21 +300,18 @@ def menu1(canvas):
                                 else :
                                         pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
                                         
-                        elif settingsB.collide(pos) == 1 or startB.collide(pos) == 1 or leaderboardB.collide(pos) == 1 or creditB.collide(pos) == 1 or soundOffB.collide(pos) or closeB.collide(pos)or leftB.collide(pos) or rightB.collide(pos) :
-                                pygame.mouse.set_cursor(*cursor.HAND_CURSOR)
-                        elif st == 1 and (settingsB.collide(pos) == 1 or
-                                          startB.collide(pos) == 1 or
-                                          leaderboardB.collide(pos) == 1 or
-                                          creditB.collide(pos) == 1 or
-                                          soundOffB.collide(pos) or
-                                          closeB.collide(pos)or
-                                          leftB.collide(pos) or
-                                          rightB.collide(pos)) :
+                        elif (settingsB.collide(pos) == 1 or
+                        startB.collide(pos) == 1 or
+                        leaderboardB.collide(pos) == 1 or
+                        creditB.collide(pos) == 1 or
+                        soundOffB.collide(pos) or
+                        closeB.collide(pos)or
+                        leftB.collide(pos) or
+                        rightB.collide(pos) ):
                                 pygame.mouse.set_cursor(*cursor.HAND_CURSOR)
                         else :
                                 pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
-                if sett == 1:
-                        box1.clicked()
+               
                         #print box1.getStatus(
                 pygame.display.update()
         return

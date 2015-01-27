@@ -16,7 +16,7 @@ class image:
         return
 
     def scale(self,hossz,magassag):
-        self.img.pygame.transform.scale(sel.img,(hossz,magassag))
+        self.img = pygame.transform.scale(self.img,(hossz,magassag))
         return
 
 
