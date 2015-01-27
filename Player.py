@@ -7,7 +7,7 @@ import Robot_Skin_selector
 import VRClient
 import scoring
 import Client
-
+import gui
 
 class Player(Entity.Entity):
 
@@ -86,7 +86,8 @@ class Player(Entity.Entity):
 		if self.xa != 0 or self.ya != 0:
 			self.isMoving = not self.move(self.xa, self.ya)
 			VRClient.move(self.x,self.y)
-			Client.move(self.x,self.y,self.movingDir,self.isSwimming)
+			if gui.isMultiplayer == True:
+                                Client.move(self.x,self.y,self.movingDir,self.isSwimming)
 		else:
 			self.isMoving = False
 
