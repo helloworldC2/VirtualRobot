@@ -100,9 +100,9 @@ def menu1(canvas):
         soundOnB.blit()
         settingsB.blit()
 
-        box1 = TickBox.tickBox(canvas,230,270,"email")
-        txfld = textfield.textField(canvas,20,210,280,30,"",20)
-        
+        box1 = TickBox.tickBox(canvas,230,370,"email")
+        txfld = textfield.textField(canvas,20,310,280,30,"",20)
+        txfld1 = textfield.textField(canvas,20,210,280,30,"",20)
         sound = 1
         skin = 0
         ran = ""
@@ -169,9 +169,14 @@ def menu1(canvas):
                                 font.set_bold(1)
                                 text = font.render("Recieve emails",1,(250,250,250))
                                 text1 = font.render("Enter Email:",1,(250,250,250))
-                                canvas.blit(text,(30,280))
-                                canvas.blit(text1,(30,170))
+                                text2 = font.render("Enter Name:",1,(250,250,250))
+
+                                
+                                canvas.blit(text,(30,380))
+                                canvas.blit(text1,(30,280))
+                                canvas.blit(text2,(30,180))
                                 txfld.blit()
+                                txfld1.blit()
                                 
                                 box1.blit()
                             elif closeB.collide(pos) :
