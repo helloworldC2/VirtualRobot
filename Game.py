@@ -121,7 +121,10 @@ def menu1(canvas):
                                 sys.exit()
 
                             if sett == 1:
-                                    txfld.handle(event)
+                                    if txfld.isSelected():
+                                            txfld.handle(event)
+                                    elif txfld1.isSelected():
+                                            txfld1.handle(event)
                         pos = pygame.mouse.get_pos()
                         
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
@@ -132,7 +135,16 @@ def menu1(canvas):
                                             gui.start(canvas,False,False,True,1,4)
                             if sett == 1:
                                 box1.clicked()
-                                
+
+
+                            if txfld.clicked():
+                                    txfld.select()
+                                    txfld1.off()
+                                    
+                            if txfld1.clicked():
+                                    txfld1.select()
+                                    txfld.off()
+                        
                             if startB.collide(pos) == 1 :
                                 pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
                                 st = 1

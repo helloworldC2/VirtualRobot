@@ -12,6 +12,7 @@ class textField :
         self.h = magassag
         self.fontH = betumeret
         self.answer = str()
+        self.selected = False
         #initializing font
         pygame.font.init()
         #setting up font type 
@@ -22,7 +23,7 @@ class textField :
         #self.disp.blit(text,(self.posX-len(s)*12,self.posY))
         #the rectangle for the actual textfield 
         return
-    
+
     def blit(self):
         font = pygame.font.SysFont("monospace",self.fontH)
         text = font.render(self.answer,1,(0,0,0))
@@ -171,5 +172,38 @@ class textField :
                             #reprinting everything with the new string   
             self.reprint(self.answer)
             return
+
+    def collide(self, pos) :
+        if (pos[0] >= self.posX and pos[0] <=self.posX + self.w and
+            pos[1] >= self.posY and pos[1] <= self.posY + self.h) :
+            return 1
+        else :
+            return 0
+        return
+
+    def clicked(self):
+        pos = pygame.mouse.get_pos()
+        if self.collide(pos):
+            return 1
+        else:
+            return 0
+        return
+
+    def isSelected(self):
+        if self.selected == False:
+            return 0
+        else:
+            return 1
+        return
+
+    def select(self):
+        self.selected = True
+        return
+
+    def off(self):
+        self.selected = False
+        return
+        
+
 
 
