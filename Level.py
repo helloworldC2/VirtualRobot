@@ -253,7 +253,7 @@ class Level():
         @Return:
                 path(Node): next node to move to
         """
-	def findPathA*(self,start,goal):
+	def findPathAStar(self,start,goal):
 		openList = []
 		closedList = []
 		currentNode = Node(start,None,0,self.getDistance(start,goal))
