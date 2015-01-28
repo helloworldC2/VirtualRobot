@@ -8,6 +8,7 @@ import socket
 import threading
 import Client
 import gui
+import Queue
 
 
 class Level():
