@@ -13,6 +13,7 @@ import RobotAI
 import Animal
 import Duck
 import GuiHUD
+import Sounds
 
 
 
@@ -29,9 +30,12 @@ def quitGame():
 def tick():
     global x,y,running,gameOver,scorePosted,isMultiplayer
     Keyboard.update(level)
+    if timer == 30:
+        Sounds.Plysound(False,False,False,False,True)
     if isMultiplayer==False and gameOver==False:
         if timer/60>100:
             gameOver = True
+    
 
     if gameOver == True and scorePosted==False:
         level.player.score.happyDucks(level.player.username)

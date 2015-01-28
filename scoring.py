@@ -21,8 +21,8 @@ class Score(object):
     """
     def incrementScore(self):
         self.score = self.score + 25
-        Sounds.Plysound(False,False,True,False)
-    
+        Sounds.Plysound(False,False,False,True,False)
+
     """happyDucks is a function which posts the scores to the Leaderboard Client
     
     @Params:

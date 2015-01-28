@@ -6,7 +6,7 @@ import Config
 import EmailClient
 import threading
 import gui
-
+import Sounds
 
 
 """
@@ -176,6 +176,7 @@ class Tile(object):
                                         t.start()
                                 self.updateAI(level,x,y)
                         if self == cactus and entity == level.player:
+                                Sounds.Plysound(False,True,False,False,False)
                                 print "Ouch!"
                                 if entity.xa>0:
                                         entity.x-=4

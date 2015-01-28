@@ -89,10 +89,10 @@ class Player(Entity.Entity):
 			VRClient.move(self.x,self.y)
 			if gui.isMultiplayer == True:
                                 Client.move(self.x,self.y,self.movingDir,self.isSwimming)
-                        Sounds.Plysound(True,False,False,False)
+                        Sounds.Plysound(True,False,False,False,False)
 		else:
 			self.isMoving = False
-			Sounds.Plysound(False,False,False,False)
+			Sounds.Plysound(False,False,False,False,False)
 
 		if self.getTileUnder().getId() == Tile.water.getId():
 			self.isSwimming = True

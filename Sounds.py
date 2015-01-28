@@ -2,15 +2,20 @@
 import pygame
 import Game
 import random
+import os
 
 
-sound_list = ['menu/asda.wav','menu/asda2.wav','menu/Track1ad.wav']
+
 def playMusic():
-    return sound_list[random.randint(0,len(sound_list)-1)]
+ 
+    music =['menu/asda.wav']
+    pygame.mixer.music.load('menu/asda.wav')
+    pygame.mixer.music.play(0)
+  
 
-def Plysound(hoverOn,hit,bClick,trFound):
+def Plysound(hoverOn,hit,bClick,trFound,Dquack):
     soundNumb = 0
-    hov = ['sound/hover.wav','sound/Hitsound.wav','sound/treasureFound.wav','sound/Click.wav']
+    hov = ['sound/hover.wav','sound/Hitsound.wav','sound/treasureFound.wav','sound/Click.wav','Duck.wav']
     if hit == True:
         soundNumb = 1
         soundz = pygame.mixer.Sound(hov[soundNumb])
@@ -30,6 +35,10 @@ def Plysound(hoverOn,hit,bClick,trFound):
         pygame.mixer.Sound.play(soundz)
     if trFound == True:
         soundNumb = 2
+        soundz = pygame.mixer.Sound(hov[soundNumb])
+        pygame.mixer.Sound.play(soundz)
+    if Dquack == True:
+        soundNumb = 4
         soundz = pygame.mixer.Sound(hov[soundNumb])
         pygame.mixer.Sound.play(soundz)
         
