@@ -7,7 +7,6 @@ import gui
 import Play
 import credit
 import leaderboardMenu
-import Sound
 import Robot_Skin_selector
 import random
 import Config
@@ -17,6 +16,7 @@ import Button
 from Button import *
 import TickBox
 import textfield
+import Sounds
 
 def createCanvas() :
         pygame.init()
@@ -128,6 +128,7 @@ def menu1(canvas):
                         pos = pygame.mouse.get_pos()
                         
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
+                            Sounds.Plysound(False,False,True,False)
                             if st == 1:
                                     if single.clicked():
                                             gui.start(canvas,False,False,False,0,0)
