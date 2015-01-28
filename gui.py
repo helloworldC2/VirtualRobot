@@ -150,7 +150,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
 
 
 
-    level.loadLevelFromFile("levels/oldArena.txt")
+    level.loadLevelFromFile("levels/Arena.txt")
 
     if isMultiplayer == False:
         populateLevel()
