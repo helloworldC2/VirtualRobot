@@ -20,13 +20,15 @@ class textField :
         #fake rendering bold text
         font.set_bold(1)
         text = font.render(s,1,(0,0,0))
-        #self.disp.blit(text,(self.posX-len(s)*12,self.posY))
-        #the rectangle for the actual textfield 
         return
 
     def blit(self):
+        tmp = self.answer
+        if self.isSelected():
+            tmp += '_'
+        
         font = pygame.font.SysFont("monospace",self.fontH)
-        text = font.render(self.answer,1,(0,0,0))
+        text = font.render(tmp,1,(0,0,0))
         r1 = pygame.Rect(self.posX,self.posY,self.w,self.h)
         r2 = pygame.Rect(self.posX-2,self.posY-2,self.w+4,self.h+4)
         #printing the rects
@@ -40,9 +42,12 @@ class textField :
 
     #reprinting the textfield when the user writes or deletes something
     def reprint(self,string): 
+        tmp = string
+        if self.isSelected():
+            tmp += '_'
         
         font = pygame.font.SysFont("monospace",self.fontH)
-        text = font.render(string,1,(0,0,0))
+        text = font.render(tmp,1,(0,0,0))
         
         r1 = pygame.Rect(self.posX,self.posY,self.w,self.h)
         r2 = pygame.Rect(self.posX-2,self.posY-2,self.w+4,self.h+4)
@@ -198,10 +203,12 @@ class textField :
 
     def select(self):
         self.selected = True
+        self.reprint(self.answer)
         return
 
     def off(self):
         self.selected = False
+        self.reprint(self.answer)
         return
         
 
