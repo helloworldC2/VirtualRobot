@@ -98,7 +98,7 @@ class textField :
                                         self.reprint(self.answer)
                                         return self.answer
                                         
-                                    #add the new characters to the string
+                #add the new characters to the string
                 elif event.key == pygame.K_QUOTE and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + \'"
                                         self.answer += '@'
@@ -107,91 +107,61 @@ class textField :
                                         self.answer += ':'
                 elif event.key == pygame.K_HASH and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + #"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '~'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_LEFTBRACKET and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + ["
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '{'
                 elif event.key == pygame.K_RIGHTBRACKET and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + ]"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '}'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_EQUALS and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + ="
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '+'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_MINUS and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + -"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '_'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_0 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + 0"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += ')'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_9 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + 9"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '('
-                                        #self.answer += '_'
                 elif event.key == pygame.K_8 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + 8"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '*'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_7 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + 7"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '&'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_6 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + 6"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '^'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_5 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + 5"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '%'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_4 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + 4"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '$'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_3 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + 3"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '£'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_2 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + 2"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '\"'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_1 and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + 1"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '!'
-                                        #self.answer += '_'
                 elif event.key == pygame.K_BACKQUOTE and pygame.key.get_mods() & pygame.KMOD_SHIFT:
                                         print "pressed: SHIFT + `"
-                                        #self.answer = self.answer[:-1]
                                         self.answer += '¬'
-                                        #self.answer += '_'
-
+                elif pygame.key.get_mods() & pygame.KMOD_SHIFT :
+                    if event.key >= 97 and event.key <= 122:
+                        print "pressed: SHIFT +",chr(event.key)
+                        self.answer += (chr(event.key-32))
                                         
-                elif event.key <= 127:
-                                        #self.answer = self.answer[:-1]
+                elif event.key <= 127 and event.key >= 32:
                                         self.answer += (chr(event.key))
-                                        #self.answer += '_'
-                                #reprinting everything with the new string   
-        
+                                        
+                #reprinting everything with the new string   
                 self.reprint(self.answer)
         return
 
