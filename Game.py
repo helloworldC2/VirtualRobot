@@ -17,6 +17,7 @@ from Button import *
 import TickBox
 import textfield
 import Sounds
+import Box
 
 #if the script was run directly, this fnction will run
 def createCanvas() :
@@ -83,21 +84,24 @@ def menu1(canvas):
         settingsB = button(canvas,setX,setY,"buttons/Settings.png")
 
         font = pygame.font.SysFont("calibri",25)
+        font1 = pygame.font.SysFont("calibri",15)
+
+        font1.set_bold(1)
         font.set_bold(1)
-        text = font.render("Recieve emails",1,(250,250,250))
+        
+        text = font.render("Recieve Emails:",1,(250,250,250))
         text1 = font.render("Enter Email:",1,(250,250,250))
         text2 = font.render("Enter Name:",1,(250,250,250))
 
-                                
+        easyTxt = font1.render("Easy",1,(250,250,250))
+        medTxt = font1.render("Medium",1,(250,250,250))
+        hardTxt = font1.render("Hard",1,(250,250,250))
+        difTxt = font.render("AI Difficulty:",1,(250,250,250))
 
 #blitting everything    
         canvas.fill((0,0,0))
-        
         background.blit()
-        transp.blit()
-        #leftB.blit()
-        #rightB.blit()
-        
+        transp.blit() 
         leaderboardB.blit()
         creditB.blit()
         helloW.blit()
@@ -105,15 +109,18 @@ def menu1(canvas):
         robot.blit()
         startB.blit()
         soundOffB.blit()
-        #soundOnB.blit()
         settingsB.blit()
 
 #initializing the tickbox and textfields
-        emailTickBox = TickBox.tickBox(canvas,230,370,"email")
-        emailTextField = textfield.textField(canvas,20,310,280,30,"",20)
-        nameTextField = textfield.textField(canvas,20,210,280,30,"",20)
+        emailTickBox = TickBox.tickBox(canvas,230,330,"email")
+        emailTextField = textfield.textField(canvas,20,270,280,30,"",20)
+        nameTextField = textfield.textField(canvas,20,180,280,30,"",20)
+        
+        easyBox = Box.box(canvas,50,420,"easy")
+        medBox = Box.box(canvas,130,420,"easy")
+        hardBox = Box.box(canvas,210,420,"easy")
 
-#no when the game run, this var will be set to 1 if the sound button clicked
+#no sound when the game run, this var will be set to 1 if the sound button clicked
         sound = 0
         ran = ""
 #this variable is for checking if the start button was clicked
@@ -123,6 +130,9 @@ def menu1(canvas):
 
         if sound == 1:
                 soundOnB.blit()
+                
+        easyBox.check()
+        difficulty = 1
 
         while True:
                 for event in pygame.event.get():
@@ -138,12 +148,14 @@ def menu1(canvas):
                                 pygame.quit()
                                 sys.exit()
 
-                        #if we are in the settings menu
+                            #if we are in the settings menu
                             if inSettings== 1:
-                                #if the email textfield was clicked, user will write in it
+                                    
+                                    #if the email textfield was clicked, user will write in it
                                     if emailTextField.isSelected():
                                             emailTextField.handle(event)
-                                #if the name textfield was clicked
+                                            
+                                    #if the name textfield was clicked
                                     elif nameTextField.isSelected():
                                             nameTextField.handle(event)
                                             
@@ -166,6 +178,31 @@ def menu1(canvas):
                             if inSettings== 1:
                                 #if the email tickbox was clicked, untick/tick it
                                 emailTickBox.clicked()
+
+                                if easyBox.clicked():
+                                        difficulty = 1
+                                        easyBox.check()
+                                        medBox.unCheck()
+                                        hardBox.unCheck()
+                                        easyBox.blit()
+                                        medBox.blit()
+                                        hardBox.blit()
+                                if medBox.clicked():
+                                        difficulty = 2
+                                        easyBox.unCheck()
+                                        medBox.check()
+                                        hardBox.unCheck()
+                                        easyBox.blit()
+                                        medBox.blit()
+                                        hardBox.blit()
+                                if hardBox.clicked():
+                                        difficulty = 3
+                                        easyBox.unCheck()
+                                        medBox.unCheck()
+                                        hardBox.check()
+                                        easyBox.blit()
+                                        medBox.blit()
+                                        hardBox.blit()
 
                             #if email textfield was clicked, select it and unselect the other one
                             if emailTextField.clicked():
@@ -218,13 +255,21 @@ def menu1(canvas):
                                         soundOnB.blit()
                                 settingsB.blit()
                                 
-                                canvas.blit(text,(30,380))
-                                canvas.blit(text1,(30,280))
-                                canvas.blit(text2,(30,180))
+                                canvas.blit(text,(30,340))
+                                canvas.blit(text1,(30,240))
+                                canvas.blit(text2,(30,150))
                                 emailTextField.blit()
                                 nameTextField.blit()
-                                
+
+                                canvas.blit(difTxt,(30,390))
                                 emailTickBox.blit()
+                                easyBox.blit()
+                                medBox.blit()
+                                hardBox.blit()
+
+                                canvas.blit(easyTxt,(54,460))
+                                canvas.blit(medTxt,(122,460))
+                                canvas.blit(hardTxt,(213,460))
                                 
                         #if close button was clicked, window closes
                             elif closeB.collide(pos) :
@@ -238,9 +283,8 @@ def menu1(canvas):
                                 bgpart.blit()
                                 soundOffB.blit()
                                 soundOnB.blit()
-                                Sounds.playMusic()
-                                
-                                break
+                                Sounds.playMusic()        
+                        
                         #if it was on
                             elif sound == 1 and soundOnB.collide(pos) == 1 :
                                 inStart= 0
@@ -250,7 +294,6 @@ def menu1(canvas):
                                 sound = 0
                                 bgpart.blit()
                                 soundOffB.blit()
-                                
                         
                             #if credit button clicked        
                             elif creditB.clicked() :

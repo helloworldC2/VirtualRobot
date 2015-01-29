@@ -32,14 +32,15 @@ class tickBox(Button.button):
                     self.status = 1
                     print self.status
                     self.blit()
-                    return
+                    return 1
                 elif self.status == 1:
                     self.status = 0
                     print self.status
                     self.blit()
-                    return
-
-        return
+                    return 1
+        else:
+            return 0
+        
     
     def getStatus(self):
         return self.status
