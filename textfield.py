@@ -73,9 +73,7 @@ class textField :
         return
 
     def handle(self,event):
-        if event.key == K_BACKSPACE:
-            self.answer = self.answer[:-1]
-            print self.answer
+        
         
         tmp = self.answer
         if self.isSelected():
@@ -85,8 +83,12 @@ class textField :
         text = font.render(tmp,1,(0,0,0))
         rect = text.get_rect()
         print rect
-        
-        if rect.width <= self.w-5:
+        if event.key == K_BACKSPACE:
+            self.answer = self.answer[:-1]
+            print self.answer
+            self.blit()
+            
+        elif rect.width <= self.w-5:
             
             #if user presses a key
             #if backspace, delete the last char from string
