@@ -30,58 +30,72 @@ def createCanvas() :
 
 
 def menu1(canvas):
-        #setting up the coordinates for the images and buttons
+        #this variable is for checking if the start button was clicked
+        inStart= 0
         
+        #if the settings button was clicked
+        inSettings= 0
+
+        
+#setting up the coordinates for the images and buttons        
         #left arrow
         leftX = 10
         leftY = 300
+        
         #right arrow
         rightX = 280
         rightY = 300
+        
         #sound
         sX = 720
         sY = 530
+        
         #robot
         rX = 65
         rY = 200
+                
         #credit button
         cX = 402
         cY = 350
+        
         #start button
         startX = 400
         startY = 170
+        
         #leaderboard button
         lX = 406
         lY = 440
+        
         #close button
         eX = 400
         eY = 510
+        
         #settings
         setX = 402
         setY = 260
 
 #loading all images, buttons
-        robot = image(canvas,rX,rY,"robots/robot.png")
+        robot = image(canvas,(rX,rY),"robots/robot.png")
         robot.scale(300,300)
         robot.scale(200,200)
-        transp = image(canvas,10,140,"menu/transparrent.png")
-        helloW = image(canvas,0,0,"menu/VR.png")
-        bgpart = image(canvas,0,0,"menu/bgpart.png")
-        background  = image(canvas,0,0,"menu/wallpaper.jpg")
-        startB = button(canvas,startX,startY,"buttons/start.png")
-        leftB = button(canvas,leftX,leftY,"buttons/larrow.png")
-        rightB = button(canvas,rightX,rightY,"buttons/rarrow.png")
-        soundOffB = button(canvas,sX,sY,"buttons/soundoff.png")
+        transp = image(canvas,(10,140),"menu/transparrent.png")
+        helloW = image(canvas,(0,0),"menu/VR.png")
+        bgpart = image(canvas,(0,0),"menu/bgpart.png")
+        background  = image(canvas,(0,0),"menu/wallpaper.jpg")
+        startB = button(canvas,(startX,startY),"buttons/start.png")
+        leftB = button(canvas,(leftX,leftY),"buttons/larrow.png")
+        rightB = button(canvas,(rightX,rightY),"buttons/rarrow.png")
+        soundOffB = button(canvas,(sX,sY),"buttons/soundoff.png")
         soundOffB.scale(35,50)
-        soundOnB = button(canvas,sX,sY,"buttons/soundon.png")
+        soundOnB = button(canvas,(sX,sY),"buttons/soundon.png")
         soundOnB.scale(60,50)
-        creditB = button(canvas,cX,cY,"buttons/credits.png")
-        leaderboardB = button(canvas,lX,lY,"buttons/Leaderboard.png")
-        closeB = button(canvas,eX,eY,"buttons/exit.png")
-        single = button(canvas,20,200,"buttons/Single-Player.png")
-        multi = button(canvas,20,260,"buttons/Multiplayer.png")
-        ai = button(canvas,20,320,"buttons/AI.png")
-        settingsB = button(canvas,setX,setY,"buttons/Settings.png")
+        creditB = button(canvas,(cX,cY),"buttons/credits.png")
+        leaderboardB = button(canvas,(lX,lY),"buttons/Leaderboard.png")
+        closeB = button(canvas,(eX,eY),"buttons/exit.png")
+        single = button(canvas,(20,200),"buttons/Single-Player.png")
+        multi = button(canvas,(20,260),"buttons/Multiplayer.png")
+        ai = button(canvas,(20,320),"buttons/AI.png")
+        settingsB = button(canvas,(setX,setY),"buttons/Settings.png")
 
         font = pygame.font.SysFont("calibri",25)
         font1 = pygame.font.SysFont("calibri",15)
@@ -112,21 +126,17 @@ def menu1(canvas):
         settingsB.blit()
 
 #initializing the tickbox and textfields
-        emailTickBox = TickBox.tickBox(canvas,230,330,"email")
-        emailTextField = textfield.textField(canvas,20,270,280,30,"",20)
-        nameTextField = textfield.textField(canvas,20,180,280,30,"",20)
+        emailTickBox = TickBox.tickBox(canvas,(230,330),"email")
+        emailTextField = textfield.textField(canvas,(20,270),(280,30),"",20)
+        nameTextField = textfield.textField(canvas,(20,180),(280,30),"",20)
         
-        easyBox = Box.box(canvas,50,420,"easy")
-        medBox = Box.box(canvas,130,420,"easy")
-        hardBox = Box.box(canvas,210,420,"easy")
+        easyBox = Box.box(canvas,(50,420),"easy")
+        medBox = Box.box(canvas,(130,420),"easy")
+        hardBox = Box.box(canvas,(210,420),"easy")
 
 #no sound when the game run, this var will be set to 1 if the sound button clicked
         sound = 0
         ran = ""
-#this variable is for checking if the start button was clicked
-        inStart= 0
-#if the settings button was clicked
-        inSettings= 0
 
         if sound == 1:
                 soundOnB.blit()

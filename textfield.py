@@ -4,7 +4,7 @@ import sys
 from pygame.locals import *
 
 class textField :
-    def __init__(self,canvas,x,y,hossz,magassag,s,betumeret):
+    def __init__(self,canvas,(x,y),(hossz,magassag),s,betumeret):
         self.disp = canvas 
         self.posX = x
         self.posY = y

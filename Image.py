@@ -3,7 +3,7 @@ from pygame import *
 import sys
 
 class image:
-    def __init__(self,surface,posX,posY,kep):
+    def __init__(self,surface,(posX,posY),kep):
         self.x = posX
         self.y = posY
         self.canvas = surface

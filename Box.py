@@ -2,7 +2,7 @@ import TickBox
 import pygame
 
 class box(TickBox.tickBox):
-    def __init__(self,screen,posX,posY,question):
+    def __init__(self,screen,(posX,posY),question):
         self.canv = screen
         self.x = posX
         self.y = posY

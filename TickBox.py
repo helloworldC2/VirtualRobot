@@ -5,7 +5,7 @@ import Image
 import Button
 
 class tickBox(Button.button):
-    def __init__(self,screen,posX,posY,question):
+    def __init__(self,screen,(posX,posY),question):
         self.canv = screen
         self.x = posX
         self.y = posY
