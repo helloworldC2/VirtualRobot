@@ -190,8 +190,6 @@ class Tile(object):
                                         entity.y-=4
                                 if entity.ya<0:
                                         entity.y+=4
-
-
         def updateAI(self,level,x,y):
                 for e in level.entities:
                         if e.canPickUpTreasure:     
