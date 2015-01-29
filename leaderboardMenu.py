@@ -12,6 +12,7 @@ def leaderboardMenu(display):
     bg = pygame.image.load("menu/wallpaper.jpg").convert_alpha()
     back = pygame.image.load("buttons/back.png").convert_alpha()
     font = pygame.font.Font(None, 30)
+    loading = font.render("Loading...",0,(0,0,0))
     stringsToRender = []
     names = []
     scores = []
@@ -51,12 +52,17 @@ def leaderboardMenu(display):
             display.blit(stringsToRender[s],(300,30+(s*30)))
 
         display.blit(back,(bX,bY))
-
+        if len(names)<=0:display.blit(loading,(400,300))
+        
         pygame.display.update()
         if len(names)<=0:
+            
             scores = LeaderboardClient.getHighScores();
             names = scores[0]
             scores = scores[1]
             for i in range(len(names)):
                 stringsToRender.append(font.render(str(i+1)+": "+str(names[i])+" - "+str(scores[i]),0,(0,0,0)))
+
+        
+            
     return
