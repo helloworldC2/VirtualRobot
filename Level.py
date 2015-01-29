@@ -8,6 +8,7 @@ import socket
 import threading
 import Client
 import gui
+import Queue
 
 
 class Level():
@@ -253,7 +254,7 @@ class Level():
         @Return:
                 path(Node): next node to move to
         """
-	def findPath(self,start,goal):
+	def findPathAStar(self,start,goal):
 		openList = []
 		closedList = []
 		currentNode = Node(start,None,0,self.getDistance(start,goal))
@@ -301,6 +302,58 @@ class Level():
 
 		print "No path :("
 		return False
+		
+		
+	"""finds the fastest path between two points
+        @Params:
+                start(vec2): starting point
+                goal(vec2): end point
+        @Return:
+                path(Node): next node to move to
+        """
+        #http://www.redblobgames.com/pathfinding/a-star/implementation.html#sec-1-1#used that for reference
+	def findPath(self,start,goal):
+		frontier = Queue.Queue()
+                frontier.put(start)
+                came_from = {}
+                came_from[start] = None
+		while not frontier.empty():
+                        current = frontier.get()
+      
+                        if current == goal:
+                                 break
+                        for i in range(9):
+				if i==4 or i==0 or i==2 or i==6 or i==8:
+					continue#ignore current tile
+				x = current[0]
+				y  = current[1]
+				dx = (i % 3) -1
+				dy = (i / 3) -1
+				tile = self.getTile(x+dx,y+dy)
+				if tile == None or tile == Tile.void:
+					continue
+				if not self.canPassTile(tile,x+dx,y+dx,None) and not tile.id == 9:
+					#print 'solid'
+					continue
+				tilePos = (x+dx,y+dy)
+				if tilePos not in came_from:
+                                     frontier.put(tilePos)
+                                     #print "Added node",tilePos
+                                     came_from[tilePos] = current
+
+               
+                print came_from.values()[0],"start",start,"goal",goal
+                n = current
+                path = []
+                while True:
+                        b = came_from[n]
+                        if b==None or b==start:
+                                break
+                        n=b
+                        path.append(n)
+
+                print n
+                return Node(n,Node,0,0)
 
         """sends tiles to A* worker
         @Params:
