@@ -1,5 +1,6 @@
 import requests
 import random
+import Config
 
 
 """Sends an email to the user to give them more info
@@ -28,6 +29,7 @@ def sendEmail(email, landmark,landmarkImage,landmarkURL,summary):
         landmark(string): name of the landmark
 """
 def sendRandomEmail(email):
+    if Config.config["receiveEmail"]==False:return
     i = random.randint(0,4)
     if i ==0:
         r = requests.get("http://en.wikipedia.org/wiki/Special:RandomInCategory/Treasure_troves_in_England")

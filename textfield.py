@@ -12,7 +12,7 @@ class textField :
         self.w = hossz
         self.h = magassag
         self.fontH = betumeret
-        self.answer = str()
+        self.answer = s
         self.selected = False
         
         #initializing font

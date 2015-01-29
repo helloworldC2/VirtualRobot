@@ -1,3 +1,5 @@
-somethingElse: True
-other: 2
+receiveEmail: False
+numAI: 2
 email: gjclaridge@gmail.com
+name: Arnold
+difficulty: 1

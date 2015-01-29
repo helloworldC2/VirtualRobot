@@ -127,12 +127,19 @@ def menu1(canvas):
 
 #initializing the tickbox and textfields
         emailTickBox = TickBox.tickBox(canvas,(230,330),"email")
-        emailTextField = textfield.textField(canvas,(20,270),(280,30),"",20)
-        nameTextField = textfield.textField(canvas,(20,180),(280,30),"",20)
+        if Config.config["receiveEmail"] ==True:
+                print "True"
+                emailTickBox.status = 1
+        emailTextField = textfield.textField(canvas,(20,270),(280,30),Config.config["email"],20)
+        
+        nameTextField = textfield.textField(canvas,(20,180),(280,30),Config.config["name"],20)
         
         easyBox = Box.box(canvas,(50,420),"easy")
         medBox = Box.box(canvas,(130,420),"easy")
         hardBox = Box.box(canvas,(210,420),"easy")
+        if Config.config["difficulty"]==1:easyBox.status=1
+        if Config.config["difficulty"]==2:medBox.status=1
+        if Config.config["difficulty"]==3:hardBox.status=1
 
 #no sound when the game run, this var will be set to 1 if the sound button clicked
         sound = 0
@@ -141,13 +148,12 @@ def menu1(canvas):
         if sound == 1:
                 soundOnB.blit()
                 
-        easyBox.check()
-        difficulty = 1
 
         while True:
                 for event in pygame.event.get():
                         #if user hits x button, window closes
                         if event.type == QUIT:
+                                Config.saveConfig()
                                 pygame.quit()
                                 sys.exit()
                                 
@@ -155,9 +161,10 @@ def menu1(canvas):
                         if event.type == KEYDOWN :
                             #if esc key pressed, window closes
                             if event.key == K_ESCAPE :
+                                Config.saveConfig()
                                 pygame.quit()
                                 sys.exit()
-
+                       
                             #if we are in the settings menu
                             if inSettings== 1:
                                     
@@ -171,7 +178,9 @@ def menu1(canvas):
                                             
                         #getting position of the mouse
                         pos = pygame.mouse.get_pos()
-
+                        #update stored name and email
+                        Config.config["email"] = emailTextField.answer
+                        Config.config["name"] = nameTextField.answer
                         #if user pressed the left mouse button
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
                             #play click sound
@@ -183,14 +192,15 @@ def menu1(canvas):
                                             gui.start(canvas,False,False,False,0,0)
                                     #if ai button was clicked, start in ai mode
                                     elif ai.clicked():
-                                            gui.start(canvas,False,False,True,1,4)
+                                            gui.start(canvas,False,False,True,Config.config["numAI"],Config.config["difficulty"])
                             #if we are in the settings menu
                             if inSettings== 1:
                                 #if the email tickbox was clicked, untick/tick it
-                                emailTickBox.clicked()
+                                if emailTickBox.clicked():
+                                        Config.config["receiveEmail"] = not Config.config["receiveEmail"] 
 
                                 if easyBox.clicked():
-                                        difficulty = 1
+                                        Config.config["difficulty"] = 1
                                         easyBox.check()
                                         medBox.unCheck()
                                         hardBox.unCheck()
@@ -198,7 +208,7 @@ def menu1(canvas):
                                         medBox.blit()
                                         hardBox.blit()
                                 if medBox.clicked():
-                                        difficulty = 2
+                                        Config.config["difficulty"] = 2
                                         easyBox.unCheck()
                                         medBox.check()
                                         hardBox.unCheck()
@@ -206,7 +216,7 @@ def menu1(canvas):
                                         medBox.blit()
                                         hardBox.blit()
                                 if hardBox.clicked():
-                                        difficulty = 3
+                                        Config.config["difficulty"] = 3
                                         easyBox.unCheck()
                                         medBox.unCheck()
                                         hardBox.check()

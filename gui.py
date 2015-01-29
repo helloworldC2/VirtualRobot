@@ -14,6 +14,7 @@ import Animal
 import Duck
 import GuiHUD
 import Sounds
+import Config
 
 
 
@@ -23,6 +24,7 @@ scorePosted = False
 """Called when the game closes to remove level.player from server"""
 def quitGame():
     print "Exiting!"
+    Config.saveConfig()
     if isMultiplayer==True:
         Client.disconnect()
 
@@ -133,7 +135,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     y = random.randint(0,600)
     hud = GuiHUD.GuiHUD()
     level = Level.Level(32,32)
-    username = namepicker.getRandomName()
+    username = Config.config["name"]
     level.player = Player.Player(level,username,x,y)
     isMultiplayer = multiplayer
     hasAI = AI

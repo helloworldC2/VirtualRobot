@@ -5,8 +5,11 @@
 """Variables to be saved and loaded
 """
 config = {"email":"",
-        "other":"",
-        "somethingElse":""
+        "receiveEmail":"",
+        "difficulty":"",
+        "numAI":"",
+        "name":"",
+        
 }
 
 """Loads the config file and stores the data in config(dict)
@@ -26,7 +29,8 @@ def loadConfig():
                 config[d[0]] = int(d[1])#load as int
             except ValueError:
                 if d[1]=="True" or d[1]=="False":
-                    config[d[0]] = bool(d[1])#load as boolean
+                    if d[1]=="True":config[d[0]]=True
+                    if d[1]=="False":config[d[0]]=False#load as boolean
                 else:
                     config[d[0]] = d[1]#load as string
         except IndexError:
