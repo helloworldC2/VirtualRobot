@@ -176,11 +176,8 @@ class Tile(object):
                                         t.start()
                                 self.updateAI(level,x,y)
                         if self == cactus and entity == level.player:
-<<<<<<< HEAD
                                 Sounds.Plysound(False,True,False,False,False)
-=======
-                                Sounds.Plysound(False,True,False,False)
->>>>>>> b194d23... Update Tile.py
+
                                 print "Ouch!"
                                 if entity.xa>0:
                                         entity.x-=4

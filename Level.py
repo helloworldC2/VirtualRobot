@@ -224,6 +224,20 @@ class Level():
         @Return:
                 inList(boolean): true if i is in l
         """
+	def isInList(self,l,i):
+		for node in l:
+			if node == i:
+				return True
+
+		return False
+
+	"""returns true if i is in list l
+        @Params:
+                l(list): list to check
+                i(object): object to look for
+        @Return:
+                inList(boolean): true if i is in l
+        """
 	def inList(self,l,i):
 		for node in l:
 			if node.pos == i:
@@ -303,7 +317,6 @@ class Level():
 		print "No path :("
 		return False
 		
-		
 	"""finds the fastest path between two points
         @Params:
                 start(vec2): starting point
@@ -312,7 +325,7 @@ class Level():
                 path(Node): next node to move to
         """
         #http://www.redblobgames.com/pathfinding/a-star/implementation.html#sec-1-1#used that for reference
-	def findPath(self,start,goal):
+	def findPathBF(self,start,goal):
 		frontier = Queue.Queue()
                 frontier.put(start)
                 came_from = {}
@@ -354,6 +367,105 @@ class Level():
 
                 print n
                 return Node(n,Node,0,0)
+        def findPathBF(self,start,goal):
+		frontier = Queue.Queue()
+                frontier.put(start)
+                came_from = {}
+                came_from[start] = None
+		while not frontier.empty():
+                        current = frontier.get()
+      
+                        if current == goal:
+                                 break
+                        for i in range(9):
+				if i==4 or i==0 or i==2 or i==6 or i==8:
+					continue#ignore current tile
+				x = current[0]
+				y  = current[1]
+				dx = (i % 3) -1
+				dy = (i / 3) -1
+				tile = self.getTile(x+dx,y+dy)
+				if tile == None or tile == Tile.void:
+					continue
+				if not self.canPassTile(tile,x+dx,y+dx,None) and not tile.id == 9:
+					#print 'solid'
+					continue
+				tilePos = (x+dx,y+dy)
+				if tilePos not in came_from:
+                                     frontier.put(tilePos)
+                                     #print "Added node",tilePos
+                                     came_from[tilePos] = current
+
+               
+                print came_from.values()[0],"start",start,"goal",goal
+                n = current
+                path = []
+                while True:
+                        b = came_from[n]
+                        if b==None or b==start:
+                                break
+                        n=b
+                        path.append(n)
+
+                print n
+                return Node(n,Node,0,0)
+	"""finds the fastest path between two points
+        @Params:
+                start(vec2): starting point
+                goal(vec2): end point
+        @Return:
+                path(Node): next node to move to
+        """
+  
+	def findPath(self,start,goal):
+		openList = []
+		closedList = []
+		currentNode = Node(start,None,0,self.getDistance(start,goal))
+		del start
+		openList.append(currentNode)
+		while len(openList) >0:
+			currentNode = self.lookForFastest(openList) #only use node with lowest cost
+			if currentNode.pos == goal:
+			#if len(closedList)>=20 or currentNode.pos == goal:
+				path = []
+				while currentNode.parent != None:#goes until reaches the start
+					path.append(currentNode)
+					currentNode = currentNode.parent
+				del openList
+				del closedList
+				if len(path) >0:
+                                        return path[len(path)-1]
+                                return True
+			openList.remove(currentNode)
+			closedList.append(currentNode)
+			for i in range(9):
+				if i==4 or i==0 or i==2 or i==6 or i==8:
+					continue#ignore current tile
+				x = currentNode.pos[0]
+				y  = currentNode.pos[1]
+				dx = (i % 3) -1
+				dy = (i / 3) -1
+				tile = self.getTile(x+dx,y+dy)
+				if tile == None or tile == Tile.void:
+					continue
+				if not self.canPassTile(tile,x+dx,y+dx,None) and not tile.id == 9:
+					#print 'solid'
+					continue
+				tilePos = (x+dx,y+dy)
+				costSoFar = currentNode.costSoFar + (self.getDistance(currentNode.pos,tilePos)+tile.getSpeed())
+				distanceToEnd = self.getDistance(tilePos,goal)
+				node = Node(tilePos,currentNode,costSoFar,distanceToEnd)
+				if self.inList(closedList,tilePos) and costSoFar >= node.costSoFar: #checks if node has already been used,or if you are going backwards
+					continue
+				if not self.inList(openList,tilePos) or costSoFar < node.costSoFar:#only add if it's not alredy there
+					openList.append(node)
+
+
+
+
+		print "No path :("
+		return False
+
 
         """sends tiles to A* worker
         @Params:
