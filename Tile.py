@@ -311,6 +311,7 @@ cactus = Tile(18,"-","tiles/cactus.png")
 sandbush = Tile(19,"-","tiles/sandbush.png")
 cactus.setSolid(True)
 grass.setChild(grass2)
+grass.setChild(grass3)
 sand.setChild(cactus)
 sand.setChild(sandbush)
 """gets the tile id from the tiles char.
