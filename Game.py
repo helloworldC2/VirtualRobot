@@ -187,6 +187,8 @@ def menu1(canvas):
                             Sounds.Plysound(False,False,True,False,False)
                             #if we are in the startmenu
                             if inStart== 1:
+                                    if multi.clicked():
+                                            gui.start(canvas,True,False,False,0,0)
                                     #if singleplayer button was clicked, start in single player mode
                                     if single.clicked():
                                             gui.start(canvas,False,False,False,0,0)
