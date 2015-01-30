@@ -225,21 +225,21 @@ def menu1(canvas):
                                         hardBox.blit()
 
                             #if email textfield was clicked, select it and unselect the other one
-                            if emailTextField.clicked():
-                                    emailTextField.select()
-                                    nameTextField.off()
+                                if emailTextField.clicked():
+                                            emailTextField.select()
+                                            nameTextField.off()
                             #if name textfield clicked
-                            if nameTextField.clicked():
-                                    nameTextField.select()
-                                    emailTextField.off()
+                                if nameTextField.clicked():
+                                            nameTextField.select()
+                                            emailTextField.off()
 
                             #if the start button was clicked
                             if startB.clicked() == 1 :
                                 pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
                                 #we are in startmenu
-                                inStart= 1
+                                inStart = 1
                                 #not in settings menu
-                                inSettings= 0
+                                inSettings = 0
 
                                 #reblit everything with the game mode buttons
                                 background.blit()
@@ -261,8 +261,8 @@ def menu1(canvas):
                             if settingsB.collide(pos):
                                 pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
 
-                                inStart= 0
-                                inSettings= 1
+                                inStart = 0
+                                inSettings = 1
                                 background.blit()
                                 transp.blit()
                                 leaderboardB.blit()
