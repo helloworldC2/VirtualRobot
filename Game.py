@@ -17,7 +17,7 @@ from Button import *
 import TickBox
 import textfield
 import Sounds
-import Box
+import RadioButton
 
 #if the script was run directly, this fnction will run
 def createCanvas() :
@@ -134,9 +134,9 @@ def menu1(canvas):
         
         nameTextField = textfield.textField(canvas,(20,180),(280,30),Config.config["name"],20)
         
-        easyBox = Box.box(canvas,(50,420),"easy")
-        medBox = Box.box(canvas,(130,420),"easy")
-        hardBox = Box.box(canvas,(210,420),"easy")
+        easyBox = RadioButton.radioButton(canvas,(50,420),"easy")
+        medBox = RadioButton.radioButton(canvas,(130,420),"easy")
+        hardBox = RadioButton.radioButton(canvas,(210,420),"easy")
         if Config.config["difficulty"]==1:easyBox.status=1
         if Config.config["difficulty"]==2:medBox.status=1
         if Config.config["difficulty"]==3:hardBox.status=1
