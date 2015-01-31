@@ -184,7 +184,8 @@ def menu1(canvas):
                         #if user pressed the left mouse button
                         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 :
                             #play click sound
-                            Sounds.Plysound(False,False,True,False,False)
+                            soundFXs = Sounds.Audio(False)    
+                            soundFXs.Plysound(False,False,True,False,False)
                             #if we are in the startmenu
                             if inStart== 1:
                                     if multi.clicked():
@@ -305,7 +306,7 @@ def menu1(canvas):
                                 bgpart.blit()
                                 soundOffB.blit()
                                 soundOnB.blit()
-                                Sounds.playMusic()        
+                                soundFXs.playMusic()       
                         
                         #if it was on
                             elif sound == 1 and soundOnB.collide(pos) == 1 :
