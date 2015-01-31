@@ -126,7 +126,7 @@ def menu1(canvas):
         settingsB.blit()
 
 #initializing the tickbox and textfields
-        emailTickBox = TickBox.tickBox(canvas,(230,330),"email")
+        emailTickBox = TickBox.tickBox(canvas,(230,330))
         if Config.config["receiveEmail"] ==True:
                 print "True"
                 emailTickBox.status = 1
@@ -134,9 +134,9 @@ def menu1(canvas):
         
         nameTextField = textfield.textField(canvas,(20,180),(280,30),Config.config["name"],20)
         
-        easyBox = RadioButton.radioButton(canvas,(50,420),"easy")
-        medBox = RadioButton.radioButton(canvas,(130,420),"easy")
-        hardBox = RadioButton.radioButton(canvas,(210,420),"easy")
+        easyBox = RadioButton.radioButton(canvas,(50,420))
+        medBox = RadioButton.radioButton(canvas,(130,420))
+        hardBox = RadioButton.radioButton(canvas,(210,420))
         if Config.config["difficulty"]==1:easyBox.status=1
         if Config.config["difficulty"]==2:medBox.status=1
         if Config.config["difficulty"]==3:hardBox.status=1
