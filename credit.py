@@ -36,6 +36,7 @@ def creditMenu(display):
                 if event.key == K_ESCAPE :
                     pygame.quit()
                     sys.exit()
+             if rY<-1200:Game.menu1(display)
         display.blit(bg,(0,0))
         display.blit(rollingCredit,(rX,rY))
         display.blit(back,(bX,bY))
