@@ -176,7 +176,8 @@ class Tile(object):
                                         t.start()
                                 self.updateAI(level,x,y)
                         if self == cactus and entity == level.player:
-                                Sounds.Plysound(False,True,False,False,False)
+                                sounFXs = Sounds.Audio(False) 
+                                sounFXs.Plysound(False,True,False,False,False)
 
                                 print "Ouch!"
                                 if entity.xa>0:

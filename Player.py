@@ -74,6 +74,7 @@ class Player(Entity.Entity):
 		self.centreY= self.y+62
 		xx = self.centreX >>5
 		yy = self.centreY >>5
+		soundFXs = Sounds.Audio(False) 
 
 		if Keyboard.keys['w']:
 			self.ya=-1
@@ -89,7 +90,7 @@ class Player(Entity.Entity):
 			VRClient.move(self.x,self.y)
 			if gui.isMultiplayer == True:
                                 Client.move(self.x,self.y,self.movingDir,self.isSwimming)
-                        sounFXs = Sounds.Audio(False) 
+                    
                         soundFXs.Plysound(True,False,False,False,False)
 		else:
 			self.isMoving = False
