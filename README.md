@@ -41,6 +41,8 @@ This project uses:
 - - In Multiplayer you can play against your friends to see who can get the highest score
 - - In AI you can observe the AI collecting treasure
 
+#####The Virtual Reality program can be found at https://github.com/helloworldC2/RobotVR
+
 #####Created By
 * Joel Bradley
 * George Claridge
