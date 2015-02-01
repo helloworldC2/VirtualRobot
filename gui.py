@@ -183,8 +183,8 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
          while delta >= 1:
              ticks+=1
              timer+=1
-             tick();
-             delta -= 1;
+             tick()
+             delta -= 1
 
          frames+=1
          render()
