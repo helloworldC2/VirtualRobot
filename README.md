@@ -32,6 +32,15 @@ This project uses:
 - [x] Make it *better*
 - [x] Make it ***the best***
 
+#####Instructions
+- Download the project
+- Run game.py
+- If you wish to receive emails based on what landmarks you find, go into Settings and enter your name and email, and tick the "Receive Emails" tickbox
+- Select which gamemode you wish to play
+- - In Single Player, you must try to get the highest score possible in the allotted time by collecting treasure
+- - In Multiplayer you can play against your friends to see who can get the highest score
+- - In AI you can observe the AI collecting treasure
+
 #####Created By
 * Joel Bradley
 * George Claridge
