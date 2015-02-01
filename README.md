@@ -14,8 +14,12 @@ Against the project criteria, we have successfully implemented:
 - Traffic lights with three different colours
 - Two robots that search for landmarks and treasure
 - An emailing system which emails the user information about the treasure they've found
+- Multiplayer
+- Innovative features such as Virtual Reality
+- A map creator and editor
 
 This project uses:
+- Object-Oriented Programming
 - Pygame
 - The A* Searching Algorithm
 - A Second Searching Algorithm, Breadth-First
