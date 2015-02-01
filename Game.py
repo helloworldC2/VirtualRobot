@@ -103,7 +103,7 @@ def menu1(canvas):
         font1.set_bold(1)
         font.set_bold(1)
         
-        text = font.render("Recieve Emails:",1,(250,250,250))
+        text = font.render("Receive Emails:",1,(250,250,250))
         text1 = font.render("Enter Email:",1,(250,250,250))
         text2 = font.render("Enter Name:",1,(250,250,250))
 
@@ -210,7 +210,7 @@ def menu1(canvas):
                                         easyBox.blit()
                                         medBox.blit()
                                         hardBox.blit()
-                                if medBox.clicked():
+                                elif medBox.clicked():
                                         Config.config["difficulty"] = 2
                                         easyBox.unCheck()
                                         medBox.check()
@@ -218,7 +218,7 @@ def menu1(canvas):
                                         easyBox.blit()
                                         medBox.blit()
                                         hardBox.blit()
-                                if hardBox.clicked():
+                                elif hardBox.clicked():
                                         Config.config["difficulty"] = 3
                                         easyBox.unCheck()
                                         medBox.unCheck()
@@ -228,13 +228,24 @@ def menu1(canvas):
                                         hardBox.blit()
 
                             #if email textfield was clicked, select it and unselect the other one
-                                if emailTextField.clicked():
+                                elif emailTextField.clicked():
                                             emailTextField.select()
                                             nameTextField.off()
                             #if name textfield clicked
-                                if nameTextField.clicked():
+                                elif nameTextField.clicked():
                                             nameTextField.select()
                                             emailTextField.off()
+                                elif (easyBox.collide(pos) or
+                                    medBox.collide(pos) or
+                                    hardBox.collide(pos) or
+                                    emailTextField.collide(pos) or
+                                    nameTextField.collide(pos) or
+                                    emailTickBox.collide(pos)):
+                                        pygame.mouse.set_cursor(*cursor.HAND_CURSOR)
+                                else :
+                                        pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
+                                    
+
 
                             #if the start button was clicked
                             if startB.clicked() == 1 :
@@ -293,7 +304,8 @@ def menu1(canvas):
                                 canvas.blit(easyTxt,(54,460))
                                 canvas.blit(medTxt,(122,460))
                                 canvas.blit(hardTxt,(213,460))
-                                
+
+                                                                
                         #if close button was clicked, window closes
                             elif closeB.collide(pos) :
                                 pygame.quit()
