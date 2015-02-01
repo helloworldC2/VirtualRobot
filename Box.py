@@ -9,13 +9,10 @@ class box(object):
         self.canv = screen
         self.x = posX
         self.y = posY
-        #self.box = pygame.image.load("buttons/box.png")
-        #self.boxTicked = pygame.image.load("buttons/box1.png")
         self.status = 0
-        
         return
-        
-    
+
+    #detects if mouse is over the box 
     def collide(self,pos) :
         rect = self.box.get_rect()
         print rect
@@ -24,7 +21,7 @@ class box(object):
         else :
             return 0
         
-    
+    #returns if the box is checked or not
     def getStatus(self):
         return self.status
 

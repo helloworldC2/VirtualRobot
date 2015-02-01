@@ -26,6 +26,9 @@ class textField :
         text = font.render(s,1,(0,0,0))
         return
 
+
+    #gets: self
+    #returns: nothing
     def blit(self):
         tmp = self.answer
         if self.isSelected():
@@ -68,13 +71,12 @@ class textField :
         self.disp.blit(text,(self.posX,self.fontY+2))
         
         pygame.display.update()
-        
-        
         return
 
+    #This class is handling the user's input in the textfield
+    #gets: key
+    #returns: nothing
     def handle(self,event):
-        
-        
         tmp = self.answer
         if self.isSelected():
             tmp += '_'
@@ -165,6 +167,9 @@ class textField :
                 self.reprint(self.answer)
         return
 
+    #This function detects if the button is over the textfield
+    #gets: self, mouse position
+    #returns: True if mouse is over, False if not
     def collide(self, pos) :
         if (pos[0] >= self.posX and pos[0] <=self.posX + self.w and
             pos[1] >= self.posY and pos[1] <= self.posY + self.h) :
@@ -173,6 +178,9 @@ class textField :
             return 0
         return
 
+    #This function detects if the textfield was clicked
+    #gets: self
+    #returns True if clicked, False if not
     def clicked(self):
         pos = pygame.mouse.get_pos()
         if self.collide(pos):
@@ -181,6 +189,9 @@ class textField :
             return 0
         return
 
+    #Tells if the textfield is selected
+    #gets: self
+    #returns: True if selected, False if not
     def isSelected(self):
         if self.selected == False:
             return 0
@@ -188,11 +199,13 @@ class textField :
             return 1
         return
 
+    #sets self.selected to True
     def select(self):
         self.selected = True
         self.reprint(self.answer)
         return
 
+    #sets self.selected to False
     def off(self):
         self.selected = False
         self.reprint(self.answer)

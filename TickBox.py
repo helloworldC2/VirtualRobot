@@ -10,9 +10,11 @@ class tickBox(Box.box):
         super(tickBox,self).__init__(screen,(posX,posY))
         self.box = pygame.image.load("buttons/box.png")
         self.boxTicked = pygame.image.load("buttons/box1.png")
-        
+        self.box.convert_alpha()
+        self.boxTicked.convert_alpha()
         return
 
+    #returns True if user clicks the box
     def clicked(self):
         pos = pygame.mouse.get_pos()
         if self.collide(pos) == 1:
@@ -28,10 +30,9 @@ class tickBox(Box.box):
                     return 1
         else:
             return 0
-        
+
+    #prints the tick box on the screen    
     def blit(self):
-        self.box.convert_alpha()
-        self.boxTicked.convert_alpha()
         if self.status == 0:
             self.canv.blit(self.box,(self.x,self.y))                    
         elif self.status == 1:
