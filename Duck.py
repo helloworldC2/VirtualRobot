@@ -6,10 +6,16 @@ import Client
 import gui
 
 
+
+def color_surface(surface, red, green, blue):
+    pxarray = pygame.PixelArray(surface)
+    pxarray.replace((255,255,255), (red,green,blue))
+    
+
 class Duck(Animal.Animal):
 
 
-    def __init__(self,level, x, y):
+    def __init__(self,level, x, y,r,g,b):
         super(Animal.Animal,self).__init__(level,x,y)
         self.x = x
         self.y = y
@@ -20,6 +26,10 @@ class Duck(Animal.Animal):
         self.basicFont = pygame.font.SysFont(None, 32)
         self.xa =0
         self.ya =0
+        self.red = r
+        self.green = g
+        self.blue = b
+        self.breedCoolDown = 0
         self.limitedToOneTile = True
         if Client.isHost == True:
             Client.sendEntity("Duck",x,y)
@@ -54,7 +64,12 @@ class Duck(Animal.Animal):
                 return True
         return False
 
+    def mate(self, level, duck):
+        duckling = Duck(level,self.x,self.y,(self.red+duck.red)/2,(self.green+duck.green)/2,(self.blue+duck.blue)/2)
+        level.entities.append(duckling)
+        self.breedCoolDown = 100
 
+        
     """Updates logic associated with entity
         @Params:
                 None
@@ -99,5 +114,7 @@ class Duck(Animal.Animal):
         """
     def render(self,screen,xoff,yoff):
         image = self.img[self.movingDir]
-
+        
+        image.convert_alpha()
+        color_surface(image, self.red, self.green, self.blue)
         screen.blit(image, (self.x-xoff,self.y-yoff))
