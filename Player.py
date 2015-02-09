@@ -96,7 +96,7 @@ class Player(Entity.Entity):
 			self.isMoving = False
 			soundFXs.Plysound(False,False,False,False,False)
 
-		if self.getTileUnder().getId() == Tile.water.getId()or self.getTileUnder().getId() == Tile.larva.getId():
+		if self.getTileUnder().getId() == Tile.water.getId():
 			self.isSwimming = True
 		else:
 			self.isSwimming = False
