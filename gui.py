@@ -81,13 +81,13 @@ def render():
 
 def populateLevel():
     destinations = []
-    for i in range(20):
+    for i in range(3):
         dx = 0
         dy = 0
         while level.getTile(dx,dy)!=Tile.water:
             dx = random.randint(0,level.width)
             dy = random.randint(0,level.height)
-        level.entities.append(Duck.Duck(level,dx<<5,dy<<5,random.randint(0,255),random.randint(0,255),random.randint(0,255)))
+        level.entities.append(Duck.Duck(level,dx<<5,dy<<5))
     dx = 0
     dy = 0
     for i in range(2):
