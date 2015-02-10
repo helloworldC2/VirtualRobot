@@ -29,7 +29,8 @@ class Duck(Animal.Animal):
         self.red = r
         self.green = g
         self.blue = b
-        self.breedCoolDown = 0
+        self.breedCoolDown = random.randint(500,5000)
+        self.deathTimer = random.randint(2000,20000)
         self.limitedToOneTile = True
         if Client.isHost == True:
             Client.sendEntity("Duck",x,y)
@@ -65,10 +66,29 @@ class Duck(Animal.Animal):
         return False
 
     def mate(self, level, duck):
-        duckling = Duck(level,self.x,self.y,(self.red+duck.red)/2,(self.green+duck.green)/2,(self.blue+duck.blue)/2)
-        level.entities.append(duckling)
-        self.breedCoolDown = 100
+        if self.breedCoolDown >0 and duck.breedCoolDown >0:return
+        for i in range(9):
+            if i==4:
+                continue#ignore current tile
+            x = self.x>>5
+            y  = self.y>>5
+            dx = (i % 3) -1
+            dy = (i / 3) -1
+            tile = level.getTile(x+dx,y+dy)
+            if tile == Tile.water:
+                    duckling = Duck(level,(x+dx)<<5,(y+dy)<<5,(self.red+duck.red)/2,(self.green+duck.green)/2,(self.blue+duck.blue)/2)
+                    level.entities.append(duckling)
+                    self.breedCoolDown = random.randint(500,5000)
+                    duck.breedCoolDown = random.randint(500,5000)
+                    print "ducks have bred",self,duck,"born at",duckling.x>>5,duckling.y>>5
+                    return
+        print "Nowhere for babby to be born :("
+           
+        
 
+    def die(self):
+        print "Duck dies RIP"
+        self.level.entities.remove(self)
         
     """Updates logic associated with entity
         @Params:
@@ -79,11 +99,25 @@ class Duck(Animal.Animal):
     def tick(self):
         global x,y
         super(Animal.Animal,self).tick()
+        self.breedCoolDown -=1
+        self.deathTimer -=1
+        if self.deathTimer <0:self.die()
         self.centreX= self.x+16
         self.centreY= self.y+16
         xx = self.centreX >>5
         yy = self.centreY >>5
-
+        couple = []
+        for e in self.level.entities:
+           # print str(e),str(self)
+            if str(e)==str(self):break
+            if e.centreX>>5 == self.centreX>>5 and e.centreY>>5 == self.centreY>>5:
+                couple.append(e)
+                
+        #print couple
+        if len(couple)>0:
+            self.mate(self.level,couple[0])
+            
+        
         if self.ticks%random.randint(1,500)==0:
             self.xa = random.randint(-1,1)
             self.ya = random.randint(-1,1)
