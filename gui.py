@@ -18,7 +18,7 @@ import Config
 
 
 
-
+defeat = False
 gameOver = False
 scorePosted = False
 """Called when the game closes to remove level.player from server"""

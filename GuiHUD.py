@@ -48,10 +48,20 @@ class GuiHUD(object):
                 text = font.render("Time: "+str(100-self.time), True, (0,0,0))
                 textpos = text.get_rect(center=(60,100))
                 screen.blit(text, textpos)
+                text2 = font.render("Health bar:", True, (0,0,0))
+                textpos2 = text.get_rect(center=(60,150))
+                screen.blit(text2, textpos2)
+        if gui.defeat==True:
+            font = pygame.font.SysFont(None, 64)
+            text1 = font.render("You Lose!", True, (0,0,0))
+            textpos1 = text.get_rect(center=(400,300))
+            screen.blit(text1, textpos1)
+
+
 
     def tick(self,ticks):
         self.time = ticks/60
-        if gui.gameOver==True:
+        if gui.gameOver==True or gui.defeat==True:
             if pygame.mouse.get_pressed()[0]==True:
                 gui.gameOver=False
                 gui.scorePosted = False
