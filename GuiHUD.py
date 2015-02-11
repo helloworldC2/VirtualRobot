@@ -19,17 +19,26 @@ class GuiHUD(object):
                     if e.score.score >= level.player.score.score:
                             font = pygame.font.SysFont(None, 64)
                             text = font.render("AI WINS", True, (0,0,0))
-                            textpos = text.get_rect(center=(400,420))
+                            textpos = text.get_rect(center=(450,420))
                             screen.blit(text, textpos)
                             return
                 except:
                     pass
-            font = pygame.font.SysFont(None, 64)
-            text = font.render("YOU WIN!", True, (0,0,0))
-            textpos = text.get_rect(center=(400,420))
-            screen.blit(text, textpos)
+            if gui.defeat == False:
+                font = pygame.font.SysFont(None, 64)
+                text = font.render("YOU WIN!", True, (0,0,0))
+                textpos = text.get_rect(center=(400,420))
+                screen.blit(text, textpos)
+            else:
+                font = pygame.font.SysFont(None, 64)
+                text1 = font.render("You Lose!", True, (0,0,0))
+                textpos1 = text.get_rect(center=(577.231,420)) 
+                screen.blit(text1, textpos1)
+                 
                         
         else:
+            pygame.draw.rect(screen,(255,0,0),(10,170,110,10))
+	        pygame.draw.rect(screen,(0,255,0),(10,170,level.player.b,10))
             text = font.render("Score: "+str(level.player.score.score), True, (0,0,0))
             textpos = text.get_rect(center=(60,60))
             screen.blit(text, textpos)
@@ -51,14 +60,8 @@ class GuiHUD(object):
                 text2 = font.render("Health bar:", True, (0,0,0))
                 textpos2 = text.get_rect(center=(60,150))
                 screen.blit(text2, textpos2)
-        if gui.defeat==True:
-            font = pygame.font.SysFont(None, 64)
-            text1 = font.render("You Lose!", True, (0,0,0))
-            textpos1 = text.get_rect(center=(400,300))
-            screen.blit(text1, textpos1)
 
-
-
+            
     def tick(self,ticks):
         self.time = ticks/60
         if gui.gameOver==True or gui.defeat==True:
