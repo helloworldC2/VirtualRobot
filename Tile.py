@@ -178,7 +178,7 @@ class Tile(object):
                         if self == cactus and entity == level.player:
                                 sounFXs = Sounds.Audio(False) 
                                 sounFXs.Plysound(False,True,False,False,False)
-
+                                entity.b -= 1 
                                 print "Ouch!"
                                 if entity.xa>0:
                                         entity.x-=4
@@ -311,6 +311,7 @@ grass3 = Tile(17,"-","tiles/grass3.png")
 cactus = Tile(18,"-","tiles/cactus.png")
 sandbush = Tile(19,"-","tiles/sandbush.png")
 larva = WaterTile(20,"L",["tiles/larva.png","tiles/waterall.png","tiles/larval.png","tiles/larvaside.png","tiles/larva2side.png","tiles/larva3side.png"])
+larva.setSpeed(2)
 cactus.setSolid(True)
 grass.setChild(grass2)
 grass.setChild(grass3)
