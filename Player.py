@@ -28,7 +28,7 @@ class Player(Entity.Entity):
 		self.ya =0
 		self.canPickUpTreasure = True
 		self.score = scoring.Score()
-		self.b = 100
+		self.b = 110
 
 
         """Determins if the entity has collided
@@ -106,8 +106,9 @@ class Player(Entity.Entity):
                                 self.b = 0
                         self.b =  self.b - 1
                         
-                if self.b == 0:
-                        gui.defeat = True
+                if self.b <= 0:
+                        gui.gameOver = True
+                        gui.defeat = True 
 
 
 
@@ -123,8 +124,6 @@ class Player(Entity.Entity):
         """
 	def render(self,screen,xoff,yoff):
 		image = self.img[self.movingDir]
-		pygame.draw.rect(screen,(255,0,0),(10,170,110,10))
-		pygame.draw.rect(screen,(0,255,0),(10,170,self.b,10))
                 if self.isSwimming:
                         source_area = pygame.Rect((0,0), (image.get_width(), image.get_height()/2))
                         screen.blit(image,(self.x-xoff,self.y-yoff+32),source_area)
