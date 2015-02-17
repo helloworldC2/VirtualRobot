@@ -122,8 +122,8 @@ class Player(Entity.Entity):
                 self.inHand.x = self.selectedTile[0]<<5
                 self.inHand.y = self.selectedTile[1]<<5
                 if Keyboard.keys['e'] and self.placeCooldown <0:
-                        self.inHand.placeInLevel()
-                        self.placeCooldown = 20
+                        if self.inHand.placeInLevel():self.placeCooldown = 20
+                        
 
 
         """Renders the entity to the screen

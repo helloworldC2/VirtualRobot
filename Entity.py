@@ -13,6 +13,7 @@ class Entity(object):
 		self.movingDir = 0
 		self.limitedToOneTile = False
 		self.canPickUpTreasure = False
+		self.entityCollidedWith = None
 		self.speed = 1
 
         """Updates logic associated with entity
@@ -100,8 +101,9 @@ class Entity(object):
 			return True
 		if lastTile != nextTile and nextTile.isSolid:
 			return True
-		for i in self.level.entitiesOnTiles:
-			if i == ((self.x + x + xa) >>5,(self.y + y + ya) >> 5):
+		for i in self.level.entities:
+			if (i.centreX>>5,i.centreY>>5) == ((self.x + x + xa) >>5,(self.y + y + ya) >> 5) and i!=self:
+                                self.entityCollidedWith = i
 				return True
 
 		return False

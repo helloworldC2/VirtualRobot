@@ -115,17 +115,13 @@ class Duck(Animal.Animal):
         self.centreY= self.y+16
         xx = self.centreX >>5
         yy = self.centreY >>5
-        couple = []
-        for e in self.level.entities:
-           # print str(e),str(self)
-            if str(e)==str(self):break
-            if e.centreX>>5 == self.centreX>>5 and e.centreY>>5 == self.centreY>>5:
-                couple.append(e)
-                
-        #print couple
-        if len(couple)>0:
-            self.mate(self.level,couple[0])
-            
+
+        
+        if self.entityCollidedWith != None:
+            try:self.mate(self.level,self.entityCollidedWith)
+            except:print "That can't mate with a duck!"
+            #print self,self.entityCollidedWith
+            self.entityCollidedWith = None
         
         if self.ticks%random.randint(1,500)==0:
             self.xa = random.randint(-1,1)
@@ -145,6 +141,8 @@ class Duck(Animal.Animal):
         else:
             self.isSwimming = False
 
+        
+        
 
     """Renders the entity to the screen
         @Params:
