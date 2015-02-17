@@ -81,7 +81,7 @@ def render():
 
 def populateLevel():
     destinations = []
-    for i in range(20):
+    for i in range(0):
         dx = 0
         dy = 0
         while level.getTile(dx,dy)!=Tile.water:

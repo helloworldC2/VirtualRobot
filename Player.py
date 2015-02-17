@@ -9,6 +9,7 @@ import scoring
 import Client
 import gui
 import Sounds
+import Duck
 
 class Player(Entity.Entity):
 
@@ -28,7 +29,10 @@ class Player(Entity.Entity):
 		self.ya =0
 		self.canPickUpTreasure = True
 		self.score = scoring.Score()
-		self.b = 110
+		self.health = 110
+		self.inHand = Duck.Duck(level,0,0,255,255,255)
+		self.selectedTile = [0,0]
+		self.placeCooldown = 0
 
 
         """Determins if the entity has collided
@@ -69,6 +73,7 @@ class Player(Entity.Entity):
         """
 	def tick(self):
                 super(Player,self).tick()
+                self.placeCooldown -=1
 		self.xa = 0
 		self.ya = 0
 		self.centreX= self.x+32
@@ -102,15 +107,23 @@ class Player(Entity.Entity):
 		else:
 			self.isSwimming = False
 		if self.getTileUnder().getId() == Tile.larva.getId():
-                        if self.b < 0:
-                                self.b = 0
-                        self.b =  self.b - 1
+                        if self.health < 0:
+                                self.health = 0
+                        self.health =  self.health - 1
                         
-                if self.b <= 0:
+                if self.health <= 0:
                         gui.gameOver = True
                         gui.defeat = True 
 
-
+                if self.movingDir == 0:self.selectedTile=[xx,yy+1]#up
+                if self.movingDir == 1:self.selectedTile=[xx,yy-3]#down
+                if self.movingDir == 2:self.selectedTile=[xx-1,yy-1]#left
+                if self.movingDir == 3:self.selectedTile=[xx+1,yy-1]#right
+                self.inHand.x = self.selectedTile[0]<<5
+                self.inHand.y = self.selectedTile[1]<<5
+                if Keyboard.keys['e'] and self.placeCooldown <0:
+                        self.inHand.placeInLevel()
+                        self.placeCooldown = 20
 
 
         """Renders the entity to the screen
@@ -132,3 +145,5 @@ class Player(Entity.Entity):
    	 	text = self.basicFont.render(self.username, True, (0,0,0))
    		textpos = text.get_rect(center=(self.x-xoff+30,self.y-yoff-20))
                 screen.blit(text, textpos)
+                
+                self.inHand.render(screen,xoff,yoff)

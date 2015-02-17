@@ -35,6 +35,15 @@ class Duck(Animal.Animal):
         if Client.isHost == True:
             Client.sendEntity("Duck",x,y)
 
+
+    def placeInLevel(self):
+        for e in self.level.entitiesOnTiles:
+            if e[0] == self.x>>5 and e[1] == self.y>>5:
+                return False
+        self.level.entities.append(Duck(self.level,self.x,self.y,self.red,self.green,self.blue))
+        print "Placed Duck"
+        return True
+        
     """Determins if the entity has collided
         @Params:
                 None
