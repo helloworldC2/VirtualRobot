@@ -23,7 +23,6 @@ class Duck(Animal.Animal):
         self.isSwimming = False
         self.isMoving = False
         self.img = [pygame.image.load("animals/duckfront.png"),pygame.transform.flip(pygame.image.load("animals/duckfront.png"),False,True),pygame.transform.rotate(pygame.image.load("animals/duckfront.png"),-90),pygame.transform.rotate(pygame.image.load("animals/duckfront.png"),90)]
-        self.basicFont = pygame.font.SysFont(None, 32)
         self.xa =0
         self.ya =0
         self.red = r
@@ -36,7 +35,13 @@ class Duck(Animal.Animal):
             Client.sendEntity("Duck",x,y)
 
 
+    def canPlace(self):
+        if self.level.getTile(self.x>>5,self.y>>5)==Tile.water:
+            return True
+        return False
+        
     def placeInLevel(self):
+        if not self.canPlace():return False
         for e in self.level.entitiesOnTiles:
             if e[0] == self.x>>5 and e[1] == self.y>>5:
                 return False
