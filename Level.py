@@ -108,8 +108,9 @@ class Level():
 		self.entitiesOnTiles  = []
                 self.ticks+=1
                 for e in self.entities:
+                        self.entitiesOnTiles.append((e.centreX>>5,e.centreY>>5))
                         e.tick()
-			self.entitiesOnTiles.append((e.centreX>>5,e.centreY>>5))
+			
 		for tile in Tile.tiles:
 			tile.tick()
 
@@ -202,8 +203,8 @@ class Level():
 	def canPassTile(self,t,x,y,entity):
 		if t.isSolid:
 			return False
-		for i in self.entitiesOnTiles:
-			if i == (x,y):
+		for i in self.entities:
+			if i.x>>5 == x and i.y>>5 ==y:
 				return False
 		return True
 
@@ -324,7 +325,7 @@ class Level():
                 start(vec2): starting point
                 goal(vec2): end point
         @Return:
-                path(Node): next node to move to
+                path(Node[]): list of nodes in path
         """
         #http://www.redblobgames.com/pathfinding/a-star/implementation.html#sec-1-1#used that for reference
 	def findPathBF(self,start,goal):
@@ -336,7 +337,8 @@ class Level():
                         current = frontier.get()
       
                         if current == goal:
-                                 break
+                                print "end reached"
+                                break
                         for i in range(9):
 				if i==4 or i==0 or i==2 or i==6 or i==8:
 					continue#ignore current tile
@@ -355,9 +357,6 @@ class Level():
                                      frontier.put(tilePos)
                                      #print "Added node",tilePos
                                      came_from[tilePos] = current
-
-               
-                print came_from.values()[0],"start",start,"goal",goal
                 n = current
                 path = []
                 while True:
@@ -367,8 +366,8 @@ class Level():
                         n=b
                         path.append(n)
 
-                print n
-                return Node(n,Node,0,0)
+                return path
+               
      
 	"""finds the fastest path between two points
         @Params:
@@ -431,8 +430,21 @@ class Level():
         def willBlockTreasure(self,x,y):
                 if self.paths=={}:
                         for t in gui.treasureLocations:
-                                self.paths[t] = []
+                                self.paths[t] = self.findPathBF((1,1),(t[0]>>5,t[1]>>5))
+                                if self.paths[t]==False:
+                                        print "treasure at",t,"was blocked from the off, implement something to stop this!"
                         print self.paths
+                for t in self.paths:
+                        for node in self.paths[t]:
+                                print node,(x,y)
+                                if node == (x,y):
+                                        print "potential blokage",node
+                                        path = self.findPathBF((1,1),(t[0]>>5,t[1]>>5))
+                                        print path
+                                        if  path == None:
+                                                return False
+                                        else:
+                                                self.paths[t] = path
                 return False
                 
         

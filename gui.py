@@ -96,19 +96,19 @@ def populateLevel():
         level.entities.append(Duck.Duck(level,dx<<5,dy<<5,random.randint(0,255),random.randint(0,255),random.randint(0,255)))
     dx = 0
     dy = 0
-    for i in range(2):
-        while level.getTile(dx,dy)!=Tile.water:
-            dx = random.randint(0,level.width)
-            dy = random.randint(0,level.height)
-        treasureLocations.append((dx<<5,dy<<5))
-        level.setTile(dx,dy,Tile.landmark1)
-        dx = 0
-        dy = 0
-        while level.getTile(dx,dy)!=Tile.sand:
-            dx = random.randint(0,level.width)
-            dy = random.randint(0,level.height)
-        treasureLocations.append((dx<<5,dy<<5))
-        level.setTile(dx,dy,Tile.landmark2)
+    for i in range(1):
+##        while level.getTile(dx,dy)!=Tile.water:
+##            dx = random.randint(0,level.width)
+##            dy = random.randint(0,level.height)
+##        treasureLocations.append((dx<<5,dy<<5))
+##        level.setTile(dx,dy,Tile.landmark1)
+##        dx = 0
+##        dy = 0
+##        while level.getTile(dx,dy)!=Tile.sand:
+##            dx = random.randint(0,level.width)
+##            dy = random.randint(0,level.height)
+##        treasureLocations.append((dx<<5,dy<<5))
+##        level.setTile(dx,dy,Tile.landmark2)
         dx = 0
         dy = 0
         while level.getTile(dx,dy)!=Tile.grass:
