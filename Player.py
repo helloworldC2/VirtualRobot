@@ -10,6 +10,7 @@ import Client
 import gui
 import Sounds
 import Duck
+import StaticEntity
 
 class Player(Entity.Entity):
 
@@ -30,9 +31,11 @@ class Player(Entity.Entity):
 		self.canPickUpTreasure = True
 		self.score = scoring.Score()
 		self.health = 110
-		self.inHand = Duck.Duck(level,0,0,255,255,255)
+		#self.inHand = Duck.Duck(level,0,0,255,255,255)
+		self.inHand = StaticEntity.StaticEntity(level,0,0)
 		self.selectedTile = [0,0]
 		self.placeCooldown = 0
+		
 
 
         """Determins if the entity has collided
@@ -77,7 +80,7 @@ class Player(Entity.Entity):
 		self.xa = 0
 		self.ya = 0
 		self.centreX= self.x+32
-		self.centreY= self.y+62
+		self.centreY= self.y+62                        
 		xx = self.centreX >>5
 		yy = self.centreY >>5
 		soundFXs = Sounds.Audio(False) 
@@ -119,8 +122,13 @@ class Player(Entity.Entity):
                 if self.movingDir == 1:self.selectedTile=[xx,yy-3]#down
                 if self.movingDir == 2:self.selectedTile=[xx-1,yy-1]#left
                 if self.movingDir == 3:self.selectedTile=[xx+1,yy-1]#right
-                self.inHand.x = self.selectedTile[0]<<5
-                self.inHand.y = self.selectedTile[1]<<5
+                if self.selectedTile[0]<<5 != self.inHand.x or self.selectedTile[1]<<5!=self.inHand.y:
+                        self.inHand.x = self.selectedTile[0]<<5
+                        self.inHand.y = self.selectedTile[1]<<5
+                        self.inHand.setCanPlace()
+                else:
+                        self.inHand.x = self.selectedTile[0]<<5
+                        self.inHand.y = self.selectedTile[1]<<5
                 if Keyboard.keys['e'] and self.placeCooldown <0:
                         if self.inHand.placeInLevel():self.placeCooldown = 20
                         
@@ -150,7 +158,7 @@ class Player(Entity.Entity):
                 s = pygame.Surface((32,32), pygame.SRCALPHA)   
                                          
                 
-                if not self.inHand.canPlace():
+                if not self.inHand.canPlace:
                         s.fill((255,0,0,128))
                         screen.blit(s, (self.inHand.x-xoff,self.inHand.y-yoff))
                 else:

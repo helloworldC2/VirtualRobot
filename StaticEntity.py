@@ -5,6 +5,7 @@ import Keyboard
 import random
 import Client
 import gui
+import copy
 
 
 class StaticEntity(Entity.Entity):
@@ -16,8 +17,31 @@ class StaticEntity(Entity.Entity):
 		self.y = y
 		self.id = len(level.entities)
 		self.basicFont = pygame.font.SysFont(None, 32)
-		self.blocksPath = False
+		self.blocksPath = True
+		self.img = pygame.image.load("tiles/wall.png")
+		self.canPlace = True
 		
+
+
+        def setCanPlace(self):
+                for e in self.level.entities:
+                    if e.x == self.x and e.y == self.y:
+                        self.canPlace = False
+                        return
+                if self.blocksPath == True:
+                        if self.level.willBlockTreasure(self.x>>5,self.y>>5):
+                                self.canPlace = False
+                                return
+                self.canPlace = True
+                       
+        
+        def placeInLevel(self):
+                if self.canPlace:
+                        self.level.entities.append(copy.copy(self))
+                        print "Placed Duck"
+                        self.setCanPlace()
+                        return True
+                return False
 
         """Determins if the entity has collided
         @Params:

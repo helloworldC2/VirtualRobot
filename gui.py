@@ -21,6 +21,13 @@ import Config
 defeat = False
 gameOver = False
 scorePosted = False
+treasureLocations = []#master list that holds the locations of all the treasures
+#holds them in the format (x,y)  !!!!Make sure to update when treasure is found or placed!!!!
+def removeTreasure(loc):
+    for t in treasureLocations:
+        if t == loc:
+            treasureLocations.remove(t)
+            return
 """Called when the game closes to remove level.player from server"""
 def quitGame():
     print "Exiting!"
@@ -80,7 +87,6 @@ def render():
 
 
 def populateLevel():
-    destinations = []
     for i in range(0):
         dx = 0
         dy = 0
@@ -94,26 +100,26 @@ def populateLevel():
         while level.getTile(dx,dy)!=Tile.water:
             dx = random.randint(0,level.width)
             dy = random.randint(0,level.height)
-        destinations.append((dx<<5,dy<<5))
+        treasureLocations.append((dx<<5,dy<<5))
         level.setTile(dx,dy,Tile.landmark1)
         dx = 0
         dy = 0
         while level.getTile(dx,dy)!=Tile.sand:
             dx = random.randint(0,level.width)
             dy = random.randint(0,level.height)
-        destinations.append((dx<<5,dy<<5))
+        treasureLocations.append((dx<<5,dy<<5))
         level.setTile(dx,dy,Tile.landmark2)
         dx = 0
         dy = 0
         while level.getTile(dx,dy)!=Tile.grass:
             dx = random.randint(0,level.width)
             dy = random.randint(0,level.height)
-        destinations.append((dx<<5,dy<<5))
+        treasureLocations.append((dx<<5,dy<<5))
         level.setTile(dx,dy,Tile.landmark3)
 
     if hasAI==True:
         for i in range(numAI):
-            level.entities.append(RobotAI.RobotAI(level,random.randint(0,level.width<<5),random.randint(0,level.width<<5),destinations,difficulty))
+            level.entities.append(RobotAI.RobotAI(level,random.randint(0,level.width<<5),random.randint(0,level.width<<5),treasureLocations,difficulty))
 
 def startServer(players,console):
     if console==True:

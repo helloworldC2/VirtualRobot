@@ -156,6 +156,7 @@ class Tile(object):
                 if entity.canPickUpTreasure==True:
                         if self == landmark1:
                                 level.setTile(x,y,Treasure3)
+                                gui.removeTreasure((x<<5,y<<5))
                                 entity.score.incrementScore()
                                 if entity == level.player:
                                         t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
@@ -163,6 +164,7 @@ class Tile(object):
                                 self.updateAI(level,x,y)
                         if self == landmark2:
                                 level.setTile(x,y,Treasure2)
+                                gui.removeTreasure((x<<5,y<<5))
                                 entity.score.incrementScore()
                                 if entity == level.player:
                                         t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
@@ -170,6 +172,7 @@ class Tile(object):
                                 self.updateAI(level,x,y)
                         if self == landmark3:
                                 level.setTile(x,y,Treasure1)
+                                gui.removeTreasure((x<<5,y<<5))
                                 entity.score.incrementScore()
                                 if entity == level.player:
                                         t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
