@@ -142,8 +142,18 @@ class Player(Entity.Entity):
                         screen.blit(image,(self.x-xoff,self.y-yoff+32),source_area)
                 else:
                         screen.blit(image, (self.x-xoff,self.y-yoff))
+                         
    	 	text = self.basicFont.render(self.username, True, (0,0,0))
    		textpos = text.get_rect(center=(self.x-xoff+30,self.y-yoff-20))
                 screen.blit(text, textpos)
-                
                 self.inHand.render(screen,xoff,yoff)
+                s = pygame.Surface((32,32), pygame.SRCALPHA)   
+                                         
+                
+                if not self.inHand.canPlace():
+                        s.fill((255,0,0,128))
+                        screen.blit(s, (self.inHand.x-xoff,self.inHand.y-yoff))
+                else:
+                        s.fill((0,255,0,128))
+                        screen.blit(s, (self.inHand.x-xoff,self.inHand.y-yoff))
+                
