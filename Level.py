@@ -439,6 +439,7 @@ class Level():
                                         print "treasure at",t,"was blocked from the off, implement something to stop this!"
                 for t in self.paths:
                         index = 0
+                        if self.paths[t] ==False:continue
                         for node in self.paths[t]:
                                 index+=1
                                 if node.pos == (x,y):
@@ -454,6 +455,7 @@ class Level():
                                                 return True
                                         if updatePath:
                                                 self.paths[t] = path
+                                        return False
                 return False
 
 
