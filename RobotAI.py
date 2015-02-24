@@ -95,12 +95,12 @@ class RobotAI(Entity.Entity):
 
 		if self.ticks%30==0:
                         for node in self.level.paths[self.destination]:
-                                if node.pos == (xx,yy):
+                                if node.pos == (self.x>>5,self.y>>5):
                                         nextNode = self.level.paths[self.destination].index(node)-1
                         try:
                                 self.path = self.level.paths[self.destination][nextNode]
                         except:
-                                print "arrived most likely"
+                                print "arrived, or just lost (probably lost)"
 			
 
 		if self.path==True:

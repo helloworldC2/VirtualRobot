@@ -438,10 +438,17 @@ class Level():
                                 if self.paths[t]==False:
                                         print "treasure at",t,"was blocked from the off, implement something to stop this!"
                 for t in self.paths:
+                        index = 0
                         for node in self.paths[t]:
+                                index+=1
                                 if node.pos == (x,y):
                                         self.entities.append(e)
-                                        path = self.findPathAStar(spawnLocation,(t[0]>>5,t[1]>>5))
+                                        if updatePath == True:
+                                                path = self.findPathAStar(spawnLocation,(t[0]>>5,t[1]>>5))#probably don't need to check the whole path unless updating
+                                        else:
+                                                prevNode = self.paths[t][index+1]
+                                                path = self.findPathAStar((prevNode.pos[0],prevNode.pos[1]),(t[0]>>5,t[1]>>5))#quickly checks if there could be a new path
+                                               
                                         self.entities.remove(e)
                                         if  path == False:
                                                 return True

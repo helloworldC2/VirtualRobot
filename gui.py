@@ -96,7 +96,7 @@ def populateLevel():
         level.entities.append(Duck.Duck(level,dx<<5,dy<<5,random.randint(0,255),random.randint(0,255),random.randint(0,255)))
     dx = 0
     dy = 0
-    for i in range(1):
+    for i in range(2):
 ##        while level.getTile(dx,dy)!=Tile.water:
 ##            dx = random.randint(0,level.width)
 ##            dy = random.randint(0,level.height)
