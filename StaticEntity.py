@@ -29,7 +29,7 @@ class StaticEntity(Entity.Entity):
                         self.canPlace = False
                         return
                 if self.blocksPath == True:
-                        if self.level.willBlockTreasure(self.x>>5,self.y>>5):
+                        if self.level.willBlockTreasure(self,self.x>>5,self.y>>5,True):
                                 self.canPlace = False
                                 return
                 self.canPlace = True
@@ -38,8 +38,10 @@ class StaticEntity(Entity.Entity):
         def placeInLevel(self):
                 if self.canPlace:
                         self.level.entities.append(copy.copy(self))
-                        print "Placed Duck"
+                        print "Placed Entity"
                         self.setCanPlace()
+                        print self.x>>5,self.y>>5
+                        self.level.willBlockTreasure(self,self.x>>5,self.y>>5,True)#update paths
                         return True
                 return False
 
@@ -77,4 +79,4 @@ class StaticEntity(Entity.Entity):
 
         """
 	def render(self,screen,xoff,yoff):
-            screen.blit(self.img, (self.x-xoff+16,self.y-yoff+16))
+            screen.blit(self.img, (self.x-xoff,self.y-yoff))
