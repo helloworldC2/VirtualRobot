@@ -118,8 +118,8 @@ def populateLevel():
         level.setTile(dx,dy,Tile.landmark3)
 
     if hasAI==True:
-        for i in range(numAI):
-            level.entities.append(RobotAI.RobotAI(level,random.randint(0,level.width<<5),random.randint(0,level.width<<5),treasureLocations,difficulty))
+        for i in range(1):
+            level.entities.append(RobotAI.RobotAI(level,32,32,treasureLocations,difficulty))
 
 def startServer(players,console):
     if console==True:

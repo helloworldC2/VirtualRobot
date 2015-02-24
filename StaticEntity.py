@@ -29,7 +29,7 @@ class StaticEntity(Entity.Entity):
                         self.canPlace = False
                         return
                 if self.blocksPath == True:
-                        if self.level.willBlockTreasure(self,self.x>>5,self.y>>5,True):
+                        if self.level.willBlockTreasure(self,self.x>>5,self.y>>5,False):
                                 self.canPlace = False
                                 return
                 self.canPlace = True

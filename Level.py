@@ -305,7 +305,7 @@ class Level():
 				tile = self.getTile(x+dx,y+dy)
 				if tile == None or tile == Tile.void:
 					continue
-				if not self.canPassTile(tile,x+dx,y+dx,None) and not tile.id == 9:
+				if not self.canPassTile(tile,x+dx,y+dy,None) and not tile.id == 9:
 					#print 'solid'
 					continue
 				tilePos = (x+dx,y+dy)
@@ -367,7 +367,7 @@ class Level():
                         if b==None or b==start:
                                 break
                         n=b
-                        path.append(n)
+                        path.append(Node(n,None,0,0))
 
                 return path
 
@@ -440,15 +440,12 @@ class Level():
                 for t in self.paths:
                         for node in self.paths[t]:
                                 if node.pos == (x,y):
-                                        print "potential blockage",node.pos
                                         self.entities.append(e)
                                         path = self.findPathAStar(spawnLocation,(t[0]>>5,t[1]>>5))
                                         self.entities.remove(e)
                                         if  path == False:
-                                                print "no possible path"
                                                 return True
                                         if updatePath:
-                                                print "change path"
                                                 self.paths[t] = path
                 return False
 

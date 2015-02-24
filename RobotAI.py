@@ -94,10 +94,14 @@ class RobotAI(Entity.Entity):
 		yy = self.centreY >>5
 
 		if self.ticks%30==0:
-			if self.level.hasAStarWorker:
-				self.level.requestAStar(0,(xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
-			else:
-				self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
+                        for node in self.level.paths[self.destination]:
+                                if node.pos == (xx,yy):
+                                        nextNode = self.level.paths[self.destination].index(node)-1
+                        try:
+                                self.path = self.level.paths[self.destination][nextNode]
+                        except:
+                                print "arrived most likely"
+			
 
 		if self.path==True:
 			self.destination = self.getClosestDestination(self.destinations,True)
