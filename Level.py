@@ -166,6 +166,10 @@ class Level():
 
 		for e in self.entities:
 			e.render(screen,xoff,yoff)
+		for p in self.paths:
+                        for node in range(len(self.paths[p])-1):
+                                pygame.draw.line(screen, (0, 0, 255), ((self.paths[p][node].pos[0]<<5)+16-xoff,((self.paths[p][node].pos[1]<<5)+16-yoff)), ((self.paths[p][node+1].pos[0]<<5)+16-xoff,(self.paths[p][node+1].pos[1]<<5)+16-yoff))
+		
 
         """changes to tile in level.tiles at index x+(y*level.width) to
            tile.id
@@ -270,7 +274,7 @@ class Level():
                 start(vec2): starting point
                 goal(vec2): end point
         @Return:
-                path(Node): next node to move to
+                path(Node[]): next node to move to
         """
 	def findPathAStar(self,start,goal):
 		openList = []
@@ -288,9 +292,7 @@ class Level():
 					currentNode = currentNode.parent
 				del openList
 				del closedList
-				if len(path) >0:
-                                        return path[len(path)-1]
-                                return True
+				return path
 			openList.remove(currentNode)
 			closedList.append(currentNode)
 			for i in range(9):
@@ -428,23 +430,25 @@ class Level():
 		return False
 
 
-        def willBlockTreasure(self,x,y):
+        def willBlockTreasure(self,e,x,y,updatePath):
+                spawnLocation = (1,1)
                 if self.paths=={}:
                         for t in gui.treasureLocations:
-                                self.paths[t] = self.findPathBF((1,1),(t[0]>>5,t[1]>>5))
+                                self.paths[t] = self.findPathAStar(spawnLocation,(t[0]>>5,t[1]>>5))
                                 if self.paths[t]==False:
                                         print "treasure at",t,"was blocked from the off, implement something to stop this!"
-                        print self.paths
                 for t in self.paths:
                         for node in self.paths[t]:
-                                print node,(x,y)
-                                if node == (x,y):
-                                        print "potential blokage",node
-                                        path = self.findPathBF((1,1),(t[0]>>5,t[1]>>5))
-                                        print path
-                                        if  path == None:
-                                                return False
-                                        else:
+                                if node.pos == (x,y):
+                                        print "potential blockage",node.pos
+                                        self.entities.append(e)
+                                        path = self.findPathAStar(spawnLocation,(t[0]>>5,t[1]>>5))
+                                        self.entities.remove(e)
+                                        if  path == False:
+                                                print "no possible path"
+                                                return True
+                                        if updatePath:
+                                                print "change path"
                                                 self.paths[t] = path
                 return False
 
