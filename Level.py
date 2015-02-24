@@ -26,7 +26,7 @@ class Level():
 		self.hasChanged = True
 		self.tileImage = 0
 		self.paths = {}#used for testing if traps can be placed
-		
+
 ##		self.workers = 1	#number of worker
 ##		self.addr_list = []	#list of client addresses and connections
 ##		self.HOST = ''
@@ -110,7 +110,7 @@ class Level():
                 for e in self.entities:
                         self.entitiesOnTiles.append((e.centreX>>5,e.centreY>>5))
                         e.tick()
-			
+
 		for tile in Tile.tiles:
 			tile.tick()
 
@@ -180,7 +180,8 @@ class Level():
                 if x < 0 or y < 0 or x > self.width or y > self.height:
 			return
 		self.tiles[x+(y*self.width)] = tile.id
-		Client.setTile(tile.id,x,y)
+		if gui.isMultiplayer:
+			Client.setTile(tile.id,x,y)
 		self.hasChanged = True
 
         """gets the tile  form level.tiles
@@ -319,7 +320,7 @@ class Level():
 
 		print "No path :("
 		return False
-		
+
 	"""finds the fastest path between two points
         @Params:
                 start(vec2): starting point
@@ -335,7 +336,7 @@ class Level():
                 came_from[start] = None
 		while not frontier.empty():
                         current = frontier.get()
-      
+
                         if current == goal:
                                 print "end reached"
                                 break
@@ -367,8 +368,8 @@ class Level():
                         path.append(n)
 
                 return path
-               
-     
+
+
 	"""finds the fastest path between two points
         @Params:
                 start(vec2): starting point
@@ -376,7 +377,7 @@ class Level():
         @Return:
                 path(Node): next node to move to
         """
-  
+
 	def findPath(self,start,goal):
 		openList = []
 		closedList = []
@@ -446,8 +447,8 @@ class Level():
                                         else:
                                                 self.paths[t] = path
                 return False
-                
-        
+
+
         """sends tiles to A* worker
         @Params:
                 None

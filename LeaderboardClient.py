@@ -26,7 +26,10 @@ def slightlyUnscrammbleKey(key):
 
 key = "03609008-99c1-51cf-9cd8-878fe78581c9"
 client = Client(slightlyUnscrammbleKey(key))
-client.ping().raise_for_status()
+try:
+    client.ping().raise_for_status()
+except:
+    print "Can't contact leaderboard sever"
 
 
 
