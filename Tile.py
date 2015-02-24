@@ -181,7 +181,7 @@ class Tile(object):
                         if self == cactus and entity == level.player:
                                 sounFXs = Sounds.Audio(False) 
                                 sounFXs.Plysound(False,True,False,False,False)
-                                entity.b -= 1 
+                                entity.health -= 1 
                                 print "Ouch!"
                                 if entity.xa>0:
                                         entity.x-=4
