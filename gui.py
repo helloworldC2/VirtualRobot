@@ -97,25 +97,25 @@ def populateLevel():
     dx = 0
     dy = 0
     for i in range(2):
-        while level.getTile(dx,dy)!=Tile.water:
+           while level.getTile(dx,dy)!=Tile.water:
             dx = random.randint(0,level.width)
             dy = random.randint(0,level.height)
         treasureLocations.append((dx<<5,dy<<5))
-        level.setTile(dx,dy,Tile.landmark1)
+        level.setTile(dx,dy,Tile.Treasure1)
         dx = 0
         dy = 0
         while level.getTile(dx,dy)!=Tile.sand:
             dx = random.randint(0,level.width)
             dy = random.randint(0,level.height)
         treasureLocations.append((dx<<5,dy<<5))
-        level.setTile(dx,dy,Tile.landmark2)
+        level.setTile(dx,dy,Tile.Treasure2)
         dx = 0
         dy = 0
         while level.getTile(dx,dy)!=Tile.grass:
             dx = random.randint(0,level.width)
             dy = random.randint(0,level.height)
         treasureLocations.append((dx<<5,dy<<5))
-        level.setTile(dx,dy,Tile.landmark3)
+        level.setTile(dx,dy,Tile.Treasure3)
 
     if hasAI==True:
         for i in range(1):
