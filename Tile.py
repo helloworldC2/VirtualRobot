@@ -154,7 +154,7 @@ class Tile(object):
 
         def bump(self,level,entity,x,y):
                 if entity.canPickUpTreasure==True:
-                        if self == landmark1:
+                        if self == Treasure1:
                                 level.setTile(x,y,Treasure3)
                                 gui.removeTreasure((x<<5,y<<5))
                                 entity.score.incrementScore()
@@ -162,7 +162,7 @@ class Tile(object):
                                         t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
                                         t.start()
                                 self.updateAI(level,x,y)
-                        if self == landmark2:
+                        if self == Treasure2:
                                 level.setTile(x,y,Treasure2)
                                 gui.removeTreasure((x<<5,y<<5))
                                 entity.score.incrementScore()
@@ -170,7 +170,7 @@ class Tile(object):
                                         t = threading.Thread(target=EmailClient.sendRandomEmail,args=(Config.config['email'],))
                                         t.start()
                                 self.updateAI(level,x,y)
-                        if self == landmark3:
+                        if self == Treasure3:
                                 level.setTile(x,y,Treasure1)
                                 gui.removeTreasure((x<<5,y<<5))
                                 entity.score.incrementScore()
@@ -303,17 +303,23 @@ start1 = Tile(7,"S","tiles/start.png")
 start2 = Tile(8,"R","tiles/start.png")
 amberlight = Tile(9,"m","tiles/amberlight.png")
 amberlight.setSolid(True)
-Treasure1 = Tile(10,"z","tiles/TreasureChest.png")
-Treasure2 = Tile(11,"x","tiles/sandT.png")
-Treasure3 = Tile(12,"y","tiles/waterT.png")
-landmark1 = Tile(13,"X","tiles/waterLM.png")
-landmark2= Tile(14,"Y","tiles/sandLM.png")
-landmark3  = Tile(15,"P","tiles/grassLM.png")
-grass2  = Tile(16,"P","tiles/grass2.png")
-grass3 = Tile(17,"-","tiles/grass3.png")
-cactus = Tile(18,"-","tiles/cactus.png")
-sandbush = Tile(19,"-","tiles/sandbush.png")
-larva = WaterTile(20,"L",["tiles/larva.png","tiles/waterall.png","tiles/larval.png","tiles/larvaside.png","tiles/larva2side.png","tiles/larva3side.png"])
+Treasure1 = Tile(10,"z","tiles/broken _chest.png")
+Treasure2 = Tile(11,"x","tiles/Burnt_chest.png")
+Treasure3 = Tile(12,"y","tiles/Dark_chest.png")
+Treasure4 = Tile(13,"X","tiles/Glass_chest.png")
+Treasure5 = Tile(14,"Y","tiles/Gold_chest.png")
+Treasure6 = Tile(15,"P","tiles/Normal_chest.png")
+Treasure7 = Tile(16,"M","tiles/OverFlowChest.png")
+Treasure8 = Tile(17,"p","tiles/Crystal_chest.png")
+Treasure9 = Tile(18,"Z","tiles/sandT.png")
+Treasure10 = Tile(19,"f","tiles/Grown_over_chest.png")
+
+
+grass2  = Tile(20,"-","tiles/grass2.png")
+grass3 = Tile(21,"-","tiles/grass3.png")
+cactus = Tile(22,"-","tiles/cactus.png")
+sandbush = Tile(23,"-","tiles/sandbush.png")
+larva = WaterTile(24,"L",["tiles/larva.png","tiles/waterall.png","tiles/larval.png","tiles/larvaside.png","tiles/larva2side.png","tiles/larva3side.png"])
 larva.setSpeed(2)
 cactus.setSolid(True)
 grass.setChild(grass2)
