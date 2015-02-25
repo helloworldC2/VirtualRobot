@@ -84,7 +84,7 @@ def render():
     level.render(screen,xoff,yoff)
     for p in Client.players:
         p.render(screen,xoff,yoff)
-    endLevel.render(screen,xoff,yoff-300)
+    endLevel.render(screen,-level.player.x+(6<<5)+xoff,-level.player.y+(10<<5)+yoff)
     level.player.render(screen,xoff,yoff)
     
     hud.render(screen,level,basicFont)
@@ -102,7 +102,7 @@ def populateLevel():
     dx = 0
     dy = 0
     for i in range(2):
-           while level.getTile(dx,dy)!=Tile.water:
+        while level.getTile(dx,dy)!=Tile.water:
             dx = random.randint(0,level.width)
             dy = random.randint(0,level.height)
         treasureLocations.append((dx<<5,dy<<5))
@@ -170,7 +170,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
 
 
     level.loadLevelFromFile("levels/Arena.txt")
-    endLevel.loadLevelFromFile("levels/oldArena.txt")
+    endLevel.loadLevelFromFile("levels/sort.txt")
     if isMultiplayer == False:
         populateLevel()
 
