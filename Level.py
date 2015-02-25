@@ -167,6 +167,7 @@ class Level():
 		for e in self.entities:
 			e.render(screen,xoff,yoff)
 		for p in self.paths:
+                        if self.paths[p]==False:continue
                         for node in range(len(self.paths[p])-1):
                                 pygame.draw.line(screen, (0, 0, 255), ((self.paths[p][node].pos[0]<<5)+16-xoff,((self.paths[p][node].pos[1]<<5)+16-yoff)), ((self.paths[p][node+1].pos[0]<<5)+16-xoff,(self.paths[p][node+1].pos[1]<<5)+16-yoff))
 		
@@ -455,7 +456,7 @@ class Level():
                                                 return True
                                         if updatePath:
                                                 self.paths[t] = path
-                                        return False
+                
                 return False
 
 
