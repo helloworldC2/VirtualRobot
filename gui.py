@@ -23,6 +23,8 @@ gameOver = False
 scorePosted = False
 treasureLocations = []#master list that holds the locations of all the treasures
 #holds them in the format (x,y)  !!!!Make sure to update when treasure is found or placed!!!!
+
+
 def removeTreasure(loc):
     for t in treasureLocations:
         if t == loc:
@@ -53,8 +55,10 @@ def tick():
         
     if Client.isHost == True and isMultiplayer == True:
         level.tick()
+        endLevel.tick()
     if isMultiplayer == False and gameOver==False:
         level.tick()
+        endLevel.tick()
     if gameOver==False:
         level.player.tick()
     
@@ -80,8 +84,9 @@ def render():
     level.render(screen,xoff,yoff)
     for p in Client.players:
         p.render(screen,xoff,yoff)
-
+    endLevel.render(screen,xoff,yoff-300)
     level.player.render(screen,xoff,yoff)
+    
     hud.render(screen,level,basicFont)
     pygame.display.flip()
 
@@ -128,7 +133,7 @@ def startServer(players,console):
         subprocess.call(['javaw', '-jar', 'server.jar', players])#for no console
 
 def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
-    global screen, height, width, size, level,hud,basicFont,isMultiplayer,hasAI,numAI,difficulty,timer
+    global screen, height, width, size, level,hud,basicFont,isMultiplayer,hasAI,numAI,difficulty,timer,endLevel
     screen = canvas
     pygame.init()
     pygame.font.init()
@@ -142,6 +147,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     y = random.randint(0,600)
     hud = GuiHUD.GuiHUD()
     level = Level.Level(32,32)
+    endLevel = Level.Level(32,32)
     username = Config.config["name"]
     level.player = Player.Player(level,username,x,y)
     isMultiplayer = multiplayer
@@ -164,7 +170,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
 
 
     level.loadLevelFromFile("levels/Arena.txt")
-
+    endLevel.loadLevelFromFile("levels/oldArena.txt")
     if isMultiplayer == False:
         populateLevel()
 

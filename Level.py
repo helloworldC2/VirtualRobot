@@ -154,14 +154,12 @@ class Level():
                 None
         """
 	def render(self,screen,xoff,yoff):
-
 		if self.tileImage==0 or self.hasChanged==True:
                         self.hasChanged = False
 			self.tileImage = pygame.Surface((self.width<<5,self.height<<5))
-			if self.player != None:
-				for x in range(self.width):
-		                        for y in range(self.height):
-	                                        self.getTile(x,y).render(self,self.tileImage,(x<<5),(y<<5),x,y)
+			for x in range(self.width):
+		                for y in range(self.height):
+	                                self.getTile(x,y).render(self,self.tileImage,(x<<5),(y<<5),x,y)
 		screen.blit(self.tileImage,(-xoff,-yoff))
 
 		for e in self.entities:
