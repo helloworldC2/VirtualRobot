@@ -10,6 +10,7 @@ import namepicker
 import Player
 import Tile
 import RobotAI
+import SorterRobot
 import Animal
 import Duck
 import GuiHUD
@@ -29,7 +30,10 @@ def removeTreasure(loc):
     for t in treasureLocations:
         if t == loc:
             treasureLocations.remove(t)
-            return
+    if len(treasureLocations)==0:
+        gameOver = True
+    
+        
 """Called when the game closes to remove level.player from server"""
 def quitGame():
     print "Exiting!"
@@ -171,6 +175,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
 
     level.loadLevelFromFile("levels/Arena.txt")
     endLevel.loadLevelFromFile("levels/sort.txt")
+    endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
     if isMultiplayer == False:
         populateLevel()
 
