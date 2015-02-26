@@ -155,7 +155,7 @@ class Tile(object):
         def bump(self,level,entity,x,y):
                 if entity.canPickUpTreasure==True:
                         if self == Treasure1:
-                                level.setTile(x,y,Treasure3)
+                                level.setTile(x,y,water)
                                 gui.removeTreasure((x<<5,y<<5))
                                 entity.score.incrementScore()
                                 if entity == level.player:
@@ -163,7 +163,7 @@ class Tile(object):
                                         t.start()
                                 self.updateAI(level,x,y)
                         if self == Treasure2:
-                                level.setTile(x,y,Treasure2)
+                                level.setTile(x,y,sand)
                                 gui.removeTreasure((x<<5,y<<5))
                                 entity.score.incrementScore()
                                 if entity == level.player:
@@ -171,7 +171,7 @@ class Tile(object):
                                         t.start()
                                 self.updateAI(level,x,y)
                         if self == Treasure3:
-                                level.setTile(x,y,Treasure1)
+                                level.setTile(x,y,grass)
                                 gui.removeTreasure((x<<5,y<<5))
                                 entity.score.incrementScore()
                                 if entity == level.player:
@@ -179,9 +179,9 @@ class Tile(object):
                                         t.start()
                                 self.updateAI(level,x,y)
                         if self == cactus and entity == level.player:
-                                sounFXs = Sounds.Audio(False) 
+                                sounFXs = Sounds.Audio(False)
                                 sounFXs.Plysound(False,True,False,False,False)
-                                entity.health -= 1 
+                                entity.health -= 1
                                 print "Ouch!"
                                 if entity.xa>0:
                                         entity.x-=4
@@ -193,15 +193,18 @@ class Tile(object):
                                         entity.y+=4
         def updateAI(self,level,x,y):
                 for e in level.entities:
-                        if e.canPickUpTreasure:     
+                        if e.canPickUpTreasure:
                                 for d in e.destinations:
-                                        print d[0],x<<5, d[1],y<<5
-                                        if d[0]==x<<5 and d[1]==y<<5:
+                                        print d[0]>>5,x , d[1]>>5,y
+                                        if d[0]>>5==x and d[1]>>5==y:
                                                 e.destinations.remove(d)
+                                                level.paths.remove(d)
+                                                gui.removeTreasure(d)
+                                                e.inHand = "treasasdasd"#temp thing
                                                 print "Removed",d
                                 if len(e.destinations) >0:
-                                        e.destination = e.getClosestDestination(e.destinations,False)
-                                        print "Changed destination!"
+                                        e.goHome = True
+                                        print "Changed direction!"
                                 else:
                                         gui.gameOver=True
 

@@ -62,7 +62,7 @@ def tick():
         endLevel.tick()
     if isMultiplayer == False and gameOver==False:
         level.tick()
-        endLevel.tick()
+        if endLevel!=None:endLevel.tick()
     if gameOver==False:
         level.player.tick()
     
@@ -88,7 +88,7 @@ def render():
     level.render(screen,xoff,yoff)
     for p in Client.players:
         p.render(screen,xoff,yoff)
-    endLevel.render(screen,-level.player.x+(6<<5)+xoff,-level.player.y+(10<<5)+yoff)
+    if endLevel!=None:endLevel.render(screen,-level.player.x+(6<<5)+xoff,-level.player.y+(10<<5)+yoff)
     level.player.render(screen,xoff,yoff)
     
     hud.render(screen,level,basicFont)
@@ -126,9 +126,9 @@ def populateLevel():
         treasureLocations.append((dx<<5,dy<<5))
         level.setTile(dx,dy,Tile.Treasure3)
 
-    if hasAI==True:
-        for i in range(1):
-            level.entities.append(RobotAI.RobotAI(level,32,32,treasureLocations,difficulty))
+   
+    #for i in range(1):
+        #level.entities.append(RobotAI.RobotAI(level,32,32,treasureLocations,difficulty))
 
 def startServer(players,console):
     if console==True:
@@ -151,7 +151,8 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     y = random.randint(0,600)
     hud = GuiHUD.GuiHUD()
     level = Level.Level(32,32)
-    endLevel = Level.Level(32,32)
+    endLevel = None
+    #endLevel = Level.Level(32,32)
     username = Config.config["name"]
     level.player = Player.Player(level,username,x,y)
     isMultiplayer = multiplayer
@@ -174,8 +175,8 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
 
 
     level.loadLevelFromFile("levels/Arena.txt")
-    endLevel.loadLevelFromFile("levels/sort.txt")
-    endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
+    #endLevel.loadLevelFromFile("levels/sort.txt")
+    #endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
     if isMultiplayer == False:
         populateLevel()
 

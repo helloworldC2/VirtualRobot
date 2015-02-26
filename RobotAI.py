@@ -12,8 +12,7 @@ class RobotAI(Entity.Entity):
 
 	def __init__(self,level, x, y,destination,speed):
 		super(RobotAI,self).__init__(level,x,y)
-		self.x = x
-		self.y = y
+		
 		self.destinations = destination
 		self.isSwimming = False
 		self.isMoving = False
@@ -21,9 +20,13 @@ class RobotAI(Entity.Entity):
 		self.basicFont = pygame.font.SysFont(None, 32)
 		self.path = None
 		self.destination = self.getClosestDestination(self.destinations,True)
+		self.x = x
+		self.y = y
                 self.canPickUpTreasure = True
 		self.score = scoring.Score()
 		self.speed = speed
+		self.goHome = False
+		self.inHand = None
 
         """Gets the closest treasure to robot
         @Params:
@@ -39,7 +42,7 @@ class RobotAI(Entity.Entity):
                         if dis < distance:
                                 distance = dis
                                 dest = i
-
+                
 ##		if remove==True:
 ##                        d.remove(dest)
 		
@@ -94,21 +97,27 @@ class RobotAI(Entity.Entity):
 		yy = self.centreY >>5
 
 		if self.ticks%30==0:
-                        for node in self.level.paths[self.destination]:
-                                if node.pos == (self.x>>5,self.y>>5):
-                                        nextNode = self.level.paths[self.destination].index(node)-1
-                        try:
-                                self.path = self.level.paths[self.destination][nextNode]
-                        except:
-                                print "arrived, or just lost (probably lost)"
+                        if self.level.paths!=True:
+                                for node in self.level.paths[self.destination]:
+                                        if node.pos == (xx,yy):
+                                                
+                                                nextNode = self.level.paths[self.destination].index(node)-1
+                                                if self.goHome:nextNode+=2
+                                                try:
+                                                        self.path = self.level.paths[self.destination][nextNode]
+                                                        
+                                                except:
+                                                        if self.goHome:
+                                                                self.goHome=False
+                                                                self.path=None
+                                                        print "arrived, or just lost (probably lost)"
 			
-
-		if self.path==True:
+               
+		if self.path==True or self.path==None:
 			self.destination = self.getClosestDestination(self.destinations,True)
-			self.path = None
 			self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 		if self.path != None and self.path!=True:
-
+                        
                         try:
                                 pos = self.path.pos
                                 if xx < pos[0]:
@@ -119,11 +128,13 @@ class RobotAI(Entity.Entity):
                                         xa=-1
                                 if yy > pos[1]:
                                         ya=-1
+                        
                         except:
                                 print "Lost :'("
                                 pass
 
 		if xa != 0 or ya != 0:
+                        
 			self.isMoving = not self.move(xa, ya)
 		else:
 			self.isMoving = False

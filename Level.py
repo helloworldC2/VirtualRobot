@@ -291,6 +291,7 @@ class Level():
 					currentNode = currentNode.parent
 				del openList
 				del closedList
+				path.append(Node((1,1),None,0,0))
 				return path
 			openList.remove(currentNode)
 			closedList.append(currentNode)
@@ -435,7 +436,8 @@ class Level():
                         for t in gui.treasureLocations:
                                 self.paths[t] = self.findPathAStar(spawnLocation,(t[0]>>5,t[1]>>5))
                                 if self.paths[t]==False:
-                                        print "treasure at",t,"was blocked from the off, implement something to stop this!"
+                                       print "treasure at",t,"was blocked from the off, implement something to stop this!"
+                        self.entities.append(RobotAI.RobotAI(self,32,32,gui.treasureLocations,2))
                 for t in self.paths:
                         index = 0
                         if self.paths[t] ==False:continue
