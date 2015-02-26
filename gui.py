@@ -152,7 +152,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     hud = GuiHUD.GuiHUD()
     level = Level.Level(32,32)
     endLevel = None
-    #endLevel = Level.Level(32,32)
+    endLevel = Level.Level(32,32)
     username = Config.config["name"]
     level.player = Player.Player(level,username,x,y)
     isMultiplayer = multiplayer
@@ -175,8 +175,8 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
 
 
     level.loadLevelFromFile("levels/Arena.txt")
-    #endLevel.loadLevelFromFile("levels/sort.txt")
-    #endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
+    endLevel.loadLevelFromFile("levels/sort.txt")
+    endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
     if isMultiplayer == False:
         populateLevel()
 
