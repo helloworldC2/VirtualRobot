@@ -14,7 +14,7 @@ class Job(object):
 
     def doJob(self,worker):
         worker.currentJob = self
-        print "doing job"
+        #print "doing job"
 
 class JobIdle(Job):
 
@@ -43,7 +43,7 @@ class JobGoTo(Job):
         if x>10:x=x-10
         y = ((index / 5)+1) * 3
         worker.dest = (x,y)
-        print "Gone to",x,y
+        #print "Gone to",x,y
 
 class JobPlaceTreasure(Job):
 
@@ -95,6 +95,7 @@ class JobPickUpTreasure(Job):
                 worker.level.entities.remove(e)
             
         self.jobDone = True
+        #print "Picked up",worker.inHand
 
 
 class JobSwapHandWithContainer(Job):
@@ -111,7 +112,7 @@ class JobSwapHandWithContainer(Job):
         worker.inHand = worker.inContainer
         worker.inContainer = temp
         self.jobDone = True
-        print "Swapped"
+        #print "Swapped"
 
 class JobStoreTreasure(Job):
 
@@ -127,4 +128,4 @@ class JobStoreTreasure(Job):
         worker.inHand = None
         
         self.jobDone = True
-        print "stored"
+        #print "stored"

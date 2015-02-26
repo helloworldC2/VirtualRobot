@@ -19,7 +19,7 @@ class SorterRobot(Entity.Entity):
 		self.isMoving = False
 		self.img = pygame.image.load("robots/robot.png")
 		self.dest = (x>>5,y>>5)
-		self.speed = 1
+		self.speed = 10
 		self.treasures = [4,125,3,6,2,7,823,253,732,23]
 		self.inHand = self.treasures[0]
 		self.inContainer = self.treasures[1]
@@ -83,8 +83,6 @@ class SorterRobot(Entity.Entity):
                 super(SorterRobot,self).tick()
                 self.currentJob.checkHasDone(self)
                 if self.currentJob.jobDone==True:
-                    print "job done, doiung next one!"
-                    print "In hand",self.inHand,"in container",self.inContainer
                     self.jobs.remove(self.currentJob)
                     self.jobs[0].doJob(self)
 		xa = 0
