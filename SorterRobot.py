@@ -6,6 +6,7 @@ import random
 import scoring
 import Jobs
 import BubbleSort
+import HeapSort
 
 
 class SorterRobot(Entity.Entity):
@@ -24,7 +25,7 @@ class SorterRobot(Entity.Entity):
 		self.inContainer = self.treasures[1]
 		self.currentJob = None
 		self.jobs = BubbleSort.createJobs(self.treasures,self)
-                
+                #self.jobs = HeapSort.heapSort(self.treasures,len(self.treasures))
 		self.jobs[0].doJob(self)
 		
 		
