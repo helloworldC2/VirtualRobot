@@ -69,6 +69,7 @@ class JobPlaceTreasure(Job):
         worker.level.entities.append(EntityTreasure.EntityTreasure(worker.level,x<<5,y<<5,treasureValue))
         self.jobDone = True
         worker.inHand = None
+        print "placed t at",index
 
 class JobPickUpTreasure(Job):
 
@@ -95,7 +96,7 @@ class JobPickUpTreasure(Job):
                 worker.level.entities.remove(e)
             
         self.jobDone = True
-        #print "Picked up",worker.inHand
+        print "Picked up at",index
 
 
 class JobSwapHandWithContainer(Job):

@@ -23,14 +23,14 @@ class SorterRobot(Entity.Entity):
 		self.dest = (x>>5,y>>5)
 		self.speed = 32
 		self.treasures = []
-		for i in range(10):
+		for i in range(9):
                         self.treasures.append(random.randint(1,100))
 		self.inHand = self.treasures[0]
 		self.inContainer = self.treasures[1]
 		self.currentJob = None
-		#self.jobs = BogoSort.createJobs(self.treasures,self)
+		self.jobs = BogoSort.createJobs(self.treasures,self)
                 #self.jobs = HeapSort.heapSort(self.treasures,len(self.treasures))
-                self.jobs = GeneticSort.geneticSort(self.treasures,self)
+                #self.jobs = GeneticSort.geneticSort(self.treasures,self)
 		self.jobs[0].doJob(self)
 		
 		

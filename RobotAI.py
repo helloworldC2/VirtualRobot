@@ -10,7 +10,7 @@ class RobotAI(Entity.Entity):
 
 
 
-	def __init__(self,level, x, y,destination,speed):
+	def __init__(self,level, x, y,destination,speed,health):
 		super(RobotAI,self).__init__(level,x,y)
 		
 		self.destinations = destination
@@ -22,12 +22,22 @@ class RobotAI(Entity.Entity):
 		self.destination = self.getClosestDestination(self.destinations,True)
 		self.x = x
 		self.y = y
+		self.health = health
                 self.canPickUpTreasure = True
 		self.score = scoring.Score()
 		self.speed = speed
 		self.goHome = False
 		self.inHand = None
 
+
+
+        def die(self):
+                self.level.entities.remove(self)
+                self.level.numAI-=1
+                self.level.player.gainPoints(self.speed)
+                self.level.player.score+=self.speed
+                if self.level.numAI<1:
+                        self.level.roundOver()
         """Gets the closest treasure to robot
         @Params:
                 d(list): list of destinations
@@ -112,12 +122,12 @@ class RobotAI(Entity.Entity):
                                                                 self.path=None
                                                         print "arrived, or just lost (probably lost)"
 			
-               
+                
 		if self.path==True or self.path==None:
 			self.destination = self.getClosestDestination(self.destinations,True)
 			self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 		if self.path != None and self.path!=True:
-                        
+                        print self.path.pos
                         try:
                                 pos = self.path.pos
                                 if xx < pos[0]:

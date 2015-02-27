@@ -35,9 +35,12 @@ class Player(Entity.Entity):
 		self.inHand = StaticEntity.StaticEntity(level,0,0)
 		self.selectedTile = [0,0]
 		self.placeCooldown = 0
+		self.points = 0
 		
 
-
+        def gainPoints(self,points):
+                self.points+=points
+                if self.points>1000:self.points=1000
         """Determins if the entity has collided
         @Params:
                 None

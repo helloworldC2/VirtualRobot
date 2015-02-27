@@ -26,6 +26,7 @@ def combine(a,b):
 def geneticSort(l,worker):
     chromosomes = []
     jobs = []
+    lastBest = None
     for i in range(10):
         random.shuffle(l,random.random)
         chromosomes.append(Chromosome(list(l)))
@@ -40,8 +41,13 @@ def geneticSort(l,worker):
                 if c.fitness > len(c.genes)-2:
                     print "Done in",generations,"generations with",len(chromosomes),"individuals"
                     for i,t in enumerate(c.genes):
-                        jobs.append(Jobs.JobGoTo(i))
-                        jobs.append(Jobs.JobPlaceTreasure(i,treasure=t))
+                        if lastBest[i]!=t:
+                            jobs.append(Jobs.JobGoTo(i))
+                            jobs.append(Jobs.JobPickUpTreasure(i))
+                        for i,t in enumerate(c.genes):
+                             if lastBest[i]!=t:
+                                jobs.append(Jobs.JobGoTo(i))
+                                jobs.append(Jobs.JobPlaceTreasure(i,t))
                     jobs.append(Jobs.JobIdle())
                     return jobs
 
@@ -52,13 +58,24 @@ def geneticSort(l,worker):
         for i in range(5):
             random.shuffle(l,random.random)
             chromosomes.append(Chromosome(list(l)))
-        for i,t in enumerate(chromosomes[0].genes):
-            jobs.append(Jobs.JobGoTo(i))
-            jobs.append(Jobs.JobPlaceTreasure(i,treasure=t))
-        for i,t in enumerate(chromosomes[0].genes):
-            jobs.append(Jobs.JobGoTo(i))
-            jobs.append(Jobs.JobPickUpTreasure(i))
-        
-   
+
+        if lastBest!=None:
+            for i,t in enumerate(chromosomes[0].genes):
+                if lastBest[i]!=t:
+                    print lastBest[i],t
+                    jobs.append(Jobs.JobGoTo(i))
+                    jobs.append(Jobs.JobPickUpTreasure(i))
+            for i,t in enumerate(chromosomes[0].genes):
+                 if lastBest[i]!=t:
+                    #print lastBest[i],t
+                    jobs.append(Jobs.JobGoTo(i))
+                    jobs.append(Jobs.JobPlaceTreasure(i,t))
+        else:
+            for i,t in enumerate(chromosomes[0].genes):
+                print "initial",i,t
+                jobs.append(Jobs.JobGoTo(i))
+                jobs.append(Jobs.JobPlaceTreasure(i,t))
+    
+        lastBest = chromosomes[0].genes
             
 

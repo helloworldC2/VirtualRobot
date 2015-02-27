@@ -26,6 +26,8 @@ class Level():
 		self.hasChanged = True
 		self.tileImage = 0
 		self.paths = {}#used for testing if traps can be placed
+		self.round = 1
+		self.numAI = 0
 
 ##		self.workers = 1	#number of worker
 ##		self.addr_list = []	#list of client addresses and connections
@@ -39,6 +41,17 @@ class Level():
 ##		t.start()
 
 
+        def startNewRound(self):
+                gui.timer=100
+                for i in range(self.round*5-3):
+                        self.numAI-=1
+                        self.entities.append(RobotAI.RobotAI(self,32,0,gui.treasureLocations,random.randint(max(self.round-2,1),self.round+2),random.randint(self.round*10,self.round*15)))
+                       
+                self.round+=1
+                
+        def roundOver(self):
+                print "Round Over!"
+                self.startNewRound()
         """Populates the tiles list to hold the level data.
         @Params:
                 path(string): path to level file
@@ -105,6 +118,10 @@ class Level():
                 None
         """
 	def tick(self):
+                if gui.timer<1:
+                        print "over"
+                        self.roundOver()
+                        return
 		self.entitiesOnTiles  = []
                 self.ticks+=1
                 for e in self.entities:
@@ -437,7 +454,7 @@ class Level():
                                 self.paths[t] = self.findPathAStar(spawnLocation,(t[0]>>5,t[1]>>5))
                                 if self.paths[t]==False:
                                        print "treasure at",t,"was blocked from the off, implement something to stop this!"
-                        self.entities.append(RobotAI.RobotAI(self,32,32,gui.treasureLocations,2))
+                        self.startNewRound()
                 for t in self.paths:
                         index = 0
                         if self.paths[t] ==False:continue

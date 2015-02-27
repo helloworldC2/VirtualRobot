@@ -70,11 +70,12 @@ class GuiHUD(object):
                  
                         
         else:
-            pygame.draw.rect(screen,(255,0,0),(10,170,110,10))
-	    pygame.draw.rect(screen,(0,255,0),(10,170,level.player.health,10))
-            text = font.render("Score: "+str(level.player.score.score), True, (0,0,0))
-            textpos = text.get_rect(center=(60,60))
-            screen.blit(text, textpos)
+            if level.player!=None:
+                pygame.draw.rect(screen,(255,0,0),(10,170,110,10))
+                pygame.draw.rect(screen,(0,255,0),(10,170,level.player.health,10))
+                text = font.render("Score: "+str(level.player.score.score), True, (0,0,0))
+                textpos = text.get_rect(center=(60,60))
+                screen.blit(text, textpos)
             
             ##############
             self.t1.blit()

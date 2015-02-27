@@ -48,10 +48,6 @@ def tick():
     if timer == 30:
         soundFXs = Sounds.Audio(False) 
         soundFXs.Plysound(False,False,False,False,True)
-    if isMultiplayer==False and gameOver==False:
-        if timer/60>100:
-            gameOver = True
-    
 
     if gameOver == True and scorePosted==False:
         level.player.score.happyDucks(level.player.username)
@@ -63,7 +59,7 @@ def tick():
     if isMultiplayer == False and gameOver==False:
         level.tick()
         if endLevel!=None:endLevel.tick()
-    if gameOver==False:
+    if gameOver==False and level.player!=None:
         level.player.tick()
     
     hud.tick(timer,xoff,yoff)
@@ -75,22 +71,26 @@ Draws all the games graphics"""
 def render():
     screen.fill((0,0,0))
     global xoff,yoff
-    xoff = level.player.x - (width/2)
-    yoff = level.player.y - (height/2)
-    if xoff < 0:
-        xoff = 0
-    if xoff > ((level.width << 5) - screen.get_width()):
-        xoff = ((level.width << 5) - screen.get_width())
-    if yoff < 0:
-        yoff = 0
-    if yoff > ((level.height << 5) - screen.get_height()):
-        yoff = ((level.height << 5) - screen.get_height())
+    xoff= 0
+    yoff = 0
+    if level.player!=None:
+        xoff = level.player.x - (width/2)
+        yoff = level.player.y - (height/2)
+        if xoff < 0:
+            xoff = 0
+        if xoff > ((level.width << 5) - screen.get_width()):
+            xoff = ((level.width << 5) - screen.get_width())
+        if yoff < 0:
+            yoff = 0
+        if yoff > ((level.height << 5) - screen.get_height()):
+            yoff = ((level.height << 5) - screen.get_height())
 
     level.render(screen,xoff,yoff)
     for p in Client.players:
         p.render(screen,xoff,yoff)
     if endLevel!=None:endLevel.render(screen,-level.player.x+(6<<5)+xoff,-level.player.y+(10<<5)+yoff)
-    level.player.render(screen,xoff,yoff)
+    if level.player!=None:
+        level.player.render(screen,xoff,yoff)
     
     hud.render(screen,level,basicFont,xoff,yoff)
     pygame.display.flip()
@@ -153,9 +153,9 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     hud = GuiHUD.GuiHUD(screen)
     level = Level.Level(32,32)
     endLevel = None
-    endLevel = Level.Level(32,32)
+    #endLevel = Level.Level(32,32)
     username = Config.config["name"]
-    level.player = Player.Player(level,username,x,y)
+    #level.player = Player.Player(level,username,x,y)
     isMultiplayer = multiplayer
     hasAI = AI
     numAI = nAI
@@ -176,8 +176,8 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
 
 
     level.loadLevelFromFile("levels/Arena.txt")
-    endLevel.loadLevelFromFile("levels/sort.txt")
-    endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
+    #endLevel.loadLevelFromFile("levels/sort.txt")
+    #endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
     if isMultiplayer == False:
         populateLevel()
 
@@ -202,7 +202,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
 
          while delta >= 1:
              ticks+=1
-             #timer+=1
+             timer+=1
              tick()
              delta -= 1
 
