@@ -66,7 +66,7 @@ def tick():
     if gameOver==False:
         level.player.tick()
     
-    hud.tick(timer)
+    hud.tick(timer,xoff,yoff)
 
 
 
@@ -74,6 +74,7 @@ def tick():
 Draws all the games graphics"""
 def render():
     screen.fill((0,0,0))
+    global xoff,yoff
     xoff = level.player.x - (width/2)
     yoff = level.player.y - (height/2)
     if xoff < 0:
@@ -91,7 +92,7 @@ def render():
     if endLevel!=None:endLevel.render(screen,-level.player.x+(6<<5)+xoff,-level.player.y+(10<<5)+yoff)
     level.player.render(screen,xoff,yoff)
     
-    hud.render(screen,level,basicFont)
+    hud.render(screen,level,basicFont,xoff,yoff)
     pygame.display.flip()
 
 
@@ -149,7 +150,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     basicFont = pygame.font.SysFont(None, 32)
     x = random.randint(0,800)
     y = random.randint(0,600)
-    hud = GuiHUD.GuiHUD()
+    hud = GuiHUD.GuiHUD(screen)
     level = Level.Level(32,32)
     endLevel = None
     endLevel = Level.Level(32,32)
