@@ -7,6 +7,8 @@ import scoring
 import Jobs
 import BubbleSort
 import HeapSort
+import BogoSort
+import GeneticSort
 
 
 class SorterRobot(Entity.Entity):
@@ -19,13 +21,16 @@ class SorterRobot(Entity.Entity):
 		self.isMoving = False
 		self.img = pygame.image.load("robots/robot.png")
 		self.dest = (x>>5,y>>5)
-		self.speed = 10
-		self.treasures = [4,125,3,6,2,7,823,253,732,23]
+		self.speed = 32
+		self.treasures = []
+		for i in range(10):
+                        self.treasures.append(random.randint(1,100))
 		self.inHand = self.treasures[0]
 		self.inContainer = self.treasures[1]
 		self.currentJob = None
-		#self.jobs = BubbleSort.createJobs(self.treasures,self)
-                self.jobs = HeapSort.heapSort(self.treasures,len(self.treasures))
+		#self.jobs = BogoSort.createJobs(self.treasures,self)
+                #self.jobs = HeapSort.heapSort(self.treasures,len(self.treasures))
+                self.jobs = GeneticSort.geneticSort(self.treasures,self)
 		self.jobs[0].doJob(self)
 		
 		
