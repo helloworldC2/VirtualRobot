@@ -76,18 +76,19 @@ class GuiHUD(object):
                 text = font.render("Score: "+str(level.player.score.score), True, (0,0,0))
                 textpos = text.get_rect(center=(60,60))
                 screen.blit(text, textpos)
-            
-            ##############
-            self.t1.blit()
-            self.t2.blit()
-            pos = pygame.mouse.get_pos()
-            if self.t1.getStatus():
-                self.c1.setCoord(((pos[0]/32 )*32 - (x%32)),((pos[1]/32 )*32 - (y%32)))
-                self.c1.blit()
-            if self.t2.getStatus():
-                self.c2.setCoord(((pos[0]/32 )*32 - (x%32)),((pos[1]/32 )*32 - (y%32)))
-                self.c2.blit()
-            ##############    
+
+            if level.player == None:
+                ##############
+                self.t1.blit()
+                self.t2.blit()
+                pos = pygame.mouse.get_pos()
+                if self.t1.getStatus():
+                    self.c1.setCoord(((pos[0]/32 )*32 - (x%32)),((pos[1]/32 )*32 - (y%32)))
+                    self.c1.blit()
+                if self.t2.getStatus():
+                    self.c2.setCoord(((pos[0]/32 )*32 - (x%32)),((pos[1]/32 )*32 - (y%32)))
+                    self.c2.blit()
+                ##############    
 
             
             y = 60
@@ -110,7 +111,7 @@ class GuiHUD(object):
                 screen.blit(text2, textpos2)
 
             
-    def tick(self,ticks,x,y):
+    def tick(self,ticks,x,y,level):
         self.time = ticks/60
         if gui.gameOver==True or gui.defeat==True:
             if pygame.mouse.get_pressed()[0]==True:
@@ -118,31 +119,31 @@ class GuiHUD(object):
                 gui.scorePosted = False
                 Game.menu1(gui.screen)
         #################
-        pos = pygame.mouse.get_pos()
-        
-        if pygame.mouse.get_pressed()[0]==True:
-            if self.t1.clicked() and self.t1.getStatus() == 0:
-                 print 1
-                 self.t1.setOne()
-                 self.t2.setZero()
-            if self.t2.clicked() and self.t1.getStatus() == 0:
-                 print 1
-                 self.t2.setOne()
-                 self.t1.setZero()
+        if level.player == None:
+                pos = pygame.mouse.get_pos()
+                if pygame.mouse.get_pressed()[0]==True:
+                    if self.t1.clicked() and self.t1.getStatus() == 0:
+                         print 1
+                         self.t1.setOne()
+                         self.t2.setZero()
+                    if self.t2.clicked() and self.t1.getStatus() == 0:
+                         print 1
+                         self.t2.setOne()
+                         self.t1.setZero()
 
-        
-        elif self.t1.getStatus() == 1:
-                self.t1.setZero()
-                p = pygame.mouse.get_pos() 
-                if self.t1.collide(p) == 0:
-                    gui.level.setTile(pos[0]/32 + x/32,pos[1]/32 + y/32,Tile.Treasure1)
+                
+                elif self.t1.getStatus() == 1:
+                        self.t1.setZero()
+                        p = pygame.mouse.get_pos() 
+                        if self.t1.collide(p) == 0:
+                            gui.level.setTile(pos[0]/32 + x/32,pos[1]/32 + y/32,Tile.Treasure1)
 
-        elif self.t2.getStatus() == 1:
-            self.t2.setZero()
-            p = pygame.mouse.get_pos() 
-            if self.t2.collide(p) == 0:
-                    gui.level.setTile(pos[0]/32 + x/32,pos[1]/32 + y/32,Tile.Treasure2)
-                 
+                elif self.t2.getStatus() == 1:
+                    self.t2.setZero()
+                    p = pygame.mouse.get_pos() 
+                    if self.t2.collide(p) == 0:
+                            gui.level.setTile(pos[0]/32 + x/32,pos[1]/32 + y/32,Tile.Treasure2)
+                
         ##################
                                      
         

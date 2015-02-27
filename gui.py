@@ -16,6 +16,7 @@ import Duck
 import GuiHUD
 import Sounds
 import Config
+import camera
 
 
 
@@ -62,7 +63,10 @@ def tick():
     if gameOver==False and level.player!=None:
         level.player.tick()
     
-    hud.tick(timer,xoff,yoff)
+    if level.player == None:
+        level.cam.tick()
+    
+    hud.tick(timer,xoff,yoff,level)
 
 
 
@@ -71,8 +75,9 @@ Draws all the games graphics"""
 def render():
     screen.fill((0,0,0))
     global xoff,yoff
-    xoff= 0
-    yoff = 0
+    xoff = level.cam.x
+    yoff = level.cam.y
+    
     if level.player!=None:
         xoff = level.player.x - (width/2)
         yoff = level.player.y - (height/2)
@@ -152,6 +157,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     y = random.randint(0,600)
     hud = GuiHUD.GuiHUD(screen)
     level = Level.Level(32,32)
+    
     endLevel = None
     #endLevel = Level.Level(32,32)
     username = Config.config["name"]

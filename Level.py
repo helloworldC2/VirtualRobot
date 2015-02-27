@@ -9,17 +9,21 @@ import threading
 import Client
 import gui
 import Queue
-
+from camera import *
 
 class Level():
 
 	def __init__(self,w,h):
+                
+                
+                
 		self.width  = w
 		self.height = h
 		self.tiles = []
 		#self.generateLevel()
 		self.ticks=0
 		self.player = None
+		self.cam = void(1)
 		self.entities = []
 		self.hasAStarWorker = False
 		self.entitiesOnTiles = []
