@@ -38,6 +38,8 @@ class GuiHUD(object):
 
         self.c1 = image(screen,(30,500),"tiles/brokenChest.png")
         self.c1.scale(32,32)
+        self.c2 = image(screen,(80,500),"tiles/burntChest.png")
+        self.c2.scale(32,32)
         
     def render(self,screen,level,font,x,y):
         if gui.gameOver==True:
@@ -73,13 +75,18 @@ class GuiHUD(object):
             text = font.render("Score: "+str(level.player.score.score), True, (0,0,0))
             textpos = text.get_rect(center=(60,60))
             screen.blit(text, textpos)
-
+            
+            ##############
             self.t1.blit()
+            self.t2.blit()
             pos = pygame.mouse.get_pos()
             if self.t1.getStatus():
                 self.c1.setCoord(((pos[0]/32 )*32 - (x%32)),((pos[1]/32 )*32 - (y%32)))
                 self.c1.blit()
-                
+            if self.t2.getStatus():
+                self.c2.setCoord(((pos[0]/32 )*32 - (x%32)),((pos[1]/32 )*32 - (y%32)))
+                self.c2.blit()
+            ##############    
 
             
             y = 60
@@ -109,13 +116,18 @@ class GuiHUD(object):
                 gui.gameOver=False
                 gui.scorePosted = False
                 Game.menu1(gui.screen)
-        
+        #################
         pos = pygame.mouse.get_pos()
         
         if pygame.mouse.get_pressed()[0]==True:
             if self.t1.clicked() and self.t1.getStatus() == 0:
                  print 1
                  self.t1.setOne()
+                 self.t2.setZero()
+            if self.t2.clicked() and self.t1.getStatus() == 0:
+                 print 1
+                 self.t2.setOne()
+                 self.t1.setZero()
 
         
         elif self.t1.getStatus() == 1:
@@ -123,9 +135,14 @@ class GuiHUD(object):
                 p = pygame.mouse.get_pos() 
                 if self.t1.collide(p) == 0:
                     gui.level.setTile(pos[0]/32 + x/32,pos[1]/32 + y/32,Tile.Treasure1)
-                
+
+        elif self.t2.getStatus() == 1:
+            self.t2.setZero()
+            p = pygame.mouse.get_pos() 
+            if self.t2.collide(p) == 0:
+                    gui.level.setTile(pos[0]/32 + x/32,pos[1]/32 + y/32,Tile.Treasure2)
                  
-        
+        ##################
                                      
         
 
