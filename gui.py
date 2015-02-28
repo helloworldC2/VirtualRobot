@@ -143,7 +143,7 @@ def startServer(players,console):
         subprocess.call(['javaw', '-jar', 'server.jar', players])#for no console
 
 def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
-    global screen, height, width, size, level,hud,basicFont,isMultiplayer,hasAI,numAI,difficulty,timer,endLevel
+    global screen, player, height, width, size, level,hud,basicFont,isMultiplayer,hasAI,numAI,difficulty,timer,endLevel
     screen = canvas
     pygame.init()
     pygame.font.init()
@@ -161,7 +161,8 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     endLevel = None
     #endLevel = Level.Level(32,32)
     username = Config.config["name"]
-    #level.player = Player.Player(level,username,x,y)
+    player = Player.Player(level,username,x,y)
+    #level.player = player
     isMultiplayer = multiplayer
     hasAI = AI
     numAI = nAI
@@ -184,11 +185,11 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     level.loadLevelFromFile("levels/Arena.txt")
     #endLevel.loadLevelFromFile("levels/sort.txt")
     #endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
-    if isMultiplayer == False:
-        populateLevel()
+    #if isMultiplayer == False:
+        #populateLevel()
 
-    if Client.isHost == True and isMultiplayer == True:
-        populateLevel()
+   # if Client.isHost == True and isMultiplayer == True:
+      #  populateLevel()
 
 
     lastTime = time.time()

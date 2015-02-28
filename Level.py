@@ -229,7 +229,7 @@ class Level():
 		if t.isSolid:
 			return False
 		for i in self.entities:
-			if i.x>>5 == x and i.y>>5 ==y:
+			if i.x>>5 == x and i.y>>5 ==y and i.blocksPath == True:
 				return False
 		return True
 

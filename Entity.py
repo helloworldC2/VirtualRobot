@@ -14,6 +14,7 @@ class Entity(object):
 		self.limitedToOneTile = False
 		self.canPickUpTreasure = False
 		self.entityCollidedWith = None
+		self.blocksPath = True
 		self.speed = 1
 
         """Updates logic associated with entity

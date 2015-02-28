@@ -7,6 +7,7 @@ from selectBar import *
 import Level
 from Level import *
 import Tile
+import EntityTreasure
 
 
 
@@ -141,14 +142,24 @@ class GuiHUD(object):
                         self.t1.setZero()
                         p = pygame.mouse.get_pos() 
                         if self.t1.collide(p) == 0:
-                            gui.level.setTile(pos[0]/32 + x/32,pos[1]/32 + y/32,Tile.Treasure1)
+                            try:
+                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                            except:
+                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/brokenChest.png")))
+                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                print "placed"
 
                 elif self.t2.getStatus() == 1:
                     self.t2.setZero()
                     p = pygame.mouse.get_pos() 
                     if self.t2.collide(p) == 0:
-                            gui.level.setTile(pos[0]/32 + x/32,pos[1]/32 + y/32,Tile.Treasure2)
-                
+                        try:
+                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                        except:
+                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/brokenChest.png")))
+                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                print "placed"
+                                gui.level.player = gui.player
         ##################
                                      
         
