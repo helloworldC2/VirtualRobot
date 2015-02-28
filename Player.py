@@ -103,7 +103,7 @@ class Player(Entity.Entity):
 			if gui.isMultiplayer == True:
                                 Client.move(self.x,self.y,self.movingDir,self.isSwimming)
                     
-                        soundFXs.Plysound(True,False,False,False,False)
+                        #soundFXs.Plysound(True,False,False,False,False)
 		else:
 			self.isMoving = False
 			soundFXs.Plysound(False,False,False,False,False)
