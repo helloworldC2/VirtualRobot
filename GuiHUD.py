@@ -15,6 +15,7 @@ class GuiHUD(object):
 
     def __init__(self,screen,):
         self.time = 1
+        self.healthbar = pygame.image.load('menu/Healthbar.png')
         self.t1 = image(screen,(30,500),"tiles/brokenChest.png")
         self.t1.scale(32,32)
         self.t2 = image(screen,(80,500),"tiles/burntChest.png")
@@ -71,8 +72,12 @@ class GuiHUD(object):
                         
         else:
             if level.player!=None:
-                pygame.draw.rect(screen,(255,0,0),(10,170,110,10))
-                pygame.draw.rect(screen,(0,255,0),(10,170,level.player.health,10))
+                pygame.draw.circle(screen, (255,0,0), (0,600), int(120*(level.player.health/100.00)))
+                pygame.draw.circle(screen, (0,0,255), (800,600), int(120*(level.player.health/100.00)))
+                screen.blit(self.healthbar, (-140,450))
+                screen.blit(self.healthbar, (650,450))
+                #pygame.draw.rect(screen,(255,0,0),(10,170,110,10))
+                #pygame.draw.rect(screen,(0,255,0),(10,170,level.player.health,10))
                 text = font.render("Score: "+str(level.player.score.score), True, (0,0,0))
                 textpos = text.get_rect(center=(60,60))
                 screen.blit(text, textpos)
@@ -106,9 +111,9 @@ class GuiHUD(object):
                 text = font.render("Time: "+str(100-self.time), True, (0,0,0))
                 textpos = text.get_rect(center=(60,100))
                 screen.blit(text, textpos)
-                text2 = font.render("Health bar:", True, (0,0,0))
-                textpos2 = text.get_rect(center=(60,150))
-                screen.blit(text2, textpos2)
+                #text2 = font.render("Health bar:", True, (0,0,0))
+                #textpos2 = text.get_rect(center=(60,150))
+                #screen.blit(text2, textpos2)
 
             
     def tick(self,ticks,x,y,level):
