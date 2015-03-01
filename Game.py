@@ -79,7 +79,7 @@ def menu1(canvas):
         robot.scale(300,300)
         robot.scale(200,200)
         transp = image(canvas,(10,140),"menu/transparrent.png")
-        helloW = image(canvas,(0,0),"menu/VR.png")
+        helloW = image(canvas,(60,0),"menu/VR.png")
         bgpart = image(canvas,(0,0),"menu/bgpart.png")
         background  = image(canvas,(0,0),"menu/wallpaper.jpg")
         startB = button(canvas,(startX,startY),"buttons/start.png")
