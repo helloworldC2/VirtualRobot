@@ -19,7 +19,7 @@ import textfield
 import Sounds
 import RadioButton
 
-#if the script was run directly, this fnction will run
+#if the script was run directly, this function will run
 def createCanvas() :
         pygame.init()
         Config.loadConfig()
@@ -55,24 +55,24 @@ def menu1(canvas):
         rY = 200
                 
         #credit button
-        cX = 402
-        cY = 350
+        cX = 460
+        cY = 370
         
         #start button
-        startX = 400
-        startY = 170
+        startX = 480
+        startY = 185
         
         #leaderboard button
-        lX = 406
-        lY = 440
+        lX = 380
+        lY = 315
         
         #close button
-        eX = 400
-        eY = 510
+        eX = 500
+        eY = 435
         
         #settings
-        setX = 402
-        setY = 260
+        setX = 445
+        setY = 245
 
 #loading all images, buttons
         robot = image(canvas,(rX,rY),"robots/robot.png")
