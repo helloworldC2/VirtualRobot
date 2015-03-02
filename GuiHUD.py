@@ -73,6 +73,8 @@ class GuiHUD(object):
                 text1 = font.render("You Lose!", True, (0,0,0))
                 textpos1 = text.get_rect(center=(577.231,420)) 
                 screen.blit(text1, textpos1)
+                gui.gameOver = False
+                gui.defeat = False 
                  
                         
         else:
