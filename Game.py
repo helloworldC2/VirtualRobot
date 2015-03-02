@@ -96,6 +96,7 @@ def menu1(canvas):
         multi = button(canvas,(20,260),"buttons/Multiplayer.png")
         ai = button(canvas,(20,320),"buttons/AI.png")
         settingsB = button(canvas,(setX,setY),"buttons/Settings.png")
+        logo=image(canvas,(10,520),'logo/helloWorldStudio.png')
 
         font = pygame.font.SysFont("calibri",25)
         font1 = pygame.font.SysFont("calibri",15)
@@ -124,6 +125,7 @@ def menu1(canvas):
         startB.blit()
         soundOffB.blit()
         settingsB.blit()
+        logo.blit()
 
 #initializing the tickbox and textfields
         emailTickBox = TickBox.tickBox(canvas,(230,330))
@@ -264,6 +266,7 @@ def menu1(canvas):
                                 closeB.blit()
                                 startB.blit()
                                 soundOffB.blit()
+                                logo.blit()
                                 if sound == 1:
                                         soundOnB.blit()
                                 settingsB.blit()
@@ -285,6 +288,7 @@ def menu1(canvas):
                                 closeB.blit()
                                 startB.blit()
                                 soundOffB.blit()
+                                logo.blit()
                                 if sound == 1:
                                         soundOnB.blit()
                                 settingsB.blit()
