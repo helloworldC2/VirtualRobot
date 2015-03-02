@@ -75,10 +75,10 @@ def menu1(canvas):
         setY = 245
 
 #loading all images, buttons
-        robot = image(canvas,(rX,rY),"robots/robot.png")
-        robot.scale(300,300)
-        robot.scale(200,200)
-        transp = image(canvas,(10,140),"menu/transparrent.png")
+        #robot = image(canvas,(rX,rY),"robots/robot.png")
+        #robot.scale(300,300)
+        #robot.scale(200,200)
+        #transp = image(canvas,(10,140),"menu/transparrent.png")
         helloW = image(canvas,(60,0),"menu/VR.png")
         bgpart = image(canvas,(0,0),"menu/bgpart.png")
         background  = image(canvas,(0,0),"menu/wallpaper.jpg")
@@ -116,12 +116,12 @@ def menu1(canvas):
 #blitting everything    
         canvas.fill((0,0,0))
         background.blit()
-        transp.blit() 
+        #transp.blit() 
         leaderboardB.blit()
         creditB.blit()
         helloW.blit()
         closeB.blit()
-        robot.blit()
+        #robot.blit()
         startB.blit()
         soundOffB.blit()
         settingsB.blit()
@@ -259,7 +259,7 @@ def menu1(canvas):
 
                                 #reblit everything with the game mode buttons
                                 background.blit()
-                                transp.blit()
+                                #transp.blit()
                                 leaderboardB.blit()
                                 creditB.blit()
                                 helloW.blit()
@@ -281,7 +281,7 @@ def menu1(canvas):
                                 inStart = 0
                                 inSettings = 1
                                 background.blit()
-                                transp.blit()
+                                #transp.blit()
                                 leaderboardB.blit()
                                 creditB.blit()
                                 helloW.blit()
