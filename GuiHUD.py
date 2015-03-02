@@ -17,31 +17,31 @@ class GuiHUD(object):
     def __init__(self,screen):
         self.time = 1
         self.healthbar = pygame.image.load('menu/Healthbar.png')
-        self.bar = image(screen,(20,494),"menu/bar.png")
-        self.t = [image(screen,(30,500),"tiles/brokenChest.png"),
-             image(screen,(90,500),"tiles/burntChest.png"),
-             image(screen,(150,500),"tiles/darkChest.png"),
-             image(screen,(210,500),"tiles/glassChest.png"),
-             image(screen,(270,500),"tiles/goldChest.png"),
-             image(screen,(330,500),"tiles/normalChest.png"),
-             image(screen,(390,500),"tiles/OverFlowChest.png"),
-             image(screen,(450,500),"tiles/crystalChest.png"),
-             image(screen,(510,500),"tiles/sandT.png"),
-             image(screen,(570,500),"tiles/grownOverChest.png")]
+        self.bar = barItem(screen,(20,494),"menu/bar.png")
+        self.t = [barItem(screen,(30,500),"tiles/brokenChest.png"),
+             barItem(screen,(90,500),"tiles/burntChest.png"),
+             barItem(screen,(150,500),"tiles/darkChest.png"),
+             barItem(screen,(210,500),"tiles/glassChest.png"),
+             barItem(screen,(270,500),"tiles/goldChest.png"),
+             barItem(screen,(330,500),"tiles/normalChest.png"),
+             barItem(screen,(390,500),"tiles/OverFlowChest.png"),
+             barItem(screen,(450,500),"tiles/crystalChest.png"),
+             barItem(screen,(510,500),"tiles/sandT.png"),
+             barItem(screen,(570,500),"tiles/grownOverChest.png")]
             
         for i in range (10):
                   self.t[i].scale(48,48)
 
-        self.c = [image(screen,(30,500),"tiles/brokenChest.png"),
-             image(screen,(80,500),"tiles/burntChest.png"),
-             image(screen,(130,500),"tiles/darkChest.png"),
-             image(screen,(180,500),"tiles/glassChest.png"),
-             image(screen,(230,500),"tiles/goldChest.png"),
-             image(screen,(280,500),"tiles/normalChest.png"),
-             image(screen,(330,500),"tiles/OverFlowChest.png"),
-             image(screen,(380,500),"tiles/crystalChest.png"),
-             image(screen,(430,500),"tiles/sandT.png"),
-             image(screen,(480,500),"tiles/grownOverChest.png")]
+        self.c = [barItem(screen,(30,500),"tiles/brokenChest.png"),
+             barItem(screen,(80,500),"tiles/burntChest.png"),
+             barItem(screen,(130,500),"tiles/darkChest.png"),
+             barItem(screen,(180,500),"tiles/glassChest.png"),
+             barItem(screen,(230,500),"tiles/goldChest.png"),
+             barItem(screen,(280,500),"tiles/normalChest.png"),
+             barItem(screen,(330,500),"tiles/OverFlowChest.png"),
+             barItem(screen,(380,500),"tiles/crystalChest.png"),
+             barItem(screen,(430,500),"tiles/sandT.png"),
+             barItem(screen,(480,500),"tiles/grownOverChest.png")]
 
         for i in range (10):
                   self.c[i].scale(32,32)
@@ -93,16 +93,18 @@ class GuiHUD(object):
                 ##############
                 self.bar.blit()
                 for i in range(10):
-                    self.t[i].blit()
+                    if self.t[i].ifPlaced() == False:
+                        self.t[i].blit()
                     
                 pos = pygame.mouse.get_pos()
                 pX = ((pos[0]/32 )*32 - (x%32))
                 pY = ((pos[1]/32 )*32 - (y%32))
 
                 for i in range(10):
-                    if self.t[i].getStatus():
-                        self.c[i].setCoord(pX,pY)
-                        self.c[i].blit()
+                    if self.t[i].ifPlaced() == False:
+                        if self.t[i].getStatus():
+                            self.c[i].setCoord(pX,pY)
+                            self.c[i].blit()
 
                 ##############    
 
@@ -137,125 +139,150 @@ class GuiHUD(object):
         #################
         if level.player == None:
                 pos = pygame.mouse.get_pos()
-                if pygame.mouse.get_pressed()[0]==True:
+                r = 1
+                for i in range(10):
+                    if self.t[i].getStatus():
+                        r = 0
+                if pygame.mouse.get_pressed()[0]==True :
                     for i in range(10):
-                        if self.t[i].clicked() and self.t[i].getStatus() == 0:
+                        if self.t[i].clicked() and self.t[i].getStatus() == 0 and r:
                             
                             self.t[i].setOne()
                             for j in range(10):
                                 if j != i:
                                     self.t[j].setZero()
                 
-                elif self.t[0].getStatus() == 1:
+                elif self.t[0].getStatus() == 1 :
                         self.t[0].setZero()
                         p = pygame.mouse.get_pos() 
                         if self.t[0].collide(p) == 0:
-                            try:
-                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                            except:
-                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/brokenChest.png")))
-                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                                print "placed"
+                            if self.t[0].ifPlaced() == False:
+                                try:
+                                    gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                except:
+                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/brokenChest.png")))
+                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    print "placed"
+                                    self.t[0].place()
 
                 elif self.t[1].getStatus() == 1:
                     self.t[1].setZero()
                     p = pygame.mouse.get_pos() 
                     if self.t[1].collide(p) == 0:
-                        try:
-                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                        except:
-                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/burntChest.png")))
-                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                                print "placed"
-                                gui.level.player = gui.player
+                        if self.t[1].ifPlaced() == False:
+                            try:
+                                    gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                            except:
+                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/burntChest.png")))
+                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    print "placed"
+                                    self.t[1].place()
+                                    gui.level.player = gui.player
                                 
                 elif self.t[2].getStatus() == 1:
                     self.t[2].setZero()
                     p = pygame.mouse.get_pos() 
                     if self.t[2].collide(p) == 0:
-                        try:
-                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                        except:
-                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/darkChest.png")))
-                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                                print "placed"
+                        if self.t[2].ifPlaced() == False:
+                            try:
+                                    gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                            except:
+                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/darkChest.png")))
+                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    print "placed"
+                                    self.t[2].place()
 
                 elif self.t[3].getStatus() == 1:
                     self.t[3].setZero()
                     p = pygame.mouse.get_pos() 
                     if self.t[3].collide(p) == 0:
-                        try:
-                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                        except:
-                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/glassChest.png")))
-                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                                print "placed"
+                        if self.t[3].ifPlaced() == False:
+                            try:
+                                    gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                            except:
+                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/glassChest.png")))
+                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    print "placed"
+                                    self.t[3].place()
 
                 elif self.t[4].getStatus() == 1:
                     self.t[4].setZero()
                     p = pygame.mouse.get_pos() 
                     if self.t[4].collide(p) == 0:
-                        try:
-                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                        except:
-                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/goldChest.png")))
-                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                                print "placed"
+                        if self.t[4].ifPlaced() == False:
+                            try:
+                                    gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                            except:
+                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/goldChest.png")))
+                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    print "placed"
+                                    self.t[4].place()
+                                
                 elif self.t[5].getStatus() == 1:
                     self.t[5].setZero()
                     p = pygame.mouse.get_pos() 
                     if self.t[5].collide(p) == 0:
-                        try:
-                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                        except:
-                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/normalChest.png")))
-                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                                print "placed"
+                        if self.t[5].ifPlaced() == False:
+                            try:
+                                    gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                            except:
+                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/normalChest.png")))
+                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    print "placed"
+                                    self.t[5].place()
 
                 elif self.t[6].getStatus() == 1:
                     self.t[6].setZero()
                     p = pygame.mouse.get_pos() 
                     if self.t[6].collide(p) == 0:
-                        try:
-                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                        except:
-                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/OverFlowChest.png")))
-                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                                print "placed"
+                        if self.t[6].ifPlaced() == False:
+                            try:
+                                    gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                            except:
+                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/OverFlowChest.png")))
+                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    print "placed"
+                                    self.t[6].place()
 
 
                 elif self.t[7].getStatus() == 1:
                     self.t[7].setZero()
                     p = pygame.mouse.get_pos() 
                     if self.t[7].collide(p) == 0:
-                        try:
-                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                        except:
-                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/crystalChest.png")))
-                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                                print "placed"
+                        if self.t[7].ifPlaced() == False:
+                            try:
+                                    gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                            except:
+                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/crystalChest.png")))
+                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    print "placed"
+                                    self.t[7].place()
 
                 elif self.t[8].getStatus() == 1:
                     self.t[8].setZero()
                     p = pygame.mouse.get_pos() 
                     if self.t[8].collide(p) == 0:
-                        try:
-                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                        except:
-                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/sandT.png")))
-                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                                print "placed"
+                        if self.t[8].ifPlaced() == False:
+                            try:
+                                    gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                            except:
+                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/sandT.png")))
+                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    print "placed"
+                                    self.t[8].place()
 
                 elif self.t[9].getStatus() == 1:
                     self.t[9].setZero()
                     p = pygame.mouse.get_pos() 
                     if self.t[9].collide(p) == 0:
-                        try:
-                                gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                        except:
-                                gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/grownOverChest.png")))
-                                gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
-                                print "placed"
+                        if self.t[9].ifPlaced() == False:
+                            try:
+                                    gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                            except:
+                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/grownOverChest.png")))
+                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    print "placed"
+                                    self.t[9].place()
 
 
 

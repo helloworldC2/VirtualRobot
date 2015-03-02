@@ -127,7 +127,7 @@ class RobotAI(Entity.Entity):
 			self.destination = self.getClosestDestination(self.destinations,True)
 			self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 		if self.path != None and self.path!=True:
-                        print self.path.pos
+                        #print self.path.pos
                         try:
                                 pos = self.path.pos
                                 if xx < pos[0]:

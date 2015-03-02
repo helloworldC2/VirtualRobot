@@ -2,15 +2,23 @@ import pygame
 from pygame import *
 import sys
 
-class image:
+class barItem:
     def __init__(self,surface,(posX,posY),kep):
         self.x = posX
         self.y = posY
         self.canvas = surface
         self.img = pygame.image.load(kep)
         self.dragging = 0
+        self.placed = False
         
         return
+
+    def place(self):
+        self.placed = True 
+        return
+
+    def ifPlaced(self):
+        return self.placed
 
     def setOne(self):
         self.dragging = 1
