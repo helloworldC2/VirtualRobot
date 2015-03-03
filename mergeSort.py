@@ -18,18 +18,7 @@ def mergeSort(alist):
             if lefthalf[i]<righthalf[j]:
                 alist[k]=lefthalf[i]
                 i=i+1
-                jobs.append(Jobs.JobGoTo(i))
-                jobs.append(Jobs.JobPickUpTreasure(i))
-                jobs.append(Jobs.JobStoreTreasure())
-            
-                jobs.append(Jobs.JobGoTo(i))
-                jobs.append(Jobs.JobPickUpTreasure(i+1))
-                jobs.append(Jobs.JobGoTo(i))
-                jobs.append(Jobs.JobPlaceTreasure(root))
-            
-                jobs.append(Jobs.JobGoTo(i+1))
-                jobs.append(Jobs.JobSwapHandWithContainer())
-                jobs.append(Jobs.JobPlaceTreasure(i+1))
+                
             else:
                 alist[k]=righthalf[j]
                 j=j+1
@@ -50,3 +39,16 @@ alist = [54,26,93,17,77,31,44,55,20]
 mergeSort(alist)
 print(alist)
 return jobs
+
+#jobs.append(Jobs.JobGoTo(i))
+#jobs.append(Jobs.JobPickUpTreasure(i))
+#jobs.append(Jobs.JobStoreTreasure())
+            
+#jobs.append(Jobs.JobGoTo(i))
+#jobs.append(Jobs.JobPickUpTreasure(i+1))
+#jobs.append(Jobs.JobGoTo(i))
+#jobs.append(Jobs.JobPlaceTreasure(root))
+            
+#jobs.append(Jobs.JobGoTo(i+1))
+#jobs.append(Jobs.JobSwapHandWithContainer())
+#jobs.append(Jobs.JobPlaceTreasure(i+1))
