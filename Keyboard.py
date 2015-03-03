@@ -15,7 +15,9 @@ keys = {
         'e':False,
         'l':False,
         'o':False,
-        'r':False
+        'r':False,
+        'left':False,
+        'right':False
 
 
 }
@@ -28,6 +30,10 @@ def update(level):
                         running = False
 
 		if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_LEFT:
+                                keys['left'] = False
+                        if event.key == pygame.K_RIGHT:
+                                keys['right'] = False
 			if event.key == pygame.K_w:
 				keys['w'] = True
 			if event.key == pygame.K_a:
@@ -46,8 +52,13 @@ def update(level):
 				keys['e'] = True
 			if event.key == pygame.K_r:
 				keys['r'] = True
+			
 
-		if event.type == pygame.KEYUP:
+		elif event.type == pygame.KEYUP:
+                        if event.key == pygame.K_LEFT:
+                                keys['left'] = True
+                        if event.key == pygame.K_RIGHT:
+                                keys['right'] = True
 			if event.key == pygame.K_w:
 				keys['w'] = False
 			if event.key == pygame.K_a:
@@ -66,6 +77,8 @@ def update(level):
 				keys['e'] = False
 			if event.key == pygame.K_r:
 				keys['r'] = False
+                        
+                                
 
                 isCheatOn(level)
 

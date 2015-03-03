@@ -8,6 +8,7 @@ import Level
 from Level import *
 import Tile
 import EntityTreasure
+import Keyboard
 
 
 
@@ -15,7 +16,18 @@ class GuiHUD(object):
 
 
     def __init__(self,screen):
+        self.tmp = 0 
         self.time = 1
+        self.box = barItem(screen,(0,0),"tiles/select.png")
+        self.trap = [barItem(screen,(30,500),"tiles/cactus.png"),
+                     barItem(screen,(90,500),"tiles/ditch1.png"),
+                     barItem(screen,(150,500),"tiles/larval.png"),
+                     barItem(screen,(210,500),"tiles/btgrass.png")]
+
+        for i in self.trap:
+            i.scale(48,48)
+                     
+        
         self.healthbar = pygame.image.load('menu/Healthbar.png')
         self.bar = barItem(screen,(20,494),"menu/bar.png")
         self.t = [barItem(screen,(30,500),"tiles/brokenChest.png"),
@@ -79,6 +91,10 @@ class GuiHUD(object):
                         
         else:
             if level.player!=None:
+                i = 3
+                
+                    
+                
                 pygame.draw.circle(screen, (255,0,0), (0,600), int(120*(level.player.health/100.00)))
                 pygame.draw.circle(screen, (0,0,255), (800,600), int(120*(level.player.health/100.00)))
                 screen.blit(self.healthbar, (-140,450))
@@ -88,6 +104,15 @@ class GuiHUD(object):
                 text = font.render("Score: "+str(level.player.score.score), True, (0,0,0))
                 textpos = text.get_rect(center=(60,60))
                 screen.blit(text, textpos)
+                self.box.scale(52,52)
+                self.box.setCoord(self.trap[self.tmp].x-2,self.trap[self.tmp].y-2)
+               
+                self.bar.blit()
+                
+                for tr in self.trap:
+                    tr.blit()
+                self.box.blit()
+                
 
             if level.player == None:
                 ##############
@@ -130,14 +155,32 @@ class GuiHUD(object):
 
             
     def tick(self,ticks,x,y,level):
+        
+        if Keyboard.keys['right']==True:
+            Keyboard.keys['right']=False
+            self.tmp +=1
+            self.tmp = self.tmp%4
+
+        if Keyboard.keys['left']==True:
+            Keyboard.keys['left']=False
+            self.tmp -=1
+            self.tmp = self.tmp%4
+
+        print self.tmp
+
         self.time = ticks/60
+
+        #if level.player != None:
+            
+            
+        
         if gui.gameOver==True or gui.defeat==True:
             if pygame.mouse.get_pressed()[0]==True:
                 gui.gameOver=False
                 gui.scorePosted = False
                 Game.menu1(gui.screen)
         #################
-        if level.player == None:
+        elif level.player == None:
                 pos = pygame.mouse.get_pos()
                 r = 1
                 for i in range(10):

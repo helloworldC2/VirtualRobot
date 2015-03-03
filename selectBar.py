@@ -10,8 +10,17 @@ class barItem:
         self.img = pygame.image.load(kep)
         self.dragging = 0
         self.placed = False
+        self.selected = False
         
         return
+
+    def isSelected(self):
+        return self.selected
+
+    def select(self):
+        self.selected = not self.selected
+    
+        
 
     def place(self):
         self.placed = True 
