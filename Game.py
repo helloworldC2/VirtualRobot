@@ -92,9 +92,9 @@ def menu1(canvas):
         creditB = button(canvas,(cX,cY),"buttons/credits.png")
         leaderboardB = button(canvas,(lX,lY),"buttons/Leaderboard.png")
         closeB = button(canvas,(eX,eY),"buttons/exit.png")
-        single = button(canvas,(20,200),"buttons/Single-Player.png")
-        multi = button(canvas,(20,260),"buttons/Multiplayer.png")
-        ai = button(canvas,(20,320),"buttons/AI.png")
+        single = button(canvas,(73,250),"buttons/Single-Player.png")
+        multi = button(canvas,(95,310),"buttons/Multiplayer.png")
+        ai = button(canvas,(170,370),"buttons/AI.png")
         settingsB = button(canvas,(setX,setY),"buttons/Settings.png")
         logo=image(canvas,(10,520),'logo/helloWorldStudio.png')
 
