@@ -175,10 +175,11 @@ class GuiHUD(object):
             
         
         if gui.gameOver==True or gui.defeat==True:
+            Game.menu1(gui.screen)
             if pygame.mouse.get_pressed()[0]==True:
                 gui.gameOver=False
                 gui.scorePosted = False
-                Game.menu1(gui.screen)
+             
         #################
         elif level.player == None:
                 pos = pygame.mouse.get_pos()
