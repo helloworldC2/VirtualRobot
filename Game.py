@@ -95,6 +95,9 @@ def menu1(canvas):
         single = button(canvas,(73,250),"buttons/Single-Player.png")
         multi = button(canvas,(95,310),"buttons/Multiplayer.png")
         ai = button(canvas,(170,370),"buttons/AI.png")
+        singleO = button(canvas,(73,250),"buttons/Single-PlayerO.png")
+        multiO = button(canvas,(95,310),"buttons/MultiplayerO.png")
+        aiO = button(canvas,(170,370),"buttons/AIO.png")
         settingsB = button(canvas,(setX,setY),"buttons/Settings.png")
         logo=image(canvas,(10,520),'logo/helloWorldStudio.png')
 
@@ -347,11 +350,21 @@ def menu1(canvas):
                         #if we are in start menu
                         if inStart== 1:
                                 #if collision with the game mode buttons, use hand cursor
-                                if single.collide(pos) or multi.collide(pos) or ai.collide(pos):
+                                if single.collide(pos):
                                         pygame.mouse.set_cursor(*cursor.HAND_CURSOR)
+                                        singleO.blit()
+                                elif multi.collide(pos):
+                                        pygame.mouse.set_cursor(*cursor.HAND_CURSOR)
+                                        multiO.blit()
+                                elif ai.collide(pos):
+                                        pygame.mouse.set_cursor(*cursor.HAND_CURSOR)
+                                        aiO.blit()
                                 #else use arrow
                                 else :
                                         pygame.mouse.set_cursor(*cursor.ARROW_CURSOR)
+                                        single.blit()
+                                        multi.blit()
+                                        ai.blit()
                         #if collision with buttons, use hand cursor              
                         if (settingsB.collide(pos) == 1 or
                         startB.collide(pos) == 1 or
