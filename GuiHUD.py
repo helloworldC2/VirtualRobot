@@ -166,7 +166,7 @@ class GuiHUD(object):
             self.tmp -=1
             self.tmp = self.tmp%4
 
-        print self.tmp
+        #print self.tmp
 
         self.time = ticks/60
 

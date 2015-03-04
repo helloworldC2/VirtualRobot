@@ -32,6 +32,8 @@ class Level():
 		self.paths = {}#used for testing if traps can be placed
 		self.round = 1
 		self.numAI = 0
+		self.treasuresCollected = []
+		self.shotgunnedDestinations = []
 
 ##		self.workers = 1	#number of worker
 ##		self.addr_list = []	#list of client addresses and connections
@@ -46,10 +48,10 @@ class Level():
 
 
         def startNewRound(self):
-                gui.timer=100
+                gui.timer=100*60
                 for i in range(self.round*5-3):
-                        self.numAI-=1
-                        self.entities.append(RobotAI.RobotAI(self,32,0,gui.treasureLocations,random.randint(max(self.round-2,1),self.round+2),random.randint(self.round*10,self.round*15)))
+                        self.numAI+=1
+                        self.entities.append(RobotAI.RobotAI(self,32,0,gui.treasureLocations,random.randint(max(self.round-2,2),self.round+3),random.randint(self.round*10,self.round*15)))
                        
                 self.round+=1
                 
@@ -300,7 +302,6 @@ class Level():
 		openList = []
 		closedList = []
 		currentNode = Node(start,None,0,self.getDistance(start,goal))
-		del start
 		openList.append(currentNode)
 		while len(openList) >0:
 			currentNode = self.lookForFastest(openList) #only use node with lowest cost
@@ -312,7 +313,7 @@ class Level():
 					currentNode = currentNode.parent
 				del openList
 				del closedList
-				path.append(Node((1,1),None,0,0))
+				path.append(Node(start,None,0,0))
 				return path
 			openList.remove(currentNode)
 			closedList.append(currentNode)

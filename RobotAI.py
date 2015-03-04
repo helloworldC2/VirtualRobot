@@ -28,6 +28,10 @@ class RobotAI(Entity.Entity):
 		self.speed = speed
 		self.goHome = False
 		self.inHand = None
+		self.blocksPath = False
+		self.isSolid = False
+		self.currentRoute = list(self.level.paths[self.destination])
+	
 
 
 
@@ -106,28 +110,50 @@ class RobotAI(Entity.Entity):
 		xx = self.centreX >>5
 		yy = self.centreY >>5
 
-		if self.ticks%30==0:
+		if self.ticks%10==0:
                         if self.level.paths!=True:
-                                for node in self.level.paths[self.destination]:
+                                for node in self.currentRoute:
                                         if node.pos == (xx,yy):
                                                 
-                                                nextNode = self.level.paths[self.destination].index(node)-1
+                                                nextNode = self.currentRoute.index(node)-1
                                                 if self.goHome:nextNode+=2
                                                 try:
-                                                        self.path = self.level.paths[self.destination][nextNode]
+                                                        self.path = self.currentRoute[nextNode]
                                                         
                                                 except:
                                                         if self.goHome:
                                                                 self.goHome=False
                                                                 self.path=None
+                                                        else:
+                                                                self.goHome=True
+                                                                self.path=None
                                                         print "arrived, or just lost (probably lost)"
+
+                                                
+                                                #if self.goHome:self.level.paths[self.destination].remove(self.path)
+                                                if nextNode == 0:
+                                                        self.goHome=True
+                                                        for robot in self.level.entities:
+                                                                if robot.canPickUpTreasure==True and robot.destination==self.destination:
+                                                                        robot.goHome = True
+                                                if nextNode == len(self.currentRoute)-1 and self.goHome:
+                                                        self.goHome=False
+                                                        self.level.treasuresCollected.append(self.inHand)
+                                                        try:
+                                                                del self.level.paths[self.destination]
+                                                                self.destinations.remove(self.destination)
+                                                        except:
+                                                                pass
+                                                       
+                                                        self.destination = self.getClosestDestination(self.destinations,True)
+                                                        self.currentRoute = list(self.level.paths[self.destination])
 			
                 
-		if self.path==True or self.path==None:
-			self.destination = self.getClosestDestination(self.destinations,True)
-			self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
+##		if self.path==True or self.path==None:
+##			self.destination = self.getClosestDestination(self.destinations,True)
+##			self.path = self.level.findPath((xx,yy),(self.destination[0]>>5,self.destination[1]>>5))
 		if self.path != None and self.path!=True:
-                        #print self.path.pos
+                        #print self.path.pos,(xx,yy)
                         try:
                                 pos = self.path.pos
                                 if xx < pos[0]:
