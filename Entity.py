@@ -104,9 +104,10 @@ class Entity(object):
 		if lastTile != nextTile and nextTile.isSolid:
 			return True
 		for i in self.level.entities:
-			if (i.centreX>>5,i.centreY>>5) == ((self.x + x + xa) >>5,(self.y + y + ya) >> 5) and i!=self and i.isSolid:
-                                self.entityCollidedWith = i
-                                i.entityCollidedWith = self
-				return True
+			if (i.centreX>>5,i.centreY>>5) == ((self.x + x + xa) >>5,(self.y + y + ya) >> 5) and i!=self:
+                                if not i.isSolid and i.canPickUpTreasure and self.isSolid and not self.canPickUpTreasure:
+                                        self.entityCollidedWith = i
+                                        i.entityCollidedWith = self
+                                        return True
 
 		return False

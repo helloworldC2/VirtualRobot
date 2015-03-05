@@ -31,6 +31,51 @@ class EntityTreasure(Entity.Entity):
 
         def setValue(self,value):
                 self.value = value
+
+        """Determins if the entity has collided
+        @Params:
+                None
+        @Return:
+                hasCollided(boolean): if the entity has collided
+        """
+	def hasCollided(self,xa, ya):
+		
+		xMin = -1
+		xMax = 33
+		yMin = -1
+		yMax = 33
+
+                if self.isSolidTile(xa, ya, xMin, yMin):
+			return True
+                if self.isSolidTile(xa, ya, xMin+2, yMin):
+			return True
+                if self.isSolidTile(xa, ya, xMin+2, yMin+2):
+			return True
+			
+                if self.isSolidTile(xa, ya, xMax, yMin):
+			return True
+                if self.isSolidTile(xa, ya, xMax-2, yMin):
+			return True
+                if self.isSolidTile(xa, ya, xMax-2, yMin+2):
+                        return True
+                        
+                if self.isSolidTile(xa, ya, xMax, yMax):
+			return True
+                if self.isSolidTile(xa, ya, xMax-2, yMax):
+			return True
+                if self.isSolidTile(xa, ya, xMax-2, yMax-2):
+                        return True
+
+                if self.isSolidTile(xa, ya, xMin, yMax):
+			return True
+                if self.isSolidTile(xa, ya, xMin+2, yMax):
+			return True
+                if self.isSolidTile(xa, ya, xMin+2, yMax-2):
+                        return True
+
+		
+		return False
+	
         """Updates logic associated with entity
         @Params:
                 None
@@ -39,6 +84,8 @@ class EntityTreasure(Entity.Entity):
         """
 	def tick(self):
                 super(EntityTreasure,self).tick()
+                self.hasCollided(0,0)
+               
                 if self.entityCollidedWith!=None:
                         if self.entityCollidedWith.canPickUpTreasure==True:
                             self.entityCollidedWith.inHand = self

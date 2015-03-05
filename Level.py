@@ -478,6 +478,9 @@ class Level():
                                                 return True
                                         if updatePath:
                                                 self.paths[t] = path
+                                                for e in self.entities:
+                                                        if e.canPickUpTreasure:
+                                                                e.currentRoute = list(path)
                 
                 return False
 
