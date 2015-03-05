@@ -42,6 +42,7 @@ class RobotAI(Entity.Entity):
                 self.level.player.score+=self.speed
                 if self.level.numAI<1:
                         self.level.roundOver()
+                self.level.shotgunnedDestinations.remove(self.destination)
         """Gets the closest treasure to robot
         @Params:
                 d(list): list of destinations
@@ -53,13 +54,27 @@ class RobotAI(Entity.Entity):
                 distance = 1000000
                 for i in d:
                         dis = self.level.getDistance((self.x,self.y),i)
+                        nextI = False
                         if dis < distance:
+                                for a in self.level.shotgunnedDestinations:
+                                        if a == i:
+                                                nextI =True
+                                                break
+                                if nextI:continue
                                 distance = dis
                                 dest = i
+                if dest==0:          
+                        for i in d:
+                                dis = self.level.getDistance((self.x,self.y),i)
+                                if dis < distance:
+                                        distance = dis
+                                        dest = i
+                        
                 
 ##		if remove==True:
 ##                        d.remove(dest)
-		
+                
+		self.level.shotgunnedDestinations.append(dest)
                 return dest
 
         """Determins if the entity has collided
