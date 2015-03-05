@@ -1,6 +1,7 @@
 import pygame
 from pygame import *
 import sys
+import TickBox
 
 class barItem:
     def __init__(self,surface,(posX,posY),kep):
@@ -11,6 +12,9 @@ class barItem:
         self.dragging = 0
         self.placed = False
         self.selected = False
+        self.edit = False
+        
+        self.b = TickBox.tickBox(surface,(50,50))
         
         return
 

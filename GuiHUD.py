@@ -14,8 +14,8 @@ import Keyboard
 
 class GuiHUD(object):
 
-
     def __init__(self,screen):
+        self.click = 0
         self.tmp = 0 
         self.time = 1
         self.box = barItem(screen,(0,0),"tiles/select.png")
@@ -116,7 +116,11 @@ class GuiHUD(object):
 
             if level.player == None:
                 ##############
+                if self.t[0].edit == True:
+                    self.t[0].b.blit()
+                    
                 self.bar.blit()
+                
                 for i in range(10):
                     if self.t[i].ifPlaced() == False:
                         self.t[i].blit()
@@ -152,8 +156,7 @@ class GuiHUD(object):
                 #text2 = font.render("Health bar:", True, (0,0,0))
                 #textpos2 = text.get_rect(center=(60,150))
                 #screen.blit(text2, textpos2)
-
-            
+        
     def tick(self,ticks,x,y,level):
         
         if Keyboard.keys['right']==True:
@@ -182,15 +185,32 @@ class GuiHUD(object):
              
         #################
         elif level.player == None:
+                
                 pos = pygame.mouse.get_pos()
                 r = 1
                 for i in range(10):
                     if self.t[i].getStatus():
                         r = 0
+                    
+                if pygame.mouse.get_pressed()[0]==False and self.click == 0 :
+                    self.click = 1
+                    
+                
+                    
                 if pygame.mouse.get_pressed()[0]==True :
+                    
+                    
+                    if self.t[0].edit == True:
+                        if self.click == 1:
+                            self.t[0].b.clicked()
+                            self.click = 0
+                            
+                    self.click = 0
+                    
+                           
                     for i in range(10):
                         if self.t[i].clicked() and self.t[i].getStatus() == 0 and r:
-                            
+                            self.t[0].edit = False
                             self.t[i].setOne()
                             for j in range(10):
                                 if j != i:
@@ -204,10 +224,13 @@ class GuiHUD(object):
                                 try:
                                     gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                 except:
-                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/brokenChest.png")))
+                                    treasure = EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/brokenChest.png"))
+                                    gui.level.entities.append(treasure)
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[0].place()
+                                    self.t[0].edit = True
+                                    
 
                 elif self.t[1].getStatus() == 1:
                     self.t[1].setZero()
@@ -217,11 +240,16 @@ class GuiHUD(object):
                             try:
                                     gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                             except:
-                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/burntChest.png")))
+                                    treasure = EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/burntChest.png"))
+                                    gui.level.entities.append(treasure)
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[1].place()
+                                    gui.level.wl.append(treasure)
+                                    print gui.level.wl
                                     gui.level.player = gui.player
+                                    
+                                    
                                 
                 elif self.t[2].getStatus() == 1:
                     self.t[2].setZero()
@@ -231,10 +259,13 @@ class GuiHUD(object):
                             try:
                                     gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                             except:
-                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/darkChest.png")))
+                                    treasure = EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/darkChest.png"))
+                                    gui.level.entities.append(treasure)
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[2].place()
+                                    gui.level.wl.append(treasure)
+                                    print gui.level.wl
 
                 elif self.t[3].getStatus() == 1:
                     self.t[3].setZero()
@@ -244,10 +275,13 @@ class GuiHUD(object):
                             try:
                                     gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                             except:
-                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/glassChest.png")))
+                                    treasure = EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/glassChest.png"))
+                                    gui.level.entities.append(treasure)
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[3].place()
+                                    gui.level.wl.append(treasure)
+                                    print gui.level.wl
 
                 elif self.t[4].getStatus() == 1:
                     self.t[4].setZero()
@@ -257,10 +291,13 @@ class GuiHUD(object):
                             try:
                                     gui.treasureLocations.index((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                             except:
-                                    gui.level.entities.append(EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/goldChest.png")))
+                                    treasure = EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/goldChest.png"))
+                                    gui.level.entities.append(treasure)
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[4].place()
+                                    #gui.level.wl.append(treasure)
+                                    
                                 
                 elif self.t[5].getStatus() == 1:
                     self.t[5].setZero()
@@ -274,6 +311,8 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[5].place()
+                 #                   gui.level.wl.append(treasure)
+                                    
 
                 elif self.t[6].getStatus() == 1:
                     self.t[6].setZero()
@@ -287,6 +326,8 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[6].place()
+                  #                  gui.level.wl.append(treasure)
+                
 
 
                 elif self.t[7].getStatus() == 1:
@@ -301,6 +342,8 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[7].place()
+                   #                 gui.level.wl.append(treasure)
+                                    
 
                 elif self.t[8].getStatus() == 1:
                     self.t[8].setZero()
@@ -314,6 +357,8 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[8].place()
+                    #                gui.level.wl.append(treasure)
+                                    
 
                 elif self.t[9].getStatus() == 1:
                     self.t[9].setZero()
@@ -327,6 +372,8 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[9].place()
+                     #               gui.level.wl.append(treasure)
+                                    
 
 
 

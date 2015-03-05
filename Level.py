@@ -16,7 +16,7 @@ class Level():
 	def __init__(self,w,h):
                 
                 
-                
+                self.wl = list()
 		self.width  = w
 		self.height = h
 		self.tiles = []

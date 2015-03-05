@@ -27,6 +27,7 @@ class tickBox(Box.box):
                     self.status = 0
                     print self.status
                     self.blit()
+                    
                     return 1
         else:
             return 0
@@ -37,5 +38,5 @@ class tickBox(Box.box):
             self.canv.blit(self.box,(self.x,self.y))                    
         elif self.status == 1:
             self.canv.blit(self.boxTicked,(self.x,self.y))
-        pygame.display.update()
+        #pygame.display.update()
         return
