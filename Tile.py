@@ -331,6 +331,7 @@ grass.setChild(grass2)
 grass.setChild(grass3)
 sand.setChild(cactus)
 sand.setChild(sandbush)
+sand.setChild(quicksand)
 """gets the tile id from the tiles char.
 Used to populate level.tiles[]
 @Params:
