@@ -9,6 +9,7 @@ import BubbleSort
 import HeapSort
 import BogoSort
 import GeneticSort
+import mergeSort
 
 
 class SorterRobot(Entity.Entity):
@@ -31,6 +32,7 @@ class SorterRobot(Entity.Entity):
 		self.jobs = BogoSort.createJobs(self.treasures,self)
                 #self.jobs = HeapSort.heapSort(self.treasures,len(self.treasures))
                 #self.jobs = GeneticSort.geneticSort(self.treasures,self)
+		#self.jobs = mergeSort.mergeSort(self.treasures)
 		self.jobs[0].doJob(self)
 		
 		
