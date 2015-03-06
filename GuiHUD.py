@@ -15,6 +15,7 @@ import Keyboard
 class GuiHUD(object):
 
     def __init__(self,screen):
+        self.keys = None
         self.click = 0
         self.tmp = 0 
         self.time = 1
@@ -116,8 +117,11 @@ class GuiHUD(object):
 
             if level.player == None:
                 ##############
-                if self.t[0].edit == True:
-                    self.t[0].b.blit()
+                for i in self.t:
+                    if i.edit == True:
+                        i.b.blit()
+                        i.tf1.blit()
+                
                     
                 self.bar.blit()
                 
@@ -198,19 +202,27 @@ class GuiHUD(object):
                 
                     
                 if pygame.mouse.get_pressed()[0]==True :
-                    
-                    
-                    if self.t[0].edit == True:
-                        if self.click == 1:
-                            self.t[0].b.clicked()
-                            self.click = 0
+                    if self.click == 1:
+                        
+                        for i in self.t:
+                            if i.edit == True:
+                                i.b.clicked()
+                                if i.tf1.clicked():
+                                    i.tf1.select()
+                                self.click = 0
+                            
+                    #if self.t[0].edit == True:
+                        #if self.click == 1:
+                         #   self.t[0].b.clicked()
+                         #   self.click = 0
                             
                     self.click = 0
                     
                            
                     for i in range(10):
                         if self.t[i].clicked() and self.t[i].getStatus() == 0 and r:
-                            self.t[0].edit = False
+                            for j in self.t:
+                                j.edit = False
                             self.t[i].setOne()
                             for j in range(10):
                                 if j != i:
@@ -226,7 +238,7 @@ class GuiHUD(object):
                                 except:
                                     treasure = EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load("tiles/brokenChest.png"))
                                     gui.level.entities.append(treasure)
-                                    gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
+                                    #gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[0].place()
                                     self.t[0].edit = True
@@ -245,8 +257,8 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[1].place()
-                                    gui.level.wl.append(treasure)
-                                    print gui.level.wl
+                                    #gui.level.wl.append(treasure)
+                                    #print gui.level.wl
                                     gui.level.player = gui.player
                                     
                                     
@@ -264,8 +276,9 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[2].place()
-                                    gui.level.wl.append(treasure)
-                                    print gui.level.wl
+                                    #gui.level.wl.append(treasure)
+                                   # print gui.level.wl
+                                    self.t[2].edit = True
 
                 elif self.t[3].getStatus() == 1:
                     self.t[3].setZero()
@@ -280,8 +293,9 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[3].place()
-                                    gui.level.wl.append(treasure)
-                                    print gui.level.wl
+                                    self.t[3].edit = True
+                                    #gui.level.wl.append(treasure)
+                                    #print gui.level.wl
 
                 elif self.t[4].getStatus() == 1:
                     self.t[4].setZero()
@@ -296,6 +310,7 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[4].place()
+                                    self.t[4].edit = True
                                     #gui.level.wl.append(treasure)
                                     
                                 
@@ -311,6 +326,7 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[5].place()
+                                    self.t[5].edit = True
                  #                   gui.level.wl.append(treasure)
                                     
 
@@ -326,6 +342,7 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[6].place()
+                                    self.t[6].edit = True
                   #                  gui.level.wl.append(treasure)
                 
 
@@ -342,6 +359,7 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[7].place()
+                                    self.t[7].edit = True
                    #                 gui.level.wl.append(treasure)
                                     
 
@@ -357,6 +375,7 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[8].place()
+                                    self.t[8].edit = True
                     #                gui.level.wl.append(treasure)
                                     
 
@@ -372,9 +391,28 @@ class GuiHUD(object):
                                     gui.treasureLocations.append((((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5))
                                     print "placed"
                                     self.t[9].place()
+                                    self.t[9].edit = True
                      #               gui.level.wl.append(treasure)
-                                    
 
+                for i in self.t:
+                    if i.edit == False:
+                        if i.b.status == 1:
+                            i.b.status = 0
+                            treasure = EntityTreasure.EntityTreasure(gui.level,((pos[0]>>5)+(x>>5))<<5,((pos[1]>>5)+(y>>5))<<5,10,pygame.image.load(i.im))
+                            gui.level.wl.append(treasure)
+                            print gui.level.wl
+
+
+            
+                    
+                p = pygame.key.get_pressed()
+                self.keys = p
+                if self.t[0].edit == True and self.t[0].tf1.isSelected():
+                    for i in range(0,len(p)):
+                            if p[i] == 1:
+                                self.t[0].tf1.handle(i)
+                            
+                
 
 
                 

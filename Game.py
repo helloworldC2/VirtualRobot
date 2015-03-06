@@ -175,11 +175,14 @@ def menu1(canvas):
                                     
                                     #if the email textfield was clicked, user will write in it
                                     if emailTextField.isSelected():
-                                            emailTextField.handle(event)
+                                            emailTextField.handle(event.key)
+                                            print event.key
                                             
                                     #if the name textfield was clicked
                                     elif nameTextField.isSelected():
-                                            nameTextField.handle(event)
+                                            nameTextField.handle(event.key)
+                                            print event.key
+
                                             
                         #getting position of the mouse
                         pos = pygame.mouse.get_pos()

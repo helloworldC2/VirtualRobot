@@ -2,12 +2,15 @@ import pygame
 from pygame import *
 import sys
 import TickBox
+import textfield
 
 class barItem:
     def __init__(self,surface,(posX,posY),kep):
+        self.tf1 = textfield.textField(surface,(200,100),(400,30),'',20)
         self.x = posX
         self.y = posY
         self.canvas = surface
+        self.im = kep
         self.img = pygame.image.load(kep)
         self.dragging = 0
         self.placed = False
