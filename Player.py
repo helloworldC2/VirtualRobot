@@ -107,11 +107,11 @@ class Player(Entity.Entity):
 			self.isMoving = False
 			soundFXs.Plysound(False,False,False,False,False)
 
-		if self.getTileUnder().getId() == Tile.water.getId()or self.getTileUnder().getId() == Tile.larva.getId():
+		if self.getTileUnder().getId() == Tile.water.getId()or self.getTileUnder().getId() == Tile.larva.getId() or self.getTileUnder().getId() == Tile.quicksand.getId():
 			self.isSwimming = True
 		else:
 			self.isSwimming = False
-		if self.getTileUnder().getId() == Tile.larva.getId():
+		if self.getTileUnder().getId() == Tile.larva.getId()or self.getTileUnder().getId() == Tile.quicksand.getId():
                         if self.health < 0:
                                 self.health = 0
                         self.health =  self.health - 1
