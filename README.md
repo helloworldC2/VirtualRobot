@@ -2,19 +2,24 @@ VirtualRobot
 ============
 #####Introduction
 
-We are "Hello World!", and this is the second project of our first year studying Computer Science at Coventry University.
+We are "Hello World!", and this is the third project of our first year studying Computer Science at Coventry University.
 The criteria we built this project around is as follows:
-- Set up a number of landmarks, a set of traffic lights with instructions (i.e. the red light to stop, amber to wait and a green light to go), and a number of treasures (each hidden on a different landmark). 
-- Two robots, each with a random starting point and the description of a given landmark, should pick up different treasures (indicated in a form of text, image or sound when found) that are worth at least 100 points before reaching their given landmark, whilst avoiding each other, moving away from the landmarks with no treasures and following the traffic light instructions along the way until one of robots has found its treasure first. 
-- Furthermore, while a robot is approaching a landmark where no treasure is hidden, the information about the landmark should be displayed on the screen, such as a web page containing information about the landmark.
-- A map can be incorporated into the program as the background along with any other innovative features.
+- The program should allow the user to select and place different types of treasures (e.g. jewellery, coins, silverware) and a number of hidden traps (randomly generated) within an arena. 
+- The program should provide a brief description for each treasure and assign each treasure with a score. 
+- The program should have a starting point, time, and a wish list of treasures to find, also provided by the user, a robot should start with the nearest treasure and gather as many treasures that are required on the list as possible within the given time.
+- When the robot stops at any of the treasures on the wish list, the info about that treasure should be displayed on the screen.
+- Furthermore, the program should make the robot lose the last treasure it has collected when the robot falls into a hidden trap during the treasure hunt.
+- The program should display the treasures that have been collected in an unsorted order, and then that robot will then show how the treasures (according to their scores in an ascending or descending order) are sorted in an animation.
+- This animation should be based on a user-defined sorting algorithm.
+- Any other innovative features may also be included.
 
 Against the project criteria, we have successfully implemented:
-- A number of landmarks
-- Traffic lights with three different colours
-- Two robots that search for landmarks and treasure
+- A number of treasures and traps
+- A brief description of the treasure, with a score
+- A wishlist of treasures!
+- A sorting algorithm which displays the treasures the user has collected
+- A leaderboard of scores which works with the end-user
 - An emailing system which emails the user information about the treasure they've found
-- Multiplayer
 - Innovative features such as Virtual Reality
 - A map creator and editor
 
