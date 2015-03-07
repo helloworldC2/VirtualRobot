@@ -31,8 +31,8 @@ class SorterRobot(Entity.Entity):
 		self.inHand = self.treasures[0]
 		self.inContainer = self.treasures[1]
 		self.currentJob = None
-                self.jobs = CocktailSort.createJobs(self.treasures,self)
-                #self.jobs = HeapSort.heapSort(self.treasures,len(self.treasures))
+                #self.jobs = CocktailSort.createJobs(self.treasures,self)
+                self.jobs = HeapSort.heapSort(self.treasures,len(self.treasures))
                 #self.jobs = GeneticSort.geneticSort(self.treasures,self)
 		#self.jobs = mergeSort.mergeSort(self.treasures)
 		self.jobs[0].doJob(self)

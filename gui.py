@@ -97,7 +97,7 @@ def render():
     if level.player!=None:
         level.player.render(screen,xoff,yoff)
     
-    #hud.render(screen,level,basicFont,xoff,yoff)
+    hud.render(screen,level,basicFont,xoff,yoff)
     pygame.display.flip()
 
 
@@ -159,10 +159,10 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     level = Level.Level(32,32)
     
     endLevel = None
-    endLevel = Level.Level(32,32)
+    #endLevel = Level.Level(32,32)
     username = Config.config["name"]
     player = Player.Player(level,username,x,y)
-    level.player = player
+    #level.player = player
     isMultiplayer = multiplayer
     hasAI = AI
     numAI = nAI
@@ -183,8 +183,8 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
 
 
     level.loadLevelFromFile("levels/Arena.txt")
-    endLevel.loadLevelFromFile("levels/sort.txt")
-    endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
+    #endLevel.loadLevelFromFile("levels/sort.txt")
+    #endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
     #if isMultiplayer == False:
         #populateLevel()
 
