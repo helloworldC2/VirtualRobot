@@ -3,11 +3,12 @@ from pygame import *
 import sys
 import TickBox
 import textfield
+from pygame.locals import *
 
 class barItem:
     def __init__(self,surface,(posX,posY),kep):
         self.tf1 = textfield.textField(surface,(30,50),(730,30),'',20)
-        self.tf2 = textfield.textField(surface,(30,150),(50,30),'',20)
+        self.tf2 = textfield.textField(surface,(250,105),(50,30),'',20)
         self.x = posX
         self.y = posY
         self.canvas = surface
@@ -17,9 +18,7 @@ class barItem:
         self.placed = False
         self.selected = False
         self.edit = False
-        
-        self.b = TickBox.tickBox(surface,(30,250))
-        
+        self.b = TickBox.tickBox(surface,(400,152))
         return
 
     def isSelected(self):

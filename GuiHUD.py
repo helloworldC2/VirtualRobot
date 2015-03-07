@@ -9,12 +9,15 @@ from Level import *
 import Tile
 import EntityTreasure
 import Keyboard
+from pygame.locals import *
+from Image import * 
 
 
 
 class GuiHUD(object):
 
     def __init__(self,screen):
+        self.ebg = image(screen,(5,5),"menu/editbg.png")
         self.keys = None
         self.click = 0
         self.tmp = 0 
@@ -28,7 +31,6 @@ class GuiHUD(object):
         for i in self.trap:
             i.scale(48,48)
                      
-        
         self.healthbar = pygame.image.load('menu/Healthbar.png')
         self.bar = barItem(screen,(20,494),"menu/bar.png")
         self.t = [barItem(screen,(30,500),"tiles/brokenChest.png"),
@@ -58,6 +60,14 @@ class GuiHUD(object):
 
         for i in range (10):
                   self.c[i].scale(32,32)
+                  
+        self.font = pygame.font.SysFont("calibri",25)
+        self.font.set_bold(1)
+        self.txt =  self.font.render("Treasure Description:",1,(250,250,250))
+        self.txt1 =  self.font.render("Treasure Score:",1,(250,250,250))
+        self.txt2 =  self.font.render("Put Treasure on the Wishlist:",1,(250,250,250))
+    
+        
         return
     
     def render(self,screen,level,font,x,y):
@@ -119,6 +129,12 @@ class GuiHUD(object):
                 ##############
                 for i in self.t:
                     if i.edit == True:
+                        
+                        self.ebg.blit()
+                            
+                        screen.blit(self.txt,(30,10))
+                        screen.blit(self.txt1,(30,110))
+                        screen.blit(self.txt2,(30,160))
                         i.b.blit()
                         i.tf1.blit()
                         i.tf2.blit()
@@ -228,6 +244,8 @@ class GuiHUD(object):
                            
                     for i in range(10):
                         if self.t[i].clicked() and self.t[i].getStatus() == 0 and r:
+                            
+                            
                             for j in self.t:
                                 j.edit = False
                             self.t[i].setOne()
