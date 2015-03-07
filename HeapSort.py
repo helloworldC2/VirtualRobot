@@ -6,10 +6,10 @@ def siftDown(l,start, end,jobs):
     while root*2+1<=end:
         child = root*2+1
         swap = root
-        if l[swap] < l[child]:#swap children if rift is greater than left
+        if l[swap] < l[child]:#swap left child to top
             swap = child
         if child+1 <= end and l[swap] < l[child+1]:
-            swap = child + 1
+            swap = child + 1#swap right child to top
         if swap == root:
             return#larest element is at the top
         else:

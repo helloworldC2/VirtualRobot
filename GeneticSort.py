@@ -62,12 +62,12 @@ def geneticSort(l,worker):
         if lastBest!=None:
             for i,t in enumerate(chromosomes[0].genes):
                 if lastBest[i]!=t:
-                    print lastBest[i],t
+                    print "pick up",lastBest[i],t
                     jobs.append(Jobs.JobGoTo(i))
                     jobs.append(Jobs.JobPickUpTreasure(i))
             for i,t in enumerate(chromosomes[0].genes):
                  if lastBest[i]!=t:
-                    #print lastBest[i],t
+                    print "Place",lastBest[i],t
                     jobs.append(Jobs.JobGoTo(i))
                     jobs.append(Jobs.JobPlaceTreasure(i,t))
         else:

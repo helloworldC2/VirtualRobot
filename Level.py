@@ -51,7 +51,7 @@ class Level():
                 gui.timer=100*60
                 for i in range(self.round*5-3):
                         self.numAI+=1
-                        self.entities.append(RobotAI.RobotAI(self,32,0,gui.treasureLocations,random.randint(max(self.round-2,2),self.round+3),random.randint(self.round*10,self.round*15)))
+                        #self.entities.append(RobotAI.RobotAI(self,32,0,gui.treasureLocations,random.randint(max(self.round-2,2),self.round+3),random.randint(self.round*10,self.round*15)))
                        
                 self.round+=1
                 
