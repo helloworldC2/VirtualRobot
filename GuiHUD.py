@@ -190,7 +190,6 @@ class GuiHUD(object):
              
         #################
         elif level.player == None:
-                
                 pos = pygame.mouse.get_pos()
                 r = 1
                 for i in range(10):
@@ -200,11 +199,8 @@ class GuiHUD(object):
                 if pygame.mouse.get_pressed()[0]==False and self.click == 0 :
                     self.click = 1
                     
-                
-                    
                 if pygame.mouse.get_pressed()[0]==True :
                     if self.click == 1:
-                        
                         for i in self.t:
                             if i.edit == True:
                                 i.b.clicked()
@@ -213,6 +209,13 @@ class GuiHUD(object):
                                     for j in self.t:
                                         if j!=i:
                                             j.tf1.off()
+                                    for j in self.t:
+                                        j.tf2.off()
+                                if i.tf2.clicked():
+                                    for j in self.t:
+                                        j.tf1.off()
+                                        j.tf2.off()
+                                    i.tf2.select()
                                 self.click = 0
                             
                     #if self.t[0].edit == True:
@@ -410,11 +413,15 @@ class GuiHUD(object):
                 p = pygame.key.get_pressed()
                 if self.keys != None:
                     for j in self.t:
-                        if j.edit == True and j.tf1.isSelected():
-                    
-                            for i in range(0,len(p)):
+                        if j.edit == True:
+                            if j.tf1.isSelected():
+                                for i in range(0,len(p)):
                                     if p[i] == 0 and self.keys[i] == 1:
                                         j.tf1.handle(i)
+                            if j.tf2.isSelected():
+                                for i in range(0,len(p)):
+                                    if p[i] == 0 and self.keys[i] == 1:
+                                        j.tf2.numHandle(i)
                             
                 self.keys = p
 

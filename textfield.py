@@ -13,6 +13,7 @@ class textField :
         self.h = magassag
         self.fontH = betumeret
         self.answer = s
+        self.num = 0
         self.selected = False
         
         #initializing font
@@ -73,6 +74,56 @@ class textField :
         pygame.display.update()
         return
 
+    def numHandle(self,event):
+        tmp = self.answer
+        if self.isSelected():
+            tmp += '_'
+        font = pygame.font.SysFont("monospace",self.fontH)
+        text = font.render(tmp,1,(0,0,0))
+        rect = text.get_rect()
+        #print rect
+        
+        if event == K_BACKSPACE:
+            self.answer = self.answer[:-1]
+            print self.answer
+            self.blit()
+
+        elif rect.width <= self.w-5:
+                if event == pygame.K_0 :
+                                        print "pressed: 0"
+                                        self.answer += '0'
+                elif event == pygame.K_9 :
+                                        print "pressed: 9"
+                                        self.answer += '9'
+                elif event == pygame.K_8 :
+                                        print "pressed: 8"
+                                        self.answer += '8'
+                elif event == pygame.K_7 :
+                                        print "pressed: 7"
+                                        self.answer += '7'
+                elif event == pygame.K_6 :
+                                        print "pressed: 6"
+                                        self.answer += '6'
+                elif event == pygame.K_5 :
+                                        print "pressed: 5"
+                                        self.answer += '5'
+                elif event == pygame.K_4 :
+                                        print "pressed: 4"
+                                        self.answer += '4'
+                elif event == pygame.K_3 :
+                                        print "pressed: 3"
+                                        self.answer += '3'
+                elif event == pygame.K_2 :
+                                        print "pressed: 2"
+                                        self.answer += '2'
+                elif event == pygame.K_1 :
+                                        print "pressed: 1"
+                                        self.answer += '1'
+        self.reprint(self.answer)
+        return
+
+
+    
     #This class is handling the user's input in the textfield
     #gets: key
     #returns: nothing
