@@ -121,6 +121,7 @@ class GuiHUD(object):
                     if i.edit == True:
                         i.b.blit()
                         i.tf1.blit()
+                        i.tf2.blit()
                 
                     
                 self.bar.blit()
@@ -209,6 +210,9 @@ class GuiHUD(object):
                                 i.b.clicked()
                                 if i.tf1.clicked():
                                     i.tf1.select()
+                                    for j in self.t:
+                                        if j!=i:
+                                            j.tf1.off()
                                 self.click = 0
                             
                     #if self.t[0].edit == True:
@@ -403,16 +407,16 @@ class GuiHUD(object):
                             print gui.level.wl
 
 
-            
-                    
                 p = pygame.key.get_pressed()
-                self.keys = p
-                if self.t[0].edit == True and self.t[0].tf1.isSelected():
-                    for i in range(0,len(p)):
-                            if p[i] == 1:
-                                self.t[0].tf1.handle(i)
+                if self.keys != None:
+                    for j in self.t:
+                        if j.edit == True and j.tf1.isSelected():
+                    
+                            for i in range(0,len(p)):
+                                    if p[i] == 0 and self.keys[i] == 1:
+                                        j.tf1.handle(i)
                             
-                
+                self.keys = p
 
 
                 

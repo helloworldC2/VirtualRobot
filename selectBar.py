@@ -6,7 +6,8 @@ import textfield
 
 class barItem:
     def __init__(self,surface,(posX,posY),kep):
-        self.tf1 = textfield.textField(surface,(200,100),(400,30),'',20)
+        self.tf1 = textfield.textField(surface,(30,50),(730,30),'',20)
+        self.tf2 = textfield.textField(surface,(30,150),(50,30),'',20)
         self.x = posX
         self.y = posY
         self.canvas = surface
@@ -17,7 +18,7 @@ class barItem:
         self.selected = False
         self.edit = False
         
-        self.b = TickBox.tickBox(surface,(50,50))
+        self.b = TickBox.tickBox(surface,(30,250))
         
         return
 

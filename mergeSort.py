@@ -38,7 +38,7 @@ def mergeSort(alist):
 alist = []
 mergeSort(alist)
 print(alist)
-return jobs
+#return jobs
 
 #jobs.append(Jobs.JobGoTo(i))
 #jobs.append(Jobs.JobPickUpTreasure(i))
