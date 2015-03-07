@@ -6,10 +6,10 @@ def createJobs(alist,worker):
         jobs.append(Jobs.JobPlaceTreasure(i,treasure=t))
         
     exchanges = True
-    passnum = len(alist)-2
+    passnum = len(alist)-1
     while passnum > 0 and exchanges:
        exchanges = False
-       for i in range(len(jobs)-2):
+       for i in range(len(alist)-1):
            if alist[i]>alist[i+1]:
                exchanges = True
                temp = alist[i]
@@ -27,8 +27,9 @@ def createJobs(alist,worker):
                jobs.append(Jobs.JobPlaceTreasure(i+1))
                exchanges = True
        if exchanges == False:break
-       for i in range(len(jobs)-2,0,-1):
+       for i in range(len(alist)-2):
            if alist[i]>alist[i+1]:
+               temp = alist[i]
                jobs.append(Jobs.JobGoTo(i))
                jobs.append(Jobs.JobPickUpTreasure(i))
                jobs.append(Jobs.JobStoreTreasure())
