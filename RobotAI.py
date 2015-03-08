@@ -161,7 +161,15 @@ class RobotAI(Entity.Entity):
                                                                 pass
                                                        
                                                         self.destination = self.getClosestDestination(self.destinations,True)
-                                                        self.currentRoute = list(self.level.paths[self.destination])
+                                                        try:
+                                                        	self.currentRoute = list(self.level.paths[self.destination])
+                                                        except:
+                                                                if gui.endLevel == None:
+                                                                        gui.endLevel = gui.Level.Level(32,32)
+                                                                        gui.endLevel.loadLevelFromFile("levels/sort.txt")
+                                                                        gui.endLevel.entities.append(SorterRobot.SorterRobot(gui.endLevel,6<<5,5<<5))
+                                                                else:
+                                                                        pass
 			
                 
 ##		if self.path==True or self.path==None:
