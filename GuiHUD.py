@@ -107,7 +107,7 @@ class GuiHUD(object):
                     
                 
                 pygame.draw.circle(screen, (255,0,0), (0,600), int(120*(level.player.health/100.00)))
-                pygame.draw.circle(screen, (0,0,255), (800,600), int(120*(level.player.health/100.00)))
+                pygame.draw.circle(screen, (0,0,255), (800,600), int(120*(level.player.points/1000.00)))
                 screen.blit(self.healthbar, (-140,450))
                 screen.blit(self.healthbar, (650,450))
                 #pygame.draw.rect(screen,(255,0,0),(10,170,110,10))
@@ -160,15 +160,7 @@ class GuiHUD(object):
 
             
             y = 60
-            for e in level.entities:
-                try:
-                    if e.score !=None:
-                        y=y+30
-                        text = font.render("AI: "+str(e.score.score), True, (0,0,0))
-                        textpos = text.get_rect(center=(500,y))
-                        screen.blit(text, textpos)
-                except:
-                    pass
+            
                 
             if gui.isMultiplayer==False:
                 text = font.render("Time: "+str(100-self.time), True, (0,0,0))
@@ -436,6 +428,7 @@ class GuiHUD(object):
                                 for i in range(0,len(p)):
                                     if p[i] == 0 and self.keys[i] == 1:
                                         j.tf1.handle(i)
+                                        
                             if j.tf2.isSelected():
                                 for i in range(0,len(p)):
                                     if p[i] == 0 and self.keys[i] == 1:

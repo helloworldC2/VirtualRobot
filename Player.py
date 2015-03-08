@@ -34,7 +34,7 @@ class Player(Entity.Entity):
 		self.inHand = StaticEntity.StaticEntity(level,0,0)
 		self.selectedTile = [0,0]
 		self.placeCooldown = 0
-		self.points = 0
+		self.points = 115
 		
 
         def gainPoints(self,points):
