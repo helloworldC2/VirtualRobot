@@ -1,49 +1,73 @@
 import random
 import Jobs
 
-def siftDown(l,start, end,jobs):
+def siftDown(l,start, end,jobs,isReversed):
     root = start
     while root*2+1<=end:
         child = root*2+1
         swap = root
-        if l[swap] < l[child]:#swap left child to top
-            swap = child
-        if child+1 <= end and l[swap] < l[child+1]:
-            swap = child + 1#swap right child to top
-        if swap == root:
-            return#larest element is at the top
+        if not isReversed:
+            if l[swap] < l[child]:#swap left child to top
+                swap = child
+            if child+1 <= end and l[swap] < l[child+1]:
+                swap = child + 1#swap right child to top
+            if swap == root:
+                return#larest element is at the top
+            else:
+                jobs.append(Jobs.JobGoTo(root))
+                jobs.append(Jobs.JobPickUpTreasure(root))
+                jobs.append(Jobs.JobStoreTreasure())
+                
+                jobs.append(Jobs.JobGoTo(swap))
+                jobs.append(Jobs.JobPickUpTreasure(swap))
+                jobs.append(Jobs.JobGoTo(root))
+                jobs.append(Jobs.JobPlaceTreasure(root))
+                
+                jobs.append(Jobs.JobGoTo(swap))
+                jobs.append(Jobs.JobSwapHandWithContainer())
+                jobs.append(Jobs.JobPlaceTreasure(swap))
+                
+                l[root],l[swap] = l[swap],l[root]
+                root = swap
         else:
-            jobs.append(Jobs.JobGoTo(root))
-            jobs.append(Jobs.JobPickUpTreasure(root))
-            jobs.append(Jobs.JobStoreTreasure())
-            
-            jobs.append(Jobs.JobGoTo(swap))
-            jobs.append(Jobs.JobPickUpTreasure(swap))
-            jobs.append(Jobs.JobGoTo(root))
-            jobs.append(Jobs.JobPlaceTreasure(root))
-            
-            jobs.append(Jobs.JobGoTo(swap))
-            jobs.append(Jobs.JobSwapHandWithContainer())
-            jobs.append(Jobs.JobPlaceTreasure(swap))
-            
-            l[root],l[swap] = l[swap],l[root]
-            root = swap
+            if l[swap] > l[child]:#swap left child to top
+                swap = child
+            if child+1 <= end and l[swap] > l[child+1]:
+                swap = child + 1#swap right child to top
+            if swap == root:
+                return#larest element is at the top
+            else:
+                jobs.append(Jobs.JobGoTo(root))
+                jobs.append(Jobs.JobPickUpTreasure(root))
+                jobs.append(Jobs.JobStoreTreasure())
+                
+                jobs.append(Jobs.JobGoTo(swap))
+                jobs.append(Jobs.JobPickUpTreasure(swap))
+                jobs.append(Jobs.JobGoTo(root))
+                jobs.append(Jobs.JobPlaceTreasure(root))
+                
+                jobs.append(Jobs.JobGoTo(swap))
+                jobs.append(Jobs.JobSwapHandWithContainer())
+                jobs.append(Jobs.JobPlaceTreasure(swap))
+                
+                l[root],l[swap] = l[swap],l[root]
+                root = swap
 
                 
-def heapify(l,length,jobs):
+def heapify(l,length,jobs,isReversed):
     
     start = (length-2)//2
     while start >=0:
-        siftDown(l,start, length -1,jobs)
+        siftDown(l,start, length -1,jobs,isReversed)
         start -=1
    
 
-def heapSort(l,length):
+def heapSort(l,length,isReversed):
     jobs = []
     for i,t in enumerate(l):
         jobs.append(Jobs.JobGoTo(i))
         jobs.append(Jobs.JobPlaceTreasure(i,treasure=t))
-    heapify(l,length,jobs)
+    heapify(l,length,jobs,isReversed)
     end = length-1
     while end > 0:
         jobs.append(Jobs.JobGoTo(end))
@@ -60,7 +84,7 @@ def heapSort(l,length):
         jobs.append(Jobs.JobPlaceTreasure(0))
         l[end],l[0] = l[0],l[end]
         end -=1
-        siftDown(l,0,end,jobs)
+        siftDown(l,0,end,jobs,isReversed)
     jobs.append(Jobs.JobIdle())
     return jobs
 
