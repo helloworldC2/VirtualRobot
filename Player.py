@@ -127,7 +127,7 @@ class Player(Entity.Entity):
                 if self.selectedTile[0]<<5 != self.inHand.x or self.selectedTile[1]<<5!=self.inHand.y:
                         self.inHand.x = self.selectedTile[0]<<5
                         self.inHand.y = self.selectedTile[1]<<5
-                        self.inHand.setCanPlace()
+                        self.inHand.CanPlace()
                 else:
                         self.inHand.x = self.selectedTile[0]<<5
                         self.inHand.y = self.selectedTile[1]<<5
