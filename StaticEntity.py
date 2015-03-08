@@ -18,12 +18,13 @@ class StaticEntity(Entity.Entity):
 		self.id = len(level.entities)
 		self.basicFont = pygame.font.SysFont(None, 32)
 		self.blocksPath = True
-		self.img = pygame.image.load("tiles/wall.png")
+		self.img = pygame.image.load("tiles/cactus.png")
+		self.img = pygame.transform.scale(self.img, (32, 32))
 		self.canPlace = True
 		
 
 
-        def setCanPlace(self):
+        def CanPlace(self):
                 for e in self.level.entities:
                     if e.x == self.x and e.y == self.y:
                         self.canPlace = False
@@ -39,7 +40,7 @@ class StaticEntity(Entity.Entity):
                 if self.canPlace:
                         self.level.entities.append(copy.copy(self))
                         print "Placed Entity"
-                        self.setCanPlace()
+                        self.CanPlace()
                         print self.x>>5,self.y>>5
                         self.level.willBlockTreasure(self,self.x>>5,self.y>>5,True)#update paths
                         return True
