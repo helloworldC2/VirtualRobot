@@ -4,8 +4,10 @@ import sys
 import TickBox
 import textfield
 from pygame.locals import *
+import Image
+import Button
 
-class barItem:
+class barItem( Button.button):
     def __init__(self,surface,(posX,posY),kep):
         self.tf1 = textfield.textField(surface,(30,50),(730,30),'',20)
         self.tf2 = textfield.textField(surface,(250,105),(50,30),'',20)
@@ -20,34 +22,31 @@ class barItem:
         self.edit = False
         self.b = TickBox.tickBox(surface,(400,152))
         return
-
+    #return if the item is selected or not
     def isSelected(self):
         return self.selected
-
+    #if the item was clicked on the bar
     def select(self):
         self.selected = not self.selected
-    
-        
-
+    #place item 
     def place(self):
         self.placed = True 
         return
-
+    #if the item was placed
     def ifPlaced(self):
         return self.placed
-
+    #dragging item
     def setOne(self):
         self.dragging = 1
-
+    #not dragging
     def setZero(self):
         self.dragging = 0
         
-
+    #changing coordinates
     def setCoord(self,posX,posY):
         self.x = posX
         self.y = posY
-        
-
+ 
     def copy(self,image):
         self.x = image.x
         self.y = image.y
@@ -55,30 +54,6 @@ class barItem:
         self.img = image.img
         self.dragging = 0
         return
-
+    #if the item is being dragged or not
     def getStatus(self):
         return self.dragging
-    
-    def blit(self):
-        self.img.convert_alpha()
-        self.canvas.blit(self.img,(self.x,self.y))
-        return
-
-    def scale(self,hossz,magassag):
-        self.img = pygame.transform.scale(self.img,(hossz,magassag))
-        return
-
-    def collide(self,pos) :
-        rect = self.img.get_rect()
-        if pos[0] >= self.x and pos[0] <=self.x + rect.width and pos[1] >= self.y and pos[1] <= self.y + rect.height :
-            return 1
-        else :
-            return 0
-
-    def clicked(self):
-        pos = pygame.mouse.get_pos()
-        if self.collide(pos) == 1:
-            
-            return 1
-        else:
-            return 0
