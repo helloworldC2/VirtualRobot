@@ -18,9 +18,10 @@ class StaticEntity(Entity.Entity):
 		self.id = len(level.entities)
 		self.basicFont = pygame.font.SysFont(None, 32)
 		self.blocksPath = True
-		self.img = pygame.image.load("tiles/cactus.png")
+		self.img = pygame.image.load("tiles/wall.png")
 		self.img = pygame.transform.scale(self.img, (32, 32))
 		self.canPlace = True
+		self.tile = Tile.cactus
 		
 
 
@@ -38,7 +39,8 @@ class StaticEntity(Entity.Entity):
         
         def placeInLevel(self):
                 if self.canPlace:
-                        self.level.entities.append(copy.copy(self))
+                        #self.level.entities.append(copy.copy(self))
+                        self.level.setTile(self.x>>5,self.y>>5,self.tile)
                         print "Placed Entity"
                         self.CanPlace()
                         print self.x>>5,self.y>>5
@@ -80,4 +82,4 @@ class StaticEntity(Entity.Entity):
 
         """
 	def render(self,screen,xoff,yoff):
-            screen.blit(self.img, (self.x-xoff,self.y-yoff))
+            screen.blit(self.tile.img, (self.x-xoff,self.y-yoff))

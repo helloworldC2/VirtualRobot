@@ -31,7 +31,7 @@ class Player(Entity.Entity):
 		self.score = scoring.Score()
 		self.health = 110
 		#self.inHand = Duck.Duck(level,0,0,255,255,255)
-		self.inHand = StaticEntity.StaticEntity(level,0,0)
+		self.inHand = StaticEntity.StaticEntity(gui.level,0,0)
 		self.selectedTile = [0,0]
 		self.placeCooldown = 0
 		self.points = 115

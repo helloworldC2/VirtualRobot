@@ -20,29 +20,33 @@ class GuiHUD(object):
         self.ebg = image(screen,(5,5),"menu/editbg.png")
         self.keys = None
         self.click = 0
-        self.tmp = 0 
+        self.tmp = 1 
         self.time = 1
+        self.tilesInBar = [Tile.grass,Tile.water,Tile.wall,Tile.sand,Tile.larva,Tile.cactus,Tile.quicksand]
         self.box = barItem(screen,(0,0),"tiles/select.png")
-        self.trap = [barItem(screen,(30,500),"tiles/cactus.png"),
-                     barItem(screen,(90,500),"tiles/ditch1.png"),
-                     barItem(screen,(150,500),"tiles/larval.png"),
-                     barItem(screen,(210,500),"tiles/btgrass.png")]
+        self.trap = [barItem(screen,(90+120,500+50),"tiles/grass.png"),
+                     barItem(screen,(150+120,500+50),"tiles/water.png"),
+                     barItem(screen,(210+120,500+50),"tiles/wall.png"),
+                     barItem(screen,(270+120,500+50),"tiles/sand.png"),
+                     barItem(screen,(330+120,500+50),"tiles/larva.png"),
+                     barItem(screen,(390+120,500+50),"tiles/cactus.png"),
+                     barItem(screen,(450+120,500+50),"tiles/quicksand.png")]
 
         for i in self.trap:
             i.scale(48,48)
                      
         self.healthbar = pygame.image.load('menu/Healthbar.png')
-        self.bar = barItem(screen,(20,494),"menu/bar.png")
-        self.t = [barItem(screen,(30,500),"tiles/brokenChest.png"),
-             barItem(screen,(90,500),"tiles/burntChest.png"),
-             barItem(screen,(150,500),"tiles/darkChest.png"),
-             barItem(screen,(210,500),"tiles/glassChest.png"),
-             barItem(screen,(270,500),"tiles/goldChest.png"),
-             barItem(screen,(330,500),"tiles/normalChest.png"),
-             barItem(screen,(390,500),"tiles/OverFlowChest.png"),
-             barItem(screen,(450,500),"tiles/crystalChest.png"),
-             barItem(screen,(510,500),"tiles/sandT.png"),
-             barItem(screen,(570,500),"tiles/grownOverChest.png")]
+        self.bar = barItem(screen,(100,544),"menu/bar.png")
+        self.t = [barItem(screen,(30+80,500+50),"tiles/brokenChest.png"),
+             barItem(screen,(90+80,500+50),"tiles/burntChest.png"),
+             barItem(screen,(150+80,500+50),"tiles/darkChest.png"),
+             barItem(screen,(210+80,500+50),"tiles/glassChest.png"),
+             barItem(screen,(270+80,500+50),"tiles/goldChest.png"),
+             barItem(screen,(330+80,500+50),"tiles/normalChest.png"),
+             barItem(screen,(390+80,500+50),"tiles/OverFlowChest.png"),
+             barItem(screen,(450+80,500+50),"tiles/crystalChest.png"),
+             barItem(screen,(510+80,500+50),"tiles/sandT.png"),
+             barItem(screen,(570+80,500+50),"tiles/grownOverChest.png")]
             
         for i in range (10):
                   self.t[i].scale(48,48)
@@ -71,7 +75,9 @@ class GuiHUD(object):
         return
     
     def render(self,screen,level,font,x,y):
+        
         if gui.gameOver==True:
+            
             font = pygame.font.SysFont(None, 128)
             text = font.render("GAME OVER!", True, (0,0,0))
             textpos = text.get_rect(center=(400,300))
@@ -103,7 +109,11 @@ class GuiHUD(object):
         else:
             if level.player!=None:
                 i = 3
+                self.bar.blit()
                 
+                for tr in self.trap:
+                    tr.blit()
+                self.box.blit()
                     
                 
                 pygame.draw.circle(screen, (255,0,0), (0,600), int(120*(level.player.health/100.00)))
@@ -118,11 +128,7 @@ class GuiHUD(object):
                 self.box.scale(52,52)
                 self.box.setCoord(self.trap[self.tmp].x-2,self.trap[self.tmp].y-2)
                
-                self.bar.blit()
                 
-                for tr in self.trap:
-                    tr.blit()
-                self.box.blit()
                 
 
             if level.player == None:
@@ -163,7 +169,7 @@ class GuiHUD(object):
             
                 
             if gui.isMultiplayer==False:
-                text = font.render("Time: "+str(100-self.time), True, (0,0,0))
+                text = font.render("Time: "+str(1000-self.time), True, (0,0,0))
                 textpos = text.get_rect(center=(60,100))
                 screen.blit(text, textpos)
                 #text2 = font.render("Health bar:", True, (0,0,0))
@@ -171,16 +177,18 @@ class GuiHUD(object):
                 #screen.blit(text2, textpos2)
         
     def tick(self,ticks,x,y,level):
-        
-        if Keyboard.keys['right']==True:
-            Keyboard.keys['right']=False
-            self.tmp +=1
-            self.tmp = self.tmp%4
+        if gui.player!=None:
+            if Keyboard.keys['right']==True:
+                Keyboard.keys['right']=False
+                self.tmp +=1
+                self.tmp = self.tmp%len(self.trap)
+                gui.player.inHand.tile=self.tilesInBar[self.tmp]
 
-        if Keyboard.keys['left']==True:
-            Keyboard.keys['left']=False
-            self.tmp -=1
-            self.tmp = self.tmp%4
+            if Keyboard.keys['left']==True:
+                Keyboard.keys['left']=False
+                self.tmp -=1
+                self.tmp = self.tmp%len(self.trap)
+                gui.player.inHand.tile=self.tilesInBar[self.tmp]
 
         #print self.tmp
 
