@@ -56,7 +56,7 @@ def tick():
         
     if Client.isHost == True and isMultiplayer == True:
         level.tick()
-        endLevel.tick()
+        if endLevel!=None:endLevel.tick()
     if isMultiplayer == False and gameOver==False:
         level.tick()
         if endLevel!=None:endLevel.tick()
@@ -102,36 +102,36 @@ def render():
 
 
 def populateLevel():
-    for i in range(0):
+    for i in range(4):
         dx = 0
         dy = 0
         while level.getTile(dx,dy)!=Tile.water:
             dx = random.randint(0,level.width)
             dy = random.randint(0,level.height)
         level.entities.append(Duck.Duck(level,dx<<5,dy<<5,random.randint(0,255),random.randint(0,255),random.randint(0,255)))
-    dx = 0
-    dy = 0
-    for i in range(2):
-        while level.getTile(dx,dy)!=Tile.water:
-            dx = random.randint(0,level.width)
-            dy = random.randint(0,level.height)
-        treasureLocations.append((dx<<5,dy<<5))
-        level.setTile(dx,dy,Tile.Treasure1)
-        dx = 0
-        dy = 0
-        while level.getTile(dx,dy)!=Tile.sand:
-            dx = random.randint(0,level.width)
-            dy = random.randint(0,level.height)
-        treasureLocations.append((dx<<5,dy<<5))
-        level.setTile(dx,dy,Tile.Treasure2)
-        dx = 0
-        dy = 0
-        while level.getTile(dx,dy)!=Tile.grass:
-            dx = random.randint(0,level.width)
-            dy = random.randint(0,level.height)
-        treasureLocations.append((dx<<5,dy<<5))
-        level.setTile(dx,dy,Tile.Treasure3)
-
+##    dx = 0
+##    dy = 0
+##    for i in range(2):
+##        while level.getTile(dx,dy)!=Tile.water:
+##            dx = random.randint(0,level.width)
+##            dy = random.randint(0,level.height)
+##        treasureLocations.append((dx<<5,dy<<5))
+##        level.setTile(dx,dy,Tile.Treasure1)
+##        dx = 0
+##        dy = 0
+##        while level.getTile(dx,dy)!=Tile.sand:
+##            dx = random.randint(0,level.width)
+##            dy = random.randint(0,level.height)
+##        treasureLocations.append((dx<<5,dy<<5))
+##        level.setTile(dx,dy,Tile.Treasure2)
+##        dx = 0
+##        dy = 0
+##        while level.getTile(dx,dy)!=Tile.grass:
+##            dx = random.randint(0,level.width)
+##            dy = random.randint(0,level.height)
+##        treasureLocations.append((dx<<5,dy<<5))
+##        level.setTile(dx,dy,Tile.Treasure3)
+##
    
     #for i in range(1):
         #level.entities.append(RobotAI.RobotAI(level,32,32,treasureLocations,difficulty))
@@ -162,7 +162,7 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     #endLevel = Level.Level(32,32)
     username = Config.config["name"]
     player = Player.Player(level,username,x,y)
-    #level.player = player
+    level.player = player
     isMultiplayer = multiplayer
     hasAI = AI
     numAI = nAI
@@ -185,11 +185,11 @@ def start(canvas,multiplayer=False,runServer=False,AI=False,nAI=1,diff=4) :
     level.loadLevelFromFile("levels/Arena.txt")
     #endLevel.loadLevelFromFile("levels/sort.txt")
     #endLevel.entities.append(SorterRobot.SorterRobot(endLevel,6<<5,5<<5))
-    #if isMultiplayer == False:
-        #populateLevel()
+    if isMultiplayer == False:
+        populateLevel()
 
-   # if Client.isHost == True and isMultiplayer == True:
-      #  populateLevel()
+    if Client.isHost == True and isMultiplayer == True:
+        populateLevel()
 
 
     lastTime = time.time()

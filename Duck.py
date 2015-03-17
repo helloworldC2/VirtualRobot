@@ -32,7 +32,7 @@ class Duck(Animal.Animal):
         self.deathTimer = random.randint(2000,20000)
         self.limitedToOneTile = True
         if Client.isHost == True:
-            Client.sendEntity("Duck",x,y)
+            Client.sendEntity("Duck",x,y,otherData=str(r)+"."+str(g)+"."+str(b))
 
 
     def canPlace(self):

@@ -4,6 +4,8 @@ import Tile
 import Keyboard
 import random
 import scoring
+import gui
+import SorterRobot
 
 
 class RobotAI(Entity.Entity):
@@ -168,8 +170,8 @@ class RobotAI(Entity.Entity):
                                                                         gui.endLevel = gui.Level.Level(32,32)
                                                                         gui.endLevel.loadLevelFromFile("levels/sort.txt")
                                                                         gui.endLevel.entities.append(SorterRobot.SorterRobot(gui.endLevel,6<<5,5<<5))
-                                                                else:
-                                                                        pass
+                                                                        gui.level.entities = []
+                                                               
 			
                 
 ##		if self.path==True or self.path==None:

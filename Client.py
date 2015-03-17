@@ -13,8 +13,8 @@ import string
 
 
 
-UDP_IP = "178.62.91.20"
-#UDP_IP = "127.0.0.1"
+#UDP_IP = "178.62.91.20"
+UDP_IP = "127.0.0.1"
 UDP_PORT = 1331
 
 print "UDP target IP:", UDP_IP
@@ -90,7 +90,7 @@ def parsePacket(data,addr):
         elif packetType == '03':
                 ent = Packet.Packet03AddEntity()
                 ent.receivePacket(data)
-                addEntity(ent.type,ent.x,ent.y)
+                addEntity(ent.type,ent.x,ent.y,ent.otherData)
         elif packetType == '04':
                 move = Packet.Packet04MoveEntity()
                 move.receivePacket(data)
@@ -103,7 +103,7 @@ def parsePacket(data,addr):
                 tiles.receivePacket(data)
                 setTiles(tiles.tiles)
                 print "Got tiles"
-        elif packetType == '06' and isHost==False:
+        elif packetType == '06':
                 tile = Packet.Packet06UpdateTile()
                 tile.receivePacket(data)
                 gui.level.tiles[int(tile.x)+(gui.level.width*int(tile.y))] = int(tile.tile)
@@ -111,6 +111,7 @@ def parsePacket(data,addr):
 
 def setTile(tile,x,y):
     send = Packet.Packet06UpdateTile(tile,x,y)
+    print "Tile",tile,"at",x,y
     sendDataToServer(send.getData())
 
 
@@ -131,18 +132,19 @@ def addPlayer(usename,x,y):
     players.append(pl)
 
 
-def addEntity(e,x,y):
-    print e
+def addEntity(e,x,y,otherData):
+    print e,otherData
     if e == "Duck":
-        d = Duck.Duck(gui.level,int(x),int(y))
+        d = otherData.split(".")
+        d = Duck.Duck(gui.level,int(x),int(y),int(d[0]),int(d[1]),int(d[2]))
     elif e == "Crab":
         d = Animal.Animal(gui.level,int(x),int(y))
 
     gui.level.entities.append(d)
 
-def sendEntity(e,x,y):
+def sendEntity(e,x,y,otherData="no"):
     global numOfEntities
-    ent = Packet.Packet03AddEntity(numOfEntities,e,x,y)
+    ent = Packet.Packet03AddEntity(numOfEntities,e,x,y,otherData)
     numOfEntities+=1
     sendDataToServer(ent.getData())
 

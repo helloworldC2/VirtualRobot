@@ -8,7 +8,7 @@ import Jobs
 import BubbleSort
 import HeapSort
 import BogoSort
-import GeneticSort
+#import GeneticSort
 import CocktailSort
 #import mergeSort
 

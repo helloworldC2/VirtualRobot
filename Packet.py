@@ -87,23 +87,29 @@ class Packet02Move(Packet):
 
 class Packet03AddEntity(Packet):
 
-	def __init__(self,idd=0,t="",x=0,y=0):
+	def __init__(self,idd=0,t="",x=0,y=0,otherData="no"):
 		super(Packet03AddEntity,self).__init__(03)
 		self.id = idd
 		self.type = t
 		self.x=x
 		self.y=y
+		self.otherData = otherData
 
 	def receivePacket(self,data):
+                print data
 		stuff = string.split(data,",")
 		self.id = stuff[0][2:]
 		self.type=stuff[1]
 		self.x=stuff[2]
 		self.y=stuff[3]
+		self.otherData = stuff[4]
+		if self.otherData==None or self.otherData=="":
+                        self.otherData = "no"
 
 
 	def getData(self):
-		return "03" + str(self.id) +','+self.type+','+str(int(self.x))+','+str(int(self.y))
+                print self.otherData
+		return "03" + str(self.id) +','+self.type+','+str(int(self.x))+','+str(int(self.y))+','+str(self.otherData)
 
 class Packet04MoveEntity(Packet):
 
