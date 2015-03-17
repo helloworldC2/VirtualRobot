@@ -18,10 +18,9 @@ class StaticEntity(Entity.Entity):
 		self.id = len(level.entities)
 		self.basicFont = pygame.font.SysFont(None, 32)
 		self.blocksPath = True
-		self.img = pygame.image.load("tiles/wall.png")
 		self.img = pygame.transform.scale(self.img, (32, 32))
 		self.canPlace = True
-		self.tile = Tile.cactus
+		self.tile = Tile.water
 		
 
 
